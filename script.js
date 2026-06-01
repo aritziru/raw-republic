@@ -599,7 +599,7 @@ function showToast(msg) {
    10. COUNTDOWN — contador para sección Nutrición
 ───────────────────────────────────────────────────────────── */
 (function initCountdown() {
-  const target = new Date('2025-09-01T00:00:00');
+  const target = new Date('2027-01-01T00:00:00');
 
   function tick() {
     const now  = new Date();
