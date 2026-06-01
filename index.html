@@ -15,23 +15,45 @@
   <!-- ░░ NAVBAR ░░ -->
   <header class="navbar" id="navbar">
     <div class="nav-inner">
-      <a href="#" class="logo">
+
+      <!-- [4] Logo con zarpazo SVG -->
+      <a href="#inicio" class="logo">
         <span class="logo-raw">RAW</span>
         <span class="logo-republic">Republic</span>
+        <!-- Zarpazo de tigre SVG -->
+        <svg class="logo-claw" viewBox="0 0 36 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- 3 marcas de zarpazo, ligeramente rotadas, dinámicas -->
+          <g opacity="0.90">
+            <!-- Garra izquierda -->
+            <path d="M6 4 C5 10, 2 18, 5 28 C6 32, 8 36, 7 42"
+                  stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+            <!-- Garra central -->
+            <path d="M15 2 C14 9, 12 18, 15 29 C16 33, 17 37, 16 43"
+                  stroke="var(--accent)" stroke-width="2.8" stroke-linecap="round" fill="none"/>
+            <!-- Garra derecha -->
+            <path d="M25 5 C25 12, 23 20, 26 30 C27 34, 28 38, 27 43"
+                  stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+            <!-- Pequeños desgarros transversales que simulan la laceración -->
+            <path d="M5 14 Q15 11 26 15" stroke="rgba(255,255,255,0.25)" stroke-width="1" fill="none" stroke-linecap="round"/>
+            <path d="M6 24 Q15 21 27 25" stroke="rgba(255,255,255,0.20)" stroke-width="1" fill="none" stroke-linecap="round"/>
+          </g>
+        </svg>
       </a>
 
+      <!-- [3] Nav links — sección activa via JS -->
       <nav class="nav-links" id="navLinks">
-        <a href="#inicio"    class="nav-link">Inicio</a>
-        <!-- ① Enlace Ropa apunta ahora al catálogo -->
-        <a href="#catalogo"  class="nav-link">Ropa</a>
-        <a href="#accesorios" class="nav-link">Accesorios</a>
-        <a href="#nutricion" class="nav-link nav-soon">
+        <a href="#inicio"     class="nav-link" data-section="inicio">Inicio</a>
+        <a href="#catalogo"   class="nav-link" data-section="catalogo">Ropa</a>
+        <a href="#accesorios" class="nav-link" data-section="accesorios">Accesorios</a>
+        <a href="#nutricion"  class="nav-link nav-soon" data-section="nutricion">
           Nutrición <span class="badge">Pronto</span>
         </a>
-        <a href="#contacto"  class="nav-link">Contacto</a>
+        <a href="#faq"        class="nav-link" data-section="faq">FAQ</a>
+        <a href="#contacto"   class="nav-link" data-section="contacto">Contacto</a>
       </nav>
 
       <div class="nav-actions">
+        <!-- [7] Botón carrito abre el drawer lateral -->
         <button class="cart-btn" id="cartBtn" aria-label="Carrito">
           <i class="fa-solid fa-bag-shopping"></i>
           <span class="cart-count" id="cartCount">0</span>
@@ -43,11 +65,14 @@
     </div>
   </header>
 
+
   <!-- ░░ HERO ░░ -->
   <section class="hero" id="inicio">
     <div class="hero-bg">
       <div class="hero-grid-overlay"></div>
       <div class="hero-noise"></div>
+      <!-- [9] Partículas de chispas naranjas (fondo hero) -->
+      <div class="hero-sparks" id="heroSparks"></div>
     </div>
     <div class="hero-content">
       <p class="hero-eyebrow">Nueva Temporada 2025</p>
@@ -57,10 +82,10 @@
       </h1>
       <p class="hero-sub">Ropa y equipamiento diseñado para quienes no conocen los límites.<br>Rendimiento sin concesiones.</p>
       <div class="hero-cta-group">
-        <a href="#catalogo" class="btn btn-primary">
-          Explorar Colección <i class="fa-solid fa-arrow-right"></i>
+        <a href="#top-ventas" class="btn btn-primary">
+          Ver Top Ventas <i class="fa-solid fa-fire"></i>
         </a>
-        <a href="#nutricion" class="btn btn-ghost">Próximamente: Nutrición</a>
+        <a href="#catalogo" class="btn btn-ghost">Ver toda la colección</a>
       </div>
     </div>
     <div class="hero-stat-bar">
@@ -75,6 +100,133 @@
       <div class="scroll-line"></div>
     </div>
   </section>
+
+
+  <!-- ░░ [1] TOP VENTAS (destacados, justo tras el Hero) ░░ -->
+  <section class="top-ventas" id="top-ventas">
+    <div class="section-header">
+      <p class="section-label">// Más Vendidos</p>
+      <h2 class="section-title">TOP <span class="accent">VENTAS</span></h2>
+      <p class="catalogo-subtitle">Las prendas que arrasan entre nuestra comunidad. Fabricadas bajo pedido, exclusivamente para ti.</p>
+    </div>
+
+    <!-- Grid de 3 destacados -->
+    <div class="product-grid top-ventas-grid">
+
+      <!-- TOP 1 — RAW Training Tee -->
+      <article class="product-card featured-card"
+               data-product-id="RR-001"
+               data-product-name="RAW Training Tee"
+               data-product-price="34.99"
+               data-product-cat="Camiseta técnica"
+               data-product-desc="Tejido dry-fit 4-way stretch. Anti-odor. Costuras planas sin rozaduras."
+               data-img-front="imagenes/camiseta1.jpg"
+               data-img-back="imagenes/camiseta1_espalda.jpg"
+               data-sizes="XS,S,M,L,XL,XXL"
+               data-colors="Negro,Blanco,Gris Carbón,Naranja RAW"
+               onclick="openProductModal(this)">
+        <!-- [5] Wrap con hover-carousel -->
+        <div class="product-img-wrap" data-front="imagenes/camiseta1.jpg" data-back="imagenes/camiseta1_espalda.jpg">
+          <img src="imagenes/camiseta1.jpg" alt="RAW Training Tee" class="product-img-main" />
+          <div class="product-badge-bop">Bajo Pedido</div>
+          <div class="product-badge-top"><i class="fa-solid fa-fire"></i> Top 1</div>
+          <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
+        </div>
+        <div class="product-body">
+          <p class="product-cat">Camiseta técnica</p>
+          <h3 class="product-name">RAW Training Tee</h3>
+          <p class="product-desc">Tejido dry-fit 4-way stretch. Anti-odor. Costuras planas sin rozaduras.</p>
+          <p class="product-price">34,99 <span class="currency">€</span></p>
+          <p class="delivery-notice"><i class="fa-solid fa-clock"></i> Entrega: <strong>10-15 días lab.</strong></p>
+          <button class="btn btn-primary full-width rr-add-to-cart"
+                  data-product-id="RR-001"
+                  data-product-name="RAW Training Tee"
+                  data-product-price="34.99"
+                  onclick="event.stopPropagation(); openProductModal(this.closest('.product-card'))">
+            <i class="fa-solid fa-bag-shopping"></i> Añadir al carrito
+          </button>
+        </div>
+      </article>
+
+      <!-- TOP 2 — RAW Industrial Hoodie -->
+      <article class="product-card featured-card"
+               data-product-id="RR-003"
+               data-product-name="RAW Industrial Hoodie"
+               data-product-price="79.99"
+               data-product-cat="Sudadera"
+               data-product-desc="Fleece 380g. Capucha estructurada. Logo bordado. Tiro oversize."
+               data-img-front="imagenes/hoodie_frente.jpg"
+               data-img-back="imagenes/hoodie_espalda.jpg"
+               data-sizes="S,M,L,XL,XXL"
+               data-colors="Negro,Grafito,Crema"
+               onclick="openProductModal(this)">
+        <div class="product-img-wrap" data-front="imagenes/hoodie_frente.jpg" data-back="imagenes/hoodie_espalda.jpg">
+          <div class="product-img-placeholder"><i class="fa-solid fa-vest"></i><span>Foto del producto</span></div>
+          <div class="product-badge-bop">Bajo Pedido</div>
+          <div class="product-badge-new">Nuevo</div>
+          <div class="product-badge-top"><i class="fa-solid fa-fire"></i> Top 2</div>
+          <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
+        </div>
+        <div class="product-body">
+          <p class="product-cat">Sudadera</p>
+          <h3 class="product-name">RAW Industrial Hoodie</h3>
+          <p class="product-desc">Fleece 380g. Capucha estructurada. Logo bordado. Tiro oversize.</p>
+          <p class="product-price">79,99 <span class="currency">€</span></p>
+          <p class="delivery-notice"><i class="fa-solid fa-clock"></i> Entrega: <strong>10-15 días lab.</strong></p>
+          <button class="btn btn-primary full-width rr-add-to-cart"
+                  data-product-id="RR-003"
+                  data-product-name="RAW Industrial Hoodie"
+                  data-product-price="79.99"
+                  onclick="event.stopPropagation(); openProductModal(this.closest('.product-card'))">
+            <i class="fa-solid fa-bag-shopping"></i> Añadir al carrito
+          </button>
+        </div>
+      </article>
+
+      <!-- TOP 3 — RAW Rep Shorts -->
+      <article class="product-card featured-card"
+               data-product-id="RR-004"
+               data-product-name="RAW Rep Shorts"
+               data-product-price="44.99"
+               data-product-cat="Shorts"
+               data-product-desc="Tejido elástico 2-way. Bolsillo con cremallera. Interior de compresión integrado."
+               data-img-front="imagenes/calcetines1.jpg"
+               data-img-back="imagenes/shorts_espalda.jpg"
+               data-sizes="S,M,L,XL"
+               data-colors="Negro,Caqui,Naranja RAW"
+               onclick="openProductModal(this)">
+        <div class="product-img-wrap" data-front="imagenes/calcetines1.jpg" data-back="imagenes/shorts_espalda.jpg">
+          <img src="imagenes/calcetines1.jpg" alt="RAW Rep Shorts" class="product-img-main" />
+          <div class="product-badge-bop">Bajo Pedido</div>
+          <div class="product-badge-top"><i class="fa-solid fa-fire"></i> Top 3</div>
+          <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
+        </div>
+        <div class="product-body">
+          <p class="product-cat">Shorts</p>
+          <h3 class="product-name">RAW Rep Shorts</h3>
+          <p class="product-desc">Tejido elástico 2-way. Bolsillo con cremallera. Interior de compresión integrado.</p>
+          <p class="product-price">44,99 <span class="currency">€</span></p>
+          <p class="delivery-notice"><i class="fa-solid fa-clock"></i> Entrega: <strong>10-15 días lab.</strong></p>
+          <button class="btn btn-primary full-width rr-add-to-cart"
+                  data-product-id="RR-004"
+                  data-product-name="RAW Rep Shorts"
+                  data-product-price="44.99"
+                  onclick="event.stopPropagation(); openProductModal(this.closest('.product-card'))">
+            <i class="fa-solid fa-bag-shopping"></i> Añadir al carrito
+          </button>
+        </div>
+      </article>
+
+    </div><!-- /top-ventas-grid -->
+
+    <!-- CTA hacia catálogo completo -->
+    <div class="top-ventas-cta">
+      <a href="#catalogo" class="btn btn-outline btn-lg">
+        Ver toda la colección <i class="fa-solid fa-arrow-down"></i>
+      </a>
+    </div>
+  </section>
+
 
   <!-- ░░ CATEGORÍAS (overview) ░░ -->
   <section class="categorias" id="categorias">
@@ -93,6 +245,7 @@
             <p class="cat-desc">Tejidos técnicos de alto rendimiento. Compresión, transpirabilidad y estética brutal.</p>
             <span class="cat-count">6 productos</span>
           </div>
+          <!-- [1] Enlace "Ropa" y botón van al catálogo completo -->
           <a href="#catalogo" class="cat-cta btn btn-outline">
             Ver Catálogo <i class="fa-solid fa-arrow-down"></i>
           </a>
@@ -126,10 +279,11 @@
     </div>
   </section>
 
-  <!-- ░░ ② CATÁLOGO DE ROPA / VENTA BAJO PEDIDO ░░ -->
+
+  <!-- ░░ CATÁLOGO COMPLETO DE ROPA ░░ -->
   <section class="catalogo" id="catalogo">
     <div class="section-header">
-      <p class="section-label">// Ropa de Gym</p>
+      <p class="section-label">// Ropa de Gym · Colección Completa</p>
       <h2 class="section-title">CATÁLOGO <span class="accent">BAJO PEDIDO</span></h2>
       <p class="catalogo-subtitle">Cada prenda se fabrica exclusivamente para ti. Sin stock masivo, sin compromisos de calidad.</p>
     </div>
@@ -143,34 +297,39 @@
       </div>
     </div>
 
-    <!-- Grid de productos -->
+    <!-- Grid de productos (todos) — [5] hover-carousel activado -->
     <div class="product-grid">
 
       <!-- PRODUCTO 1 -->
-      <article class="product-card" data-product-id="RR-001">
-        <div class="product-img-wrap">
-          <img src="imagenes/camiseta1.jpg" alt="RAW Rep Shorts">
+      <article class="product-card"
+               data-product-id="RR-001"
+               data-product-name="RAW Training Tee"
+               data-product-price="34.99"
+               data-product-cat="Camiseta técnica"
+               data-product-desc="Tejido dry-fit 4-way stretch. Anti-odor. Costuras planas sin rozaduras."
+               data-img-front="imagenes/camiseta1.jpg"
+               data-img-back="imagenes/camiseta1_espalda.jpg"
+               data-sizes="XS,S,M,L,XL,XXL"
+               data-colors="Negro,Blanco,Gris Carbón,Naranja RAW"
+               onclick="openProductModal(this)">
+        <div class="product-img-wrap" data-front="imagenes/camiseta1.jpg" data-back="imagenes/camiseta1_espalda.jpg">
+          <img src="imagenes/camiseta1.jpg" alt="RAW Training Tee" class="product-img-main" />
           <div class="product-badge-bop">Bajo Pedido</div>
+          <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
         </div>
         <div class="product-body">
           <p class="product-cat">Camiseta técnica</p>
           <h3 class="product-name">RAW Training Tee</h3>
           <p class="product-desc">Tejido dry-fit 4-way stretch. Anti-odor. Costuras planas sin rozaduras.</p>
           <p class="product-price">34,99 <span class="currency">€</span></p>
-
-          <!-- Selectores talla / color -->
           <div class="product-selectors">
             <div class="selector-group">
               <label for="talla-001">Talla</label>
               <div class="select-wrap">
-                <select id="talla-001" name="talla" class="rr-select" data-variant="size">
+                <select id="talla-001" name="talla" class="rr-select" data-variant="size" onclick="event.stopPropagation()">
                   <option value="">— Elige talla —</option>
-                  <option value="XS">XS</option>
-                  <option value="S">S</option>
-                  <option value="M">M</option>
-                  <option value="L">L</option>
-                  <option value="XL">XL</option>
-                  <option value="XXL">XXL</option>
+                  <option>XS</option><option>S</option><option>M</option>
+                  <option>L</option><option>XL</option><option>XXL</option>
                 </select>
                 <i class="fa-solid fa-chevron-down select-arrow"></i>
               </div>
@@ -178,50 +337,40 @@
             <div class="selector-group">
               <label for="color-001">Color</label>
               <div class="select-wrap">
-                <select id="color-001" name="color" class="rr-select" data-variant="color">
+                <select id="color-001" name="color" class="rr-select" data-variant="color" onclick="event.stopPropagation()">
                   <option value="">— Elige color —</option>
-                  <option value="negro">Negro</option>
-                  <option value="blanco">Blanco</option>
-                  <option value="gris-carbon">Gris Carbón</option>
-                  <option value="naranja-raw">Naranja RAW</option>
+                  <option>Negro</option><option>Blanco</option>
+                  <option>Gris Carbón</option><option>Naranja RAW</option>
                 </select>
                 <i class="fa-solid fa-chevron-down select-arrow"></i>
               </div>
             </div>
           </div>
-
-          <!-- Aviso entrega inline -->
-          <p class="delivery-notice">
-            <i class="fa-solid fa-clock"></i>
-            Fabricación y entrega: <strong>10-15 días laborables</strong>
-          </p>
-
-          <!--
-            ══ BOTÓN DE COMPRA ══
-            Clases preparadas para integración con Ecwid o Snipcart:
-            • Ecwid:   añade atributos data-product-id y usa JS de Ecwid
-            • Snipcart: sustituye <button> por <button class="snipcart-add-item" data-item-id="RR-001" data-item-name="RAW Training Tee" data-item-price="34.99" data-item-url="/index.html">
-          -->
-          <button
-            class="btn btn-primary full-width rr-add-to-cart"
-            data-product-id="RR-001"
-            data-product-name="RAW Training Tee"
-            data-product-price="34.99"
-            onclick="handleAddToCart(this)"
-          >
+          <p class="delivery-notice"><i class="fa-solid fa-clock"></i> Fabricación y entrega: <strong>10-15 días laborables</strong></p>
+          <button class="btn btn-primary full-width rr-add-to-cart"
+                  data-product-id="RR-001" data-product-name="RAW Training Tee" data-product-price="34.99"
+                  onclick="event.stopPropagation(); handleAddToCart(this)">
             <i class="fa-solid fa-bag-shopping"></i> Añadir al carrito
           </button>
         </div>
       </article>
 
       <!-- PRODUCTO 2 -->
-      <article class="product-card" data-product-id="RR-002">
-        <div class="product-img-wrap">
-          <div class="product-img-placeholder">
-            <i class="fa-solid fa-person-running"></i>
-            <span>Foto del producto</span>
-          </div>
+      <article class="product-card"
+               data-product-id="RR-002"
+               data-product-name="RAW Compression Pro"
+               data-product-price="54.99"
+               data-product-cat="Mallas de compresión"
+               data-product-desc="Compresión graduada. Tejido técnico opaco. Bolsillo lateral integrado."
+               data-img-front="imagenes/compression_frente.jpg"
+               data-img-back="imagenes/compression_espalda.jpg"
+               data-sizes="XS,S,M,L,XL"
+               data-colors="Negro,Gris Carbón,Azul Noche"
+               onclick="openProductModal(this)">
+        <div class="product-img-wrap" data-front="imagenes/compression_frente.jpg" data-back="imagenes/compression_espalda.jpg">
+          <div class="product-img-placeholder"><i class="fa-solid fa-person-running"></i><span>Foto del producto</span></div>
           <div class="product-badge-bop">Bajo Pedido</div>
+          <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
         </div>
         <div class="product-body">
           <p class="product-cat">Mallas de compresión</p>
@@ -232,13 +381,9 @@
             <div class="selector-group">
               <label for="talla-002">Talla</label>
               <div class="select-wrap">
-                <select id="talla-002" name="talla" class="rr-select" data-variant="size">
+                <select id="talla-002" name="talla" class="rr-select" data-variant="size" onclick="event.stopPropagation()">
                   <option value="">— Elige talla —</option>
-                  <option value="XS">XS</option>
-                  <option value="S">S</option>
-                  <option value="M">M</option>
-                  <option value="L">L</option>
-                  <option value="XL">XL</option>
+                  <option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option>
                 </select>
                 <i class="fa-solid fa-chevron-down select-arrow"></i>
               </div>
@@ -246,41 +391,40 @@
             <div class="selector-group">
               <label for="color-002">Color</label>
               <div class="select-wrap">
-                <select id="color-002" name="color" class="rr-select" data-variant="color">
+                <select id="color-002" name="color" class="rr-select" data-variant="color" onclick="event.stopPropagation()">
                   <option value="">— Elige color —</option>
-                  <option value="negro">Negro</option>
-                  <option value="gris-carbon">Gris Carbón</option>
-                  <option value="azul-noche">Azul Noche</option>
+                  <option>Negro</option><option>Gris Carbón</option><option>Azul Noche</option>
                 </select>
                 <i class="fa-solid fa-chevron-down select-arrow"></i>
               </div>
             </div>
           </div>
-          <p class="delivery-notice">
-            <i class="fa-solid fa-clock"></i>
-            Fabricación y entrega: <strong>10-15 días laborables</strong>
-          </p>
-          <button
-            class="btn btn-primary full-width rr-add-to-cart"
-            data-product-id="RR-002"
-            data-product-name="RAW Compression Pro"
-            data-product-price="54.99"
-            onclick="handleAddToCart(this)"
-          >
+          <p class="delivery-notice"><i class="fa-solid fa-clock"></i> Fabricación y entrega: <strong>10-15 días laborables</strong></p>
+          <button class="btn btn-primary full-width rr-add-to-cart"
+                  data-product-id="RR-002" data-product-name="RAW Compression Pro" data-product-price="54.99"
+                  onclick="event.stopPropagation(); handleAddToCart(this)">
             <i class="fa-solid fa-bag-shopping"></i> Añadir al carrito
           </button>
         </div>
       </article>
 
       <!-- PRODUCTO 3 -->
-      <article class="product-card" data-product-id="RR-003">
-        <div class="product-img-wrap">
-          <div class="product-img-placeholder">
-            <i class="fa-solid fa-vest"></i>
-            <span>Foto del producto</span>
-          </div>
+      <article class="product-card"
+               data-product-id="RR-003"
+               data-product-name="RAW Industrial Hoodie"
+               data-product-price="79.99"
+               data-product-cat="Sudadera"
+               data-product-desc="Fleece 380g. Capucha estructurada. Logo bordado. Tiro oversize."
+               data-img-front="imagenes/hoodie_frente.jpg"
+               data-img-back="imagenes/hoodie_espalda.jpg"
+               data-sizes="S,M,L,XL,XXL"
+               data-colors="Negro,Grafito,Crema"
+               onclick="openProductModal(this)">
+        <div class="product-img-wrap" data-front="imagenes/hoodie_frente.jpg" data-back="imagenes/hoodie_espalda.jpg">
+          <div class="product-img-placeholder"><i class="fa-solid fa-vest"></i><span>Foto del producto</span></div>
           <div class="product-badge-bop">Bajo Pedido</div>
           <div class="product-badge-new">Nuevo</div>
+          <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
         </div>
         <div class="product-body">
           <p class="product-cat">Sudadera</p>
@@ -291,13 +435,9 @@
             <div class="selector-group">
               <label for="talla-003">Talla</label>
               <div class="select-wrap">
-                <select id="talla-003" name="talla" class="rr-select" data-variant="size">
+                <select id="talla-003" name="talla" class="rr-select" data-variant="size" onclick="event.stopPropagation()">
                   <option value="">— Elige talla —</option>
-                  <option value="S">S</option>
-                  <option value="M">M</option>
-                  <option value="L">L</option>
-                  <option value="XL">XL</option>
-                  <option value="XXL">XXL</option>
+                  <option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option>
                 </select>
                 <i class="fa-solid fa-chevron-down select-arrow"></i>
               </div>
@@ -305,37 +445,39 @@
             <div class="selector-group">
               <label for="color-003">Color</label>
               <div class="select-wrap">
-                <select id="color-003" name="color" class="rr-select" data-variant="color">
+                <select id="color-003" name="color" class="rr-select" data-variant="color" onclick="event.stopPropagation()">
                   <option value="">— Elige color —</option>
-                  <option value="negro">Negro</option>
-                  <option value="grafito">Grafito</option>
-                  <option value="crema">Crema</option>
+                  <option>Negro</option><option>Grafito</option><option>Crema</option>
                 </select>
                 <i class="fa-solid fa-chevron-down select-arrow"></i>
               </div>
             </div>
           </div>
-          <p class="delivery-notice">
-            <i class="fa-solid fa-clock"></i>
-            Fabricación y entrega: <strong>10-15 días laborables</strong>
-          </p>
-          <button
-            class="btn btn-primary full-width rr-add-to-cart"
-            data-product-id="RR-003"
-            data-product-name="RAW Industrial Hoodie"
-            data-product-price="79.99"
-            onclick="handleAddToCart(this)"
-          >
+          <p class="delivery-notice"><i class="fa-solid fa-clock"></i> Fabricación y entrega: <strong>10-15 días laborables</strong></p>
+          <button class="btn btn-primary full-width rr-add-to-cart"
+                  data-product-id="RR-003" data-product-name="RAW Industrial Hoodie" data-product-price="79.99"
+                  onclick="event.stopPropagation(); handleAddToCart(this)">
             <i class="fa-solid fa-bag-shopping"></i> Añadir al carrito
           </button>
         </div>
       </article>
 
       <!-- PRODUCTO 4 -->
-      <article class="product-card" data-product-id="RR-004">
-        <div class="product-img-wrap">
-        <img src="imagenes/calcetines1.jpg" alt="RAW Rep Shorts">
-        <div class="product-badge-bop">Bajo Pedido</div>
+      <article class="product-card"
+               data-product-id="RR-004"
+               data-product-name="RAW Rep Shorts"
+               data-product-price="44.99"
+               data-product-cat="Shorts"
+               data-product-desc="Tejido elástico 2-way. Bolsillo con cremallera. Interior de compresión integrado."
+               data-img-front="imagenes/calcetines1.jpg"
+               data-img-back="imagenes/shorts_espalda.jpg"
+               data-sizes="S,M,L,XL"
+               data-colors="Negro,Caqui,Naranja RAW"
+               onclick="openProductModal(this)">
+        <div class="product-img-wrap" data-front="imagenes/calcetines1.jpg" data-back="imagenes/shorts_espalda.jpg">
+          <img src="imagenes/calcetines1.jpg" alt="RAW Rep Shorts" class="product-img-main" />
+          <div class="product-badge-bop">Bajo Pedido</div>
+          <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
         </div>
         <div class="product-body">
           <p class="product-cat">Shorts</p>
@@ -346,12 +488,9 @@
             <div class="selector-group">
               <label for="talla-004">Talla</label>
               <div class="select-wrap">
-                <select id="talla-004" name="talla" class="rr-select" data-variant="size">
+                <select id="talla-004" name="talla" class="rr-select" data-variant="size" onclick="event.stopPropagation()">
                   <option value="">— Elige talla —</option>
-                  <option value="S">S</option>
-                  <option value="M">M</option>
-                  <option value="L">L</option>
-                  <option value="XL">XL</option>
+                  <option>S</option><option>M</option><option>L</option><option>XL</option>
                 </select>
                 <i class="fa-solid fa-chevron-down select-arrow"></i>
               </div>
@@ -359,40 +498,39 @@
             <div class="selector-group">
               <label for="color-004">Color</label>
               <div class="select-wrap">
-                <select id="color-004" name="color" class="rr-select" data-variant="color">
+                <select id="color-004" name="color" class="rr-select" data-variant="color" onclick="event.stopPropagation()">
                   <option value="">— Elige color —</option>
-                  <option value="negro">Negro</option>
-                  <option value="caqui">Caqui</option>
-                  <option value="naranja-raw">Naranja RAW</option>
+                  <option>Negro</option><option>Caqui</option><option>Naranja RAW</option>
                 </select>
                 <i class="fa-solid fa-chevron-down select-arrow"></i>
               </div>
             </div>
           </div>
-          <p class="delivery-notice">
-            <i class="fa-solid fa-clock"></i>
-            Fabricación y entrega: <strong>10-15 días laborables</strong>
-          </p>
-          <button
-            class="btn btn-primary full-width rr-add-to-cart"
-            data-product-id="RR-004"
-            data-product-name="RAW Rep Shorts"
-            data-product-price="44.99"
-            onclick="handleAddToCart(this)"
-          >
+          <p class="delivery-notice"><i class="fa-solid fa-clock"></i> Fabricación y entrega: <strong>10-15 días laborables</strong></p>
+          <button class="btn btn-primary full-width rr-add-to-cart"
+                  data-product-id="RR-004" data-product-name="RAW Rep Shorts" data-product-price="44.99"
+                  onclick="event.stopPropagation(); handleAddToCart(this)">
             <i class="fa-solid fa-bag-shopping"></i> Añadir al carrito
           </button>
         </div>
       </article>
 
       <!-- PRODUCTO 5 -->
-      <article class="product-card" data-product-id="RR-005">
-        <div class="product-img-wrap">
-          <div class="product-img-placeholder">
-            <i class="fa-solid fa-tshirt"></i>
-            <span>Foto del producto</span>
-          </div>
+      <article class="product-card"
+               data-product-id="RR-005"
+               data-product-name="RAW Tank Muscle"
+               data-product-price="29.99"
+               data-product-cat="Camiseta sin mangas"
+               data-product-desc="Corte muscle fit. Costuras laterales reforzadas. 100% algodón ring-spun."
+               data-img-front="imagenes/tank_frente.jpg"
+               data-img-back="imagenes/tank_espalda.jpg"
+               data-sizes="S,M,L,XL,XXL"
+               data-colors="Negro,Blanco,Rojo RAW"
+               onclick="openProductModal(this)">
+        <div class="product-img-wrap" data-front="imagenes/tank_frente.jpg" data-back="imagenes/tank_espalda.jpg">
+          <div class="product-img-placeholder"><i class="fa-solid fa-tshirt"></i><span>Foto del producto</span></div>
           <div class="product-badge-bop">Bajo Pedido</div>
+          <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
         </div>
         <div class="product-body">
           <p class="product-cat">Camiseta sin mangas</p>
@@ -403,13 +541,9 @@
             <div class="selector-group">
               <label for="talla-005">Talla</label>
               <div class="select-wrap">
-                <select id="talla-005" name="talla" class="rr-select" data-variant="size">
+                <select id="talla-005" name="talla" class="rr-select" data-variant="size" onclick="event.stopPropagation()">
                   <option value="">— Elige talla —</option>
-                  <option value="S">S</option>
-                  <option value="M">M</option>
-                  <option value="L">L</option>
-                  <option value="XL">XL</option>
-                  <option value="XXL">XXL</option>
+                  <option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option>
                 </select>
                 <i class="fa-solid fa-chevron-down select-arrow"></i>
               </div>
@@ -417,41 +551,40 @@
             <div class="selector-group">
               <label for="color-005">Color</label>
               <div class="select-wrap">
-                <select id="color-005" name="color" class="rr-select" data-variant="color">
+                <select id="color-005" name="color" class="rr-select" data-variant="color" onclick="event.stopPropagation()">
                   <option value="">— Elige color —</option>
-                  <option value="negro">Negro</option>
-                  <option value="blanco">Blanco</option>
-                  <option value="rojo-raw">Rojo RAW</option>
+                  <option>Negro</option><option>Blanco</option><option>Rojo RAW</option>
                 </select>
                 <i class="fa-solid fa-chevron-down select-arrow"></i>
               </div>
             </div>
           </div>
-          <p class="delivery-notice">
-            <i class="fa-solid fa-clock"></i>
-            Fabricación y entrega: <strong>10-15 días laborables</strong>
-          </p>
-          <button
-            class="btn btn-primary full-width rr-add-to-cart"
-            data-product-id="RR-005"
-            data-product-name="RAW Tank Muscle"
-            data-product-price="29.99"
-            onclick="handleAddToCart(this)"
-          >
+          <p class="delivery-notice"><i class="fa-solid fa-clock"></i> Fabricación y entrega: <strong>10-15 días laborables</strong></p>
+          <button class="btn btn-primary full-width rr-add-to-cart"
+                  data-product-id="RR-005" data-product-name="RAW Tank Muscle" data-product-price="29.99"
+                  onclick="event.stopPropagation(); handleAddToCart(this)">
             <i class="fa-solid fa-bag-shopping"></i> Añadir al carrito
           </button>
         </div>
       </article>
 
       <!-- PRODUCTO 6 -->
-      <article class="product-card" data-product-id="RR-006">
-        <div class="product-img-wrap">
-          <div class="product-img-placeholder">
-            <i class="fa-solid fa-mitten"></i>
-            <span>Foto del producto</span>
-          </div>
+      <article class="product-card"
+               data-product-id="RR-006"
+               data-product-name="RAW Shell Jacket"
+               data-product-price="89.99"
+               data-product-cat="Chaqueta técnica"
+               data-product-desc="Cortavientos ligero. Capucha plegable. Reflectantes en costuras. Ideal entrenamiento outdoor."
+               data-img-front="imagenes/jacket_frente.jpg"
+               data-img-back="imagenes/jacket_espalda.jpg"
+               data-sizes="S,M,L,XL"
+               data-colors="Negro,Naranja RAW,Verde Militar"
+               onclick="openProductModal(this)">
+        <div class="product-img-wrap" data-front="imagenes/jacket_frente.jpg" data-back="imagenes/jacket_espalda.jpg">
+          <div class="product-img-placeholder"><i class="fa-solid fa-mitten"></i><span>Foto del producto</span></div>
           <div class="product-badge-bop">Bajo Pedido</div>
           <div class="product-badge-new">Nuevo</div>
+          <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
         </div>
         <div class="product-body">
           <p class="product-cat">Chaqueta técnica</p>
@@ -462,12 +595,9 @@
             <div class="selector-group">
               <label for="talla-006">Talla</label>
               <div class="select-wrap">
-                <select id="talla-006" name="talla" class="rr-select" data-variant="size">
+                <select id="talla-006" name="talla" class="rr-select" data-variant="size" onclick="event.stopPropagation()">
                   <option value="">— Elige talla —</option>
-                  <option value="S">S</option>
-                  <option value="M">M</option>
-                  <option value="L">L</option>
-                  <option value="XL">XL</option>
+                  <option>S</option><option>M</option><option>L</option><option>XL</option>
                 </select>
                 <i class="fa-solid fa-chevron-down select-arrow"></i>
               </div>
@@ -475,27 +605,18 @@
             <div class="selector-group">
               <label for="color-006">Color</label>
               <div class="select-wrap">
-                <select id="color-006" name="color" class="rr-select" data-variant="color">
+                <select id="color-006" name="color" class="rr-select" data-variant="color" onclick="event.stopPropagation()">
                   <option value="">— Elige color —</option>
-                  <option value="negro">Negro</option>
-                  <option value="naranja-raw">Naranja RAW</option>
-                  <option value="verde-militar">Verde Militar</option>
+                  <option>Negro</option><option>Naranja RAW</option><option>Verde Militar</option>
                 </select>
                 <i class="fa-solid fa-chevron-down select-arrow"></i>
               </div>
             </div>
           </div>
-          <p class="delivery-notice">
-            <i class="fa-solid fa-clock"></i>
-            Fabricación y entrega: <strong>10-15 días laborables</strong>
-          </p>
-          <button
-            class="btn btn-primary full-width rr-add-to-cart"
-            data-product-id="RR-006"
-            data-product-name="RAW Shell Jacket"
-            data-product-price="89.99"
-            onclick="handleAddToCart(this)"
-          >
+          <p class="delivery-notice"><i class="fa-solid fa-clock"></i> Fabricación y entrega: <strong>10-15 días laborables</strong></p>
+          <button class="btn btn-primary full-width rr-add-to-cart"
+                  data-product-id="RR-006" data-product-name="RAW Shell Jacket" data-product-price="89.99"
+                  onclick="event.stopPropagation(); handleAddToCart(this)">
             <i class="fa-solid fa-bag-shopping"></i> Añadir al carrito
           </button>
         </div>
@@ -503,6 +624,7 @@
 
     </div><!-- /product-grid -->
   </section>
+
 
   <!-- ░░ BANNER NUTRICIÓN ░░ -->
   <section class="nutricion-banner" id="nutricion">
@@ -536,6 +658,90 @@
       <p id="nutr-success" class="nutr-success hidden">✓ ¡Perfecto! Te avisaremos en el lanzamiento.</p>
     </div>
   </section>
+
+
+  <!-- ░░ [8] FAQ — Preguntas Frecuentes ░░ -->
+  <section class="faq-section" id="faq">
+    <div class="section-header">
+      <p class="section-label">// Preguntas Frecuentes</p>
+      <h2 class="section-title">RESOLVEMOS TUS <span class="accent">DUDAS</span></h2>
+    </div>
+
+    <div class="faq-list">
+
+      <details class="faq-item">
+        <summary class="faq-question">
+          <span>¿Cómo funciona el sistema de fabricación bajo pedido?</span>
+          <i class="fa-solid fa-chevron-down faq-icon"></i>
+        </summary>
+        <div class="faq-answer">
+          <p>Cada prenda de RAW Republic se fabrica exclusivamente cuando recibes tu pedido. No mantenemos stock masivo: una vez confirmado el pago, la prenda entra en producción con tus tallas y colores elegidos. Este modelo nos permite garantizar la máxima calidad en cada unidad y reducir el desperdicio de material.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-question">
+          <span>¿Cuánto tarda en llegar mi pedido?</span>
+          <i class="fa-solid fa-chevron-down faq-icon"></i>
+        </summary>
+        <div class="faq-answer">
+          <p>El plazo total estimado es de <strong>10-15 días laborables</strong>: entre 7-10 días de fabricación más 2-4 días de tránsito con transportista (SEUR/GLS para España, DHL Express para Europa). Recibirás un email con número de seguimiento en cuanto tu pedido sea despachado.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-question">
+          <span>¿Puedo cambiar la talla si me equivoqué al pedir?</span>
+          <i class="fa-solid fa-chevron-down faq-icon"></i>
+        </summary>
+        <div class="faq-answer">
+          <p>Al ser fabricación bajo pedido y personalizada, no podemos aceptar cambios o devoluciones por elección incorrecta de talla. Te recomendamos consultar nuestra <strong>guía de tallas</strong> antes de finalizar la compra, o contactarnos por WhatsApp si tienes alguna duda antes de pedir. Si el error es nuestro (talla incorrecta enviada), lo solucionamos sin coste.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-question">
+          <span>¿Qué métodos de pago aceptáis?</span>
+          <i class="fa-solid fa-chevron-down faq-icon"></i>
+        </summary>
+        <div class="faq-answer">
+          <p>Aceptamos pagos mediante <strong>PayPal</strong> (con o sin cuenta, tarjeta de crédito/débito) y <strong>Revolut</strong>. Todos los pagos son procesados de forma segura y encriptada. No almacenamos datos bancarios en nuestros servidores.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-question">
+          <span>¿Los gastos de envío están incluidos en el precio?</span>
+          <i class="fa-solid fa-chevron-down faq-icon"></i>
+        </summary>
+        <div class="faq-answer">
+          <p>Los precios mostrados no incluyen gastos de envío. El coste de envío para España es de <strong>4,95 €</strong> para pedidos inferiores a 80 €, y <strong>GRATIS</strong> a partir de 80 €. Para envíos a Europa (UE) el coste es de 9,95 €. El precio exacto se muestra al finalizar el pedido.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-question">
+          <span>¿Puedo devolver una prenda si tiene un defecto de fábrica?</span>
+          <i class="fa-solid fa-chevron-down faq-icon"></i>
+        </summary>
+        <div class="faq-answer">
+          <p>Sí. Si la prenda llega con un defecto de fabricación (costuras defectuosas, impresión incorrecta, mancha, etc.) o si hemos cometido un error en tu pedido, gestionamos la devolución o reposición sin coste alguno para ti. Tienes 14 días desde la recepción para comunicárnoslo con una foto del defecto. Escríbenos a <strong>pedidos@rawrepublic.es</strong>.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-question">
+          <span>¿Cómo puedo saber el estado de mi pedido?</span>
+          <i class="fa-solid fa-chevron-down faq-icon"></i>
+        </summary>
+        <div class="faq-answer">
+          <p>Recibirás un email de confirmación en el momento del pago y otro con el número de seguimiento del transportista cuando tu pedido sea enviado. También puedes contactarnos directamente por WhatsApp o mediante el formulario de contacto indicando tu número de pedido.</p>
+        </div>
+      </details>
+
+    </div>
+  </section>
+
 
   <!-- ░░ CONTACTO ░░ -->
   <section class="contacto" id="contacto">
@@ -579,7 +785,6 @@
         </div>
       </div>
 
-      <!-- ③ Formulario soporte pedidos -->
       <form class="contact-form" onsubmit="handleContactSubmit(event)">
         <div class="form-row">
           <input type="text" placeholder="Tu nombre" required />
@@ -605,13 +810,21 @@
     </div>
   </section>
 
-  <!-- ░░ FOOTER ░░ -->
+
+  <!-- ░░ [8] FOOTER con enlaces legales completos ░░ -->
   <footer class="footer">
     <div class="footer-top">
       <div class="footer-brand">
-        <a href="#" class="logo footer-logo">
+        <a href="#inicio" class="logo footer-logo">
           <span class="logo-raw">RAW</span>
           <span class="logo-republic">Republic</span>
+          <svg class="logo-claw logo-claw--sm" viewBox="0 0 36 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <g opacity="0.80">
+              <path d="M6 4 C5 10, 2 18, 5 28 C6 32, 8 36, 7 42" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+              <path d="M15 2 C14 9, 12 18, 15 29 C16 33, 17 37, 16 43" stroke="var(--accent)" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+              <path d="M25 5 C25 12, 23 20, 26 30 C27 34, 28 38, 27 43" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+            </g>
+          </svg>
         </a>
         <p class="footer-tagline">Entrenamiento sin concesiones.</p>
         <div class="social-links">
@@ -620,10 +833,17 @@
           <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
           <a href="#" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
         </div>
+        <!-- Badges de pago -->
+        <div class="payment-badges">
+          <span class="pay-badge"><i class="fa-brands fa-paypal"></i> PayPal</span>
+          <span class="pay-badge"><i class="fa-solid fa-bolt"></i> Revolut</span>
+          <span class="pay-badge"><i class="fa-solid fa-lock"></i> Pago Seguro</span>
+        </div>
       </div>
 
       <div class="footer-col">
         <p class="footer-col-title">Tienda</p>
+        <a href="#top-ventas">Top Ventas</a>
         <a href="#catalogo">Ropa de Gym</a>
         <a href="#accesorios">Accesorios</a>
         <a href="#nutricion">Nutrición (Pronto)</a>
@@ -636,34 +856,192 @@
         <a href="#">Blog</a>
         <a href="#">Trabaja con nosotros</a>
         <a href="#contacto">Contacto</a>
+        <a href="#faq">Preguntas Frecuentes</a>
       </div>
 
+      <!-- [8] Legal completo para pasarelas de pago -->
       <div class="footer-col">
         <p class="footer-col-title">Legal & Compras</p>
-        <a href="#" onclick="openModal('modal-envios'); return false;">Envíos y Transportistas</a>
-        <a href="#" onclick="openModal('modal-devoluciones'); return false;">Política de Devolución</a>
-        <a href="#">Aviso Legal</a>
-        <a href="#">Política de Privacidad</a>
-        <a href="#">Política de Cookies</a>
-        <a href="#">Condiciones de Venta</a>
+        <a href="#" onclick="openModal('modal-envios'); return false;">
+          <i class="fa-solid fa-truck-fast fa-xs"></i> Envíos y Transportistas
+        </a>
+        <a href="#" onclick="openModal('modal-devoluciones'); return false;">
+          <i class="fa-solid fa-rotate-left fa-xs"></i> Política de Devoluciones
+        </a>
+        <a href="#" onclick="openModal('modal-terminos'); return false;">
+          <i class="fa-solid fa-file-contract fa-xs"></i> Términos del Servicio
+        </a>
+        <a href="#" onclick="openModal('modal-privacidad'); return false;">
+          <i class="fa-solid fa-shield-halved fa-xs"></i> Política de Privacidad
+        </a>
+        <a href="#contacto">
+          <i class="fa-solid fa-headset fa-xs"></i> Formulario de Soporte
+        </a>
+        <a href="#">
+          <i class="fa-solid fa-cookie fa-xs"></i> Política de Cookies
+        </a>
+        <a href="#">
+          <i class="fa-solid fa-scale-balanced fa-xs"></i> Aviso Legal
+        </a>
       </div>
     </div>
+
     <div class="footer-bottom">
-      <p>© 2025 RAW Republic. Todos los derechos reservados.</p>
+      <p>© 2025 RAW Republic. Todos los derechos reservados. · Madrid, España</p>
+      <div class="footer-bottom-links">
+        <a href="#" onclick="openModal('modal-terminos'); return false;">Términos</a>
+        <span>·</span>
+        <a href="#" onclick="openModal('modal-privacidad'); return false;">Privacidad</a>
+        <span>·</span>
+        <a href="#">Cookies</a>
+        <span>·</span>
+        <a href="#contacto">Soporte</a>
+      </div>
       <p class="footer-craft">Diseñado para los que no se rinden.</p>
     </div>
   </footer>
 
-  <!-- ░░ CART TOAST ░░ -->
+
+  <!-- ░░ TOAST ░░ -->
   <div class="toast" id="toast">
     <i class="fa-solid fa-check-circle"></i> Añadido al carrito
   </div>
 
-  <!-- ════════════════════════════════════════
-       ③ MODALES: Envíos / Devoluciones
-  ════════════════════════════════════════ -->
 
-  <!-- MODAL ENVÍOS -->
+  <!-- ░░ [2] BOTÓN FLOTANTE WHATSAPP ░░ -->
+  <a class="whatsapp-fab"
+     href="https://wa.me/34000000000?text=%C2%A1Hola!%20Tengo%20una%20duda%20sobre%20una%20prenda%20de%20RAW%20Republic"
+     target="_blank"
+     rel="noopener noreferrer"
+     aria-label="Contactar por WhatsApp">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="white" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+    <span class="whatsapp-fab-label">¿Dudas? Escríbenos</span>
+  </a>
+
+
+  <!-- ░░ [7] CART DRAWER (carrito lateral) ░░ -->
+  <div class="cart-overlay" id="cartOverlay" onclick="closeCartDrawer()"></div>
+  <aside class="cart-drawer" id="cartDrawer" aria-label="Carrito de compra">
+    <div class="cart-drawer-header">
+      <h3><i class="fa-solid fa-bag-shopping"></i> Tu Carrito</h3>
+      <button class="cart-drawer-close" onclick="closeCartDrawer()" aria-label="Cerrar carrito">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="cart-drawer-body" id="cartDrawerBody">
+      <!-- Items añadidos dinámicamente por JS -->
+      <div class="cart-empty" id="cartEmpty">
+        <i class="fa-solid fa-bag-shopping"></i>
+        <p>Tu carrito está vacío</p>
+        <a href="#catalogo" class="btn btn-outline" onclick="closeCartDrawer()">Ver colección</a>
+      </div>
+      <ul class="cart-items-list" id="cartItemsList"></ul>
+    </div>
+
+    <div class="cart-drawer-footer" id="cartDrawerFooter" style="display:none">
+      <div class="cart-summary">
+        <div class="cart-summary-row">
+          <span>Subtotal</span>
+          <span id="cartSubtotal">0,00 €</span>
+        </div>
+        <div class="cart-summary-row">
+          <span>Envío</span>
+          <span id="cartShipping">— (calculado al pagar)</span>
+        </div>
+        <div class="cart-summary-row cart-summary-total">
+          <span>Total estimado</span>
+          <span id="cartTotal">0,00 €</span>
+        </div>
+      </div>
+      <div class="cart-bop-note">
+        <i class="fa-solid fa-industry"></i>
+        Prenda fabricada bajo pedido · Entrega 10-15 días lab.
+      </div>
+      <a href="https://www.paypal.com/es/home" target="_blank" rel="noopener" class="btn btn-primary full-width cart-pay-btn">
+        <i class="fa-brands fa-paypal"></i> Pagar con PayPal
+      </a>
+      <a href="https://www.revolut.com" target="_blank" rel="noopener" class="btn btn-ghost full-width cart-pay-btn" style="margin-top:10px">
+        <i class="fa-solid fa-bolt"></i> Pagar con Revolut
+      </a>
+      <button class="cart-clear-btn" onclick="clearCart()">
+        <i class="fa-solid fa-trash"></i> Vaciar carrito
+      </button>
+    </div>
+  </aside>
+
+
+  <!-- ░░ [6] MODAL DETALLE DE PRODUCTO ░░ -->
+  <div class="modal-overlay" id="modal-producto" role="dialog" aria-modal="true" aria-labelledby="modal-producto-title">
+    <div class="modal-box modal-producto-box">
+      <button class="modal-close" onclick="closeModal('modal-producto')" aria-label="Cerrar">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <!-- Carrusel de imágenes con flechas -->
+      <div class="modal-gallery">
+        <button class="gallery-arrow gallery-prev" onclick="galleryPrev()" aria-label="Anterior">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <div class="gallery-track" id="galleryTrack">
+          <!-- imágenes inyectadas por JS -->
+        </div>
+        <button class="gallery-arrow gallery-next" onclick="galleryNext()" aria-label="Siguiente">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+        <div class="gallery-dots" id="galleryDots"></div>
+      </div>
+
+      <!-- Detalle del producto -->
+      <div class="modal-producto-detail">
+        <p class="product-cat" id="mp-cat"></p>
+        <h2 class="modal-title" id="modal-producto-title"></h2>
+        <p class="product-price" id="mp-price" style="font-size:1.6rem;margin:8px 0 12px"></p>
+        <p id="mp-desc" style="color:var(--text-muted);line-height:1.6;margin-bottom:16px"></p>
+
+        <!-- Aviso bajo pedido -->
+        <div class="bop-banner bop-banner--modal">
+          <i class="fa-solid fa-industry"></i>
+          <div>
+            <strong>Prenda exclusiva fabricada bajo pedido.</strong>
+            Envío estimado: 10-15 días laborables.
+          </div>
+        </div>
+
+        <!-- Selectores de talla y color -->
+        <div class="product-selectors" style="margin-top:16px">
+          <div class="selector-group">
+            <label for="mp-talla">Talla</label>
+            <div class="select-wrap">
+              <select id="mp-talla" class="rr-select" data-variant="size">
+                <option value="">— Elige talla —</option>
+              </select>
+              <i class="fa-solid fa-chevron-down select-arrow"></i>
+            </div>
+          </div>
+          <div class="selector-group">
+            <label for="mp-color">Color</label>
+            <div class="select-wrap">
+              <select id="mp-color" class="rr-select" data-variant="color">
+                <option value="">— Elige color —</option>
+              </select>
+              <i class="fa-solid fa-chevron-down select-arrow"></i>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn btn-primary full-width" style="margin-top:20px" id="mp-add-btn"
+                onclick="addToCartFromModal()">
+          <i class="fa-solid fa-bag-shopping"></i> Añadir al carrito
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ░░ MODAL ENVÍOS ░░ -->
   <div class="modal-overlay" id="modal-envios" role="dialog" aria-modal="true" aria-labelledby="modal-envios-title">
     <div class="modal-box">
       <button class="modal-close" onclick="closeModal('modal-envios')" aria-label="Cerrar">
@@ -677,76 +1055,36 @@
         </div>
       </div>
       <div class="modal-body">
-
         <div class="modal-alert">
           <i class="fa-solid fa-industry"></i>
           <p><strong>Modelo bajo pedido:</strong> Ninguna prenda está en stock. Cada artículo se fabrica exclusivamente para ti tras recibir y confirmar el pago.</p>
         </div>
-
         <h3 class="modal-section-title">Plazos de entrega</h3>
         <div class="info-table">
-          <div class="info-row">
-            <span class="info-key">Fabricación</span>
-            <span class="info-val">7-10 días laborables desde confirmación de pago</span>
-          </div>
-          <div class="info-row">
-            <span class="info-key">Envío nacional (España)</span>
-            <span class="info-val">2-4 días laborables adicionales</span>
-          </div>
-          <div class="info-row">
-            <span class="info-key">Total estimado</span>
-            <span class="info-val accent-text"><strong>10-15 días laborables</strong></span>
-          </div>
-          <div class="info-row">
-            <span class="info-key">Envío internacional (UE)</span>
-            <span class="info-val">Añadir 3-5 días laborables adicionales</span>
-          </div>
+          <div class="info-row"><span class="info-key">Fabricación</span><span class="info-val">7-10 días laborables desde confirmación de pago</span></div>
+          <div class="info-row"><span class="info-key">Envío nacional (España)</span><span class="info-val">2-4 días laborables adicionales</span></div>
+          <div class="info-row"><span class="info-key">Total estimado</span><span class="info-val accent-text"><strong>10-15 días laborables</strong></span></div>
+          <div class="info-row"><span class="info-key">Envío internacional (UE)</span><span class="info-val">Añadir 3-5 días laborables adicionales</span></div>
         </div>
-
         <h3 class="modal-section-title">Transportistas</h3>
         <div class="carrier-grid">
-          <div class="carrier-card">
-            <i class="fa-solid fa-box"></i>
-            <div>
-              <strong>SEUR / GLS</strong>
-              <p>Envíos nacionales. Tracking en tiempo real.</p>
-            </div>
-          </div>
-          <div class="carrier-card">
-            <i class="fa-solid fa-globe"></i>
-            <div>
-              <strong>DHL Express</strong>
-              <p>Envíos internacionales UE y resto del mundo.</p>
-            </div>
-          </div>
+          <div class="carrier-card"><i class="fa-solid fa-box"></i><div><strong>SEUR / GLS</strong><p>Envíos nacionales. Tracking en tiempo real.</p></div></div>
+          <div class="carrier-card"><i class="fa-solid fa-globe"></i><div><strong>DHL Express</strong><p>Envíos internacionales UE y resto del mundo.</p></div></div>
         </div>
-
         <h3 class="modal-section-title">Costes de envío</h3>
         <div class="info-table">
-          <div class="info-row">
-            <span class="info-key">España (pedidos &lt; 80€)</span>
-            <span class="info-val">4,95 €</span>
-          </div>
-          <div class="info-row">
-            <span class="info-key">España (pedidos ≥ 80€)</span>
-            <span class="info-val accent-text"><strong>GRATIS</strong></span>
-          </div>
-          <div class="info-row">
-            <span class="info-key">Europa (UE)</span>
-            <span class="info-val">9,95 €</span>
-          </div>
-          <div class="info-row">
-            <span class="info-key">Internacional</span>
-            <span class="info-val">Calculado al finalizar compra</span>
-          </div>
+          <div class="info-row"><span class="info-key">España (pedidos &lt; 80€)</span><span class="info-val">4,95 €</span></div>
+          <div class="info-row"><span class="info-key">España (pedidos ≥ 80€)</span><span class="info-val accent-text"><strong>GRATIS</strong></span></div>
+          <div class="info-row"><span class="info-key">Europa (UE)</span><span class="info-val">9,95 €</span></div>
+          <div class="info-row"><span class="info-key">Internacional</span><span class="info-val">Calculado al finalizar compra</span></div>
         </div>
-
         <p class="modal-note">Recibirás un email con el número de seguimiento en cuanto tu pedido sea despachado por el transportista.</p>
       </div>
     </div>
   </div>
 
-  <!-- MODAL DEVOLUCIONES -->
+
+  <!-- ░░ MODAL DEVOLUCIONES ░░ -->
   <div class="modal-overlay" id="modal-devoluciones" role="dialog" aria-modal="true" aria-labelledby="modal-dev-title">
     <div class="modal-box">
       <button class="modal-close" onclick="closeModal('modal-devoluciones')" aria-label="Cerrar">
@@ -760,80 +1098,91 @@
         </div>
       </div>
       <div class="modal-body">
-
         <div class="modal-alert modal-alert-warning">
           <i class="fa-solid fa-triangle-exclamation"></i>
-          <p><strong>Importante:</strong> Al ser prendas fabricadas bajo pedido y personalizadas, <strong>no se aceptan devoluciones por cambio de opinión</strong> (desistimiento). Solo se tramitan devoluciones por defecto de fabricación o error nuestro en el pedido.</p>
+          <p><strong>Importante:</strong> Al ser prendas fabricadas bajo pedido y personalizadas, <strong>no se aceptan devoluciones por cambio de opinión</strong>. Solo se tramitan devoluciones por defecto de fabricación o error nuestro.</p>
         </div>
-
         <h3 class="modal-section-title">¿Cuándo puedes devolver?</h3>
         <div class="policy-list">
-          <div class="policy-item policy-ok">
-            <i class="fa-solid fa-circle-check"></i>
-            <div>
-              <strong>Defecto de fabricación</strong>
-              <p>Costuras rotas, manchas, impresión incorrecta u otro defecto de producción. Plazo: 14 días desde recepción.</p>
-            </div>
-          </div>
-          <div class="policy-item policy-ok">
-            <i class="fa-solid fa-circle-check"></i>
-            <div>
-              <strong>Error en el pedido (nuestro)</strong>
-              <p>Recibiste una talla, color o producto diferente al que pediste. Plazo: 14 días desde recepción.</p>
-            </div>
-          </div>
-          <div class="policy-item policy-no">
-            <i class="fa-solid fa-circle-xmark"></i>
-            <div>
-              <strong>Cambio de opinión / talla equivocada</strong>
-              <p>Al ser fabricación personalizada, no podemos aceptar devoluciones por elección incorrecta de talla o cambio de decisión. Consulta la guía de tallas antes de comprar.</p>
-            </div>
-          </div>
-          <div class="policy-item policy-no">
-            <i class="fa-solid fa-circle-xmark"></i>
-            <div>
-              <strong>Prenda usada o lavada</strong>
-              <p>No se aceptan devoluciones de prendas que hayan sido usadas o lavadas.</p>
-            </div>
-          </div>
+          <div class="policy-item policy-ok"><i class="fa-solid fa-circle-check"></i><div><strong>Defecto de fabricación</strong><p>Costuras rotas, manchas, impresión incorrecta. Plazo: 14 días desde recepción.</p></div></div>
+          <div class="policy-item policy-ok"><i class="fa-solid fa-circle-check"></i><div><strong>Error en el pedido (nuestro)</strong><p>Recibiste talla, color o producto diferente al pedido. Plazo: 14 días desde recepción.</p></div></div>
+          <div class="policy-item policy-no"><i class="fa-solid fa-circle-xmark"></i><div><strong>Cambio de opinión / talla equivocada</strong><p>Al ser fabricación personalizada, no aceptamos devoluciones por elección incorrecta.</p></div></div>
+          <div class="policy-item policy-no"><i class="fa-solid fa-circle-xmark"></i><div><strong>Prenda usada o lavada</strong><p>No se aceptan devoluciones de prendas que hayan sido usadas o lavadas.</p></div></div>
         </div>
-
         <h3 class="modal-section-title">Proceso de devolución</h3>
         <div class="steps-list">
-          <div class="step-item">
-            <span class="step-num">01</span>
-            <div>
-              <strong>Contacta con soporte</strong>
-              <p>Envía un email a <em>pedidos@rawrepublic.es</em> con tu nº de pedido, foto del defecto y descripción del problema.</p>
-            </div>
-          </div>
-          <div class="step-item">
-            <span class="step-num">02</span>
-            <div>
-              <strong>Validamos tu caso</strong>
-              <p>Nuestro equipo revisará la solicitud en 48h laborables y te confirmará si procede la devolución.</p>
-            </div>
-          </div>
-          <div class="step-item">
-            <span class="step-num">03</span>
-            <div>
-              <strong>Envío de la devolución</strong>
-              <p>Te proporcionamos la etiqueta de envío prepagada. Envía el paquete en los siguientes 7 días.</p>
-            </div>
-          </div>
-          <div class="step-item">
-            <span class="step-num">04</span>
-            <div>
-              <strong>Reembolso o reposición</strong>
-              <p>Una vez recibida y verificada la prenda, procesamos el reembolso completo o enviamos una nueva unidad (a tu elección) en 5-7 días laborables.</p>
-            </div>
-          </div>
+          <div class="step-item"><span class="step-num">01</span><div><strong>Contacta con soporte</strong><p>Envía un email a <em>pedidos@rawrepublic.es</em> con tu nº de pedido y foto del defecto.</p></div></div>
+          <div class="step-item"><span class="step-num">02</span><div><strong>Validamos tu caso</strong><p>Nuestro equipo revisará la solicitud en 48h laborables.</p></div></div>
+          <div class="step-item"><span class="step-num">03</span><div><strong>Envío de la devolución</strong><p>Te proporcionamos la etiqueta de envío prepagada.</p></div></div>
+          <div class="step-item"><span class="step-num">04</span><div><strong>Reembolso o reposición</strong><p>Procesamos el reembolso completo o enviamos una nueva unidad en 5-7 días laborables.</p></div></div>
         </div>
-
-        <p class="modal-note">Para cualquier duda, usa el formulario de contacto o escríbenos directamente a pedidos@rawrepublic.es</p>
+        <p class="modal-note">Para cualquier duda, usa el formulario de contacto o escríbenos a pedidos@rawrepublic.es</p>
       </div>
     </div>
   </div>
+
+
+  <!-- ░░ [8] MODAL TÉRMINOS DEL SERVICIO ░░ -->
+  <div class="modal-overlay" id="modal-terminos" role="dialog" aria-modal="true" aria-labelledby="modal-terminos-title">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeModal('modal-terminos')" aria-label="Cerrar">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <div class="modal-header">
+        <i class="fa-solid fa-file-contract modal-icon"></i>
+        <div>
+          <p class="section-label" style="text-align:left;margin-bottom:4px">// Condiciones legales</p>
+          <h2 class="modal-title" id="modal-terminos-title">Términos del Servicio</h2>
+        </div>
+      </div>
+      <div class="modal-body">
+        <p class="modal-note" style="margin-bottom:16px">Última actualización: Enero 2025</p>
+        <h3 class="modal-section-title">1. Identificación del vendedor</h3>
+        <p style="color:var(--text-muted);margin-bottom:14px">RAW Republic es una marca de indumentaria deportiva con sede en Madrid, España. Email de contacto: pedidos@rawrepublic.es</p>
+        <h3 class="modal-section-title">2. Modelo de venta bajo pedido</h3>
+        <p style="color:var(--text-muted);margin-bottom:14px">Todos los productos de RAW Republic se fabrican exclusivamente tras recibir y confirmar el pago del cliente. No existe stock previo. Al confirmar tu pedido, aceptas el plazo de entrega estimado de 10-15 días laborables.</p>
+        <h3 class="modal-section-title">3. Precios e impuestos</h3>
+        <p style="color:var(--text-muted);margin-bottom:14px">Los precios mostrados en la tienda incluyen IVA al tipo vigente en España (21%). Los gastos de envío se añaden al precio final del producto y se muestran antes de confirmar el pago.</p>
+        <h3 class="modal-section-title">4. Métodos de pago</h3>
+        <p style="color:var(--text-muted);margin-bottom:14px">Aceptamos pagos mediante PayPal y Revolut. El pago debe completarse en su totalidad antes del inicio de la fabricación del pedido.</p>
+        <h3 class="modal-section-title">5. Cancelaciones</h3>
+        <p style="color:var(--text-muted);margin-bottom:14px">Los pedidos pueden cancelarse dentro de las primeras 2 horas tras la confirmación, siempre que la fabricación no haya comenzado. Para solicitar una cancelación, contacta inmediatamente con pedidos@rawrepublic.es.</p>
+        <h3 class="modal-section-title">6. Ley aplicable</h3>
+        <p style="color:var(--text-muted);">Estas condiciones se rigen por la legislación española. Para cualquier disputa, ambas partes se someten a los Juzgados y Tribunales de Madrid.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ░░ [8] MODAL POLÍTICA DE PRIVACIDAD ░░ -->
+  <div class="modal-overlay" id="modal-privacidad" role="dialog" aria-modal="true" aria-labelledby="modal-privacidad-title">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeModal('modal-privacidad')" aria-label="Cerrar">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <div class="modal-header">
+        <i class="fa-solid fa-shield-halved modal-icon"></i>
+        <div>
+          <p class="section-label" style="text-align:left;margin-bottom:4px">// Protección de datos</p>
+          <h2 class="modal-title" id="modal-privacidad-title">Política de Privacidad</h2>
+        </div>
+      </div>
+      <div class="modal-body">
+        <p class="modal-note" style="margin-bottom:16px">Cumplimiento RGPD · Última actualización: Enero 2025</p>
+        <h3 class="modal-section-title">Responsable del tratamiento</h3>
+        <p style="color:var(--text-muted);margin-bottom:14px">RAW Republic, Madrid, España. Contacto: pedidos@rawrepublic.es</p>
+        <h3 class="modal-section-title">Datos que recopilamos</h3>
+        <p style="color:var(--text-muted);margin-bottom:14px">Recopilamos únicamente los datos necesarios para procesar tu pedido: nombre, email, dirección de envío y datos de pago (procesados por PayPal/Revolut, sin acceso directo por nuestra parte). También podemos recopilar tu email si te suscribes a nuestro newsletter.</p>
+        <h3 class="modal-section-title">Finalidad del tratamiento</h3>
+        <p style="color:var(--text-muted);margin-bottom:14px">Tus datos se utilizan exclusivamente para: gestionar y enviar tu pedido, atender consultas de soporte, y enviarte comunicaciones comerciales si has dado tu consentimiento expreso.</p>
+        <h3 class="modal-section-title">Tus derechos (RGPD)</h3>
+        <p style="color:var(--text-muted);margin-bottom:14px">Tienes derecho a acceder, rectificar, suprimir, portar y oponerte al tratamiento de tus datos. Para ejercer estos derechos, escríbenos a pedidos@rawrepublic.es indicando tu solicitud.</p>
+        <h3 class="modal-section-title">Conservación de datos</h3>
+        <p style="color:var(--text-muted);">Conservamos tus datos durante el tiempo necesario para cumplir con las obligaciones legales (generalmente 5 años para datos de facturación) o hasta que solicites su supresión.</p>
+      </div>
+    </div>
+  </div>
+
 
   <script src="script.js"></script>
 </body>
