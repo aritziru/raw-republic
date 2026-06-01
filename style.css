@@ -1747,18 +1747,29 @@ input, textarea { font-family: var(--font-body); }
 
 //////////////////////////////////////////////////////////////////////////
 
-/* CONTROL DE TAMAÑO PARA LAS IMÁGENES DE LOS PRODUCTOS */
+/* REGLA UNIVERSAL PARA AFECTAR A TODAS LAS IMÁGENES DEL CATÁLOGO */
+.product-card img, 
+.product-grid img, 
+article img, 
 .product-img-wrap img {
   width: 100% !important;
-  height: 350px !important; /* Altura perfecta para que se vea la camiseta entera */
-  object-fit: cover !important; /* Evita que la foto se estire o se deforme */
-  display: block;
+  height: 320px !important;     /* Obliga a todas las fotos a medir exactamente lo mismo de alto */
+  min-height: 320px !important; /* Evita que se encojan */
+  max-height: 320px !important; /* Evita que crezcan */
+  object-fit: cover !important;  /* Recorta y centra la foto automáticamente para que no se deforme */
+  display: block !important;
 }
 
-/* Por si acaso la clase de la foto dentro del modal es diferente */
-.product-modal img, .modal-content img {
-  max-width: 100% !important;
-  max-height: 400px !important;
-  object-fit: contain !important; /* Muestra la foto completa en la ventana emergente */
-  border-radius: 8px;
+/* Ajuste para que las tarjetas de producto se alineen perfectamente en fila */
+.product-grid, .product-list {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: stretch !important;
 }
+
+.product-card {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+}
+
