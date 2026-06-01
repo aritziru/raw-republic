@@ -674,6 +674,62 @@
         </div>
       </article>
 
+            <!-- PRODUCTO 8 — Muñequeras de Gimnasio -->
+      <article class="product-card"
+               data-product-id="RR-008"
+               data-product-name="Muñequeras de Fuerza RAW"
+               data-product-price="14.99"
+               data-product-cat="Accesorios"
+               data-product-desc="Soporte premium para muñecas con costuras reforzadas. Velcro de grado industrial y lazo de pulgar elástico para un ajuste perfecto en levantamientos pesados."
+               data-img-front="imagenes/munequeras1.jpg"
+               data-img-back="imagenes/munequeras1.jpg"
+               data-sizes="Única (Ajustable)"
+               data-colors="Negro Guerrero,Camuflaje,Naranja RAW"
+               onclick="openProductModal(this)">
+        <div class="product-img-wrap" data-front="imagenes/munequeras1.jpg" data-back="imagenes/munequeras1.jpg">
+          <img src="imagenes/munequeras1.jpg" alt="Muñequeras de Fuerza RAW" class="product-img-main" />
+          <div class="product-badge-bop">Bajo Pedido</div>
+          <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
+        </div>
+        <div class="product-body">
+          <p class="product-cat">Accesorios</p>
+          <h3 class="product-name">Muñequeras de Fuerza RAW</h3>
+          <p class="product-desc">Costuras reforzadas y velcro industrial. Máxima estabilidad en tus récords.</p>
+          <p class="product-price">14,99 <span class="currency">€</span></p>
+          <div class="product-selectors">
+            <!-- Selector de Talla Ajustable -->
+            <div class="selector-group">
+              <label for="talla-008">Tamaño</label>
+              <div class="select-wrap">
+                <select id="talla-008" name="talla" class="rr-select" data-variant="size" onclick="event.stopPropagation()">
+                  <option value="Única (Ajustable)">Ajustable</option>
+                </select>
+                <i class="fa-solid fa-chevron-down select-arrow"></i>
+              </div>
+            </div>
+            <!-- Selector de Color -->
+            <div class="selector-group">
+              <label for="color-008">Color</label>
+              <div class="select-wrap">
+                <select id="color-008" name="color" class="rr-select" data-variant="color" onclick="event.stopPropagation()">
+                  <option value="">— Elige color —</option>
+                  <option>Negro Guerrero</option>
+                  <option>Camuflaje</option>
+                  <option>Naranja RAW</option>
+                </select>
+                <i class="fa-solid fa-chevron-down select-arrow"></i>
+              </div>
+            </div>
+          </div>
+          <p class="delivery-notice"><i class="fa-solid fa-clock"></i> Fabricación y entrega: <strong>10-15 días laborables</strong></p>
+          <button class="btn btn-primary full-width rr-add-to-cart"
+                  data-product-id="RR-008" data-product-name="Muñequeras de Fuerza RAW" data-product-price="14.99"
+                  onclick="event.stopPropagation(); handleAddToCart(this)">
+            <i class="fa-solid fa-bag-shopping"></i> Añadir al carrito
+          </button>
+        </div>
+      </article>
+
     </div><!-- /product-grid -->
   </section>
 
