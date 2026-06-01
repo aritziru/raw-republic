@@ -618,6 +618,62 @@
         </div>
       </article>
 
+            <!-- PRODUCTO 7 — Botella de Agua -->
+      <article class="product-card"
+               data-product-id="RR-007"
+               data-product-name="Botella Térmica RAW"
+               data-product-price="19.99"
+               data-product-cat="Accesorios"
+               data-product-desc="Acero inoxidable de doble capa. Mantiene frío 24h y calor 12h. Tapón hermético a prueba de fugas. Libre de BPA."
+               data-img-front="imagenes/botella1.jpg"
+               data-img-back="imagenes/botella1.jpg"
+               data-sizes="Única (750ml)"
+               data-colors="Negro Mate,Acero Cepillado,Naranja RAW"
+               onclick="openProductModal(this)">
+        <div class="product-img-wrap" data-front="imagenes/botella1.jpg" data-back="imagenes/botella1.jpg">
+          <img src="imagenes/botella1.jpg" alt="Botella Térmica RAW" class="product-img-main" />
+          <div class="product-badge-bop">Bajo Pedido</div>
+          <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
+        </div>
+        <div class="product-body">
+          <p class="product-cat">Accesorios</p>
+          <h3 class="product-name">Botella Térmica RAW</h3>
+          <p class="product-desc">Acero inoxidable de doble capa. Mantiene frío 24h. Capacidad: 750ml.</p>
+          <p class="product-price">19,99 <span class="currency">€</span></p>
+          <div class="product-selectors">
+            <!-- Selector de Capacidad / Tamaño único -->
+            <div class="selector-group">
+              <label for="talla-007">Tamaño</label>
+              <div class="select-wrap">
+                <select id="talla-007" name="talla" class="rr-select" data-variant="size" onclick="event.stopPropagation()">
+                  <option value="Única (750ml)">750 ml</option>
+                </select>
+                <i class="fa-solid fa-chevron-down select-arrow"></i>
+              </div>
+            </div>
+            <!-- Selector de Color -->
+            <div class="selector-group">
+              <label for="color-007">Color</label>
+              <div class="select-wrap">
+                <select id="color-007" name="color" class="rr-select" data-variant="color" onclick="event.stopPropagation()">
+                  <option value="">— Elige color —</option>
+                  <option>Negro Mate</option>
+                  <option>Acero Cepillado</option>
+                  <option>Naranja RAW</option>
+                </select>
+                <i class="fa-solid fa-chevron-down select-arrow"></i>
+              </div>
+            </div>
+          </div>
+          <p class="delivery-notice"><i class="fa-solid fa-clock"></i> Fabricación y entrega: <strong>10-15 días laborables</strong></p>
+          <button class="btn btn-primary full-width rr-add-to-cart"
+                  data-product-id="RR-007" data-product-name="Botella Térmica RAW" data-product-price="19.99"
+                  onclick="event.stopPropagation(); handleAddToCart(this)">
+            <i class="fa-solid fa-bag-shopping"></i> Añadir al carrito
+          </button>
+        </div>
+      </article>
+
     </div><!-- /product-grid -->
   </section>
 
