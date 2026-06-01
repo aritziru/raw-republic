@@ -1742,3 +1742,23 @@ input, textarea { font-family: var(--font-body); }
   .product-selectors { grid-template-columns: 1fr; }
   .bop-banner { flex-direction: column; gap: 10px; }
 }
+
+
+
+//////////////////////////////////////////////////////////////////////////
+
+/* CONTROL DE TAMAÑO PARA LAS IMÁGENES DE LOS PRODUCTOS */
+.product-img-wrap img {
+  width: 100% !important;
+  height: 350px !important; /* Altura perfecta para que se vea la camiseta entera */
+  object-fit: cover !important; /* Evita que la foto se estire o se deforme */
+  display: block;
+}
+
+/* Por si acaso la clase de la foto dentro del modal es diferente */
+.product-modal img, .modal-content img {
+  max-width: 100% !important;
+  max-height: 400px !important;
+  object-fit: contain !important; /* Muestra la foto completa en la ventana emergente */
+  border-radius: 8px;
+}
