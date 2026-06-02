@@ -38,14 +38,84 @@
 
       <!-- [3] Nav links — sección activa via JS -->
       <nav class="nav-links" id="navLinks">
-        <a href="#inicio"     class="nav-link" data-section="inicio">Inicio</a>
-        <a href="#catalogo"   class="nav-link" data-section="catalogo">Ropa</a>
-        <a href="#accesorios" class="nav-link" data-section="accesorios">Accesorios</a>
-        <a href="#nutricion"  class="nav-link nav-soon" data-section="nutricion">
+        <a href="#inicio" class="nav-link" data-section="inicio">Inicio</a>
+
+        <!-- DROPDOWN: Ropa -->
+        <div class="nav-item-dropdown" id="dropdownRopa">
+          <button class="nav-link nav-link-dropdown" aria-haspopup="true" aria-expanded="false" data-section="catalogo">
+            Ropa <i class="fa-solid fa-chevron-down nav-chevron"></i>
+          </button>
+          <div class="dropdown-panel" role="menu">
+            <div class="dropdown-col">
+              <p class="dropdown-heading">Por tipo</p>
+              <a href="#catalogo-camisetas" class="dropdown-item" data-filter="camiseta" role="menuitem">
+                <i class="fa-solid fa-shirt"></i>
+                <span>Camisetas</span>
+              </a>
+              <a href="#catalogo-sudaderas" class="dropdown-item" data-filter="sudadera" role="menuitem">
+                <i class="fa-solid fa-person-walking"></i>
+                <span>Sudaderas y Hoodies</span>
+              </a>
+              <a href="#catalogo-pantalones" class="dropdown-item" data-filter="pantalon" role="menuitem">
+                <i class="fa-solid fa-arrows-up-down"></i>
+                <span>Pantalones y Shorts</span>
+              </a>
+              <a href="#catalogo-conjuntos" class="dropdown-item" data-filter="conjunto" role="menuitem">
+                <i class="fa-solid fa-layer-group"></i>
+                <span>Conjuntos</span>
+              </a>
+            </div>
+            <div class="dropdown-col">
+              <p class="dropdown-heading">Destacados</p>
+              <a href="#top-ventas" class="dropdown-item dropdown-item--hot" role="menuitem">
+                <i class="fa-solid fa-fire"></i>
+                <span>Top Ventas</span>
+              </a>
+              <a href="#catalogo-nueva-temporada" class="dropdown-item" data-filter="nueva" role="menuitem">
+                <i class="fa-solid fa-star"></i>
+                <span>Nueva Temporada</span>
+              </a>
+              <a href="#catalogo-ofertas" class="dropdown-item" data-filter="oferta" role="menuitem">
+                <i class="fa-solid fa-tag"></i>
+                <span>Ofertas</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- DROPDOWN: Accesorios -->
+        <div class="nav-item-dropdown" id="dropdownAccesorios">
+          <button class="nav-link nav-link-dropdown" aria-haspopup="true" aria-expanded="false" data-section="accesorios">
+            Accesorios <i class="fa-solid fa-chevron-down nav-chevron"></i>
+          </button>
+          <div class="dropdown-panel" role="menu">
+            <div class="dropdown-col">
+              <p class="dropdown-heading">Categorías</p>
+              <a href="#accesorios-bolsas" class="dropdown-item" data-filter="bolsa" role="menuitem">
+                <i class="fa-solid fa-bag-shopping"></i>
+                <span>Bolsas y Mochilas</span>
+              </a>
+              <a href="#accesorios-gorras" class="dropdown-item" data-filter="gorra" role="menuitem">
+                <i class="fa-solid fa-hat-cowboy"></i>
+                <span>Gorras y Gorros</span>
+              </a>
+              <a href="#accesorios-munequeras" class="dropdown-item" data-filter="munequera" role="menuitem">
+                <i class="fa-solid fa-hand-fist"></i>
+                <span>Muñequeras y Cintas</span>
+              </a>
+              <a href="#accesorios-botellas" class="dropdown-item" data-filter="botella" role="menuitem">
+                <i class="fa-solid fa-bottle-water"></i>
+                <span>Botellas y Nutrición</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <a href="#nutricion" class="nav-link nav-soon" data-section="nutricion">
           Nutrición <span class="badge">Pronto</span>
         </a>
-        <a href="#faq"        class="nav-link" data-section="faq">FAQ</a>
-        <a href="#contacto"   class="nav-link" data-section="contacto">Contacto</a>
+        <a href="#faq"      class="nav-link" data-section="faq">FAQ</a>
+        <a href="#contacto" class="nav-link" data-section="contacto">Contacto</a>
       </nav>
 
       <div class="nav-actions">
@@ -117,12 +187,12 @@
                data-product-cat="Camiseta técnica"
                data-product-desc="Tejido dry-fit 4-way stretch. Anti-odor. Costuras planas sin rozaduras."
                data-img-front="imagenes/camiseta1.jpg"
-               data-img-back="imagenes/camiseta1_espalda.jpg"
+               data-img-back="imagenes/camiseta2.jpg"
                data-sizes="XS,S,M,L,XL,XXL"
                data-colors="Negro,Blanco,Gris Carbón,Naranja RAW"
                onclick="openProductModal(this)">
         <!-- [5] Wrap con hover-carousel -->
-        <div class="product-img-wrap" data-front="imagenes/camiseta1.jpg" data-back="imagenes/camiseta1_espalda.jpg">
+        <div class="product-img-wrap" data-front="imagenes/camiseta1.jpg" data-back="imagenes/camiseta2.jpg">
           <img src="imagenes/camiseta1.jpg" alt="RAW Training Tee" class="product-img-main" />
           <div class="product-badge-bop">Bajo Pedido</div>
           <div class="product-badge-top"><i class="fa-solid fa-fire"></i> Top 1</div>
@@ -296,7 +366,7 @@
     <!-- Grid de productos (todos) — [5] hover-carousel activado -->
     <div class="product-grid">
 
-      <!-- PRODUCTO 1 -->
+      <!-- PRODUCTO 1 camiseta -->
       <article class="product-card"
                data-product-id="RR-001"
                data-product-name="RAW Training Tee"
@@ -304,11 +374,11 @@
                data-product-cat="Camiseta técnica"
                data-product-desc="Tejido dry-fit 4-way stretch. Anti-odor. Costuras planas sin rozaduras."
                data-img-front="imagenes/camiseta1.jpg"
-               data-img-back="imagenes/camiseta1_espalda.jpg"
+               data-img-back="imagenes/camiseta2.jpg"
                data-sizes="XS,S,M,L,XL,XXL"
                data-colors="Negro,Blanco,Gris Carbón,Naranja RAW"
                onclick="openProductModal(this)">
-        <div class="product-img-wrap" data-front="imagenes/camiseta1.jpg" data-back="imagenes/camiseta1_espalda.jpg">
+        <div class="product-img-wrap" data-front="imagenes/camiseta1.jpg" data-back="imagenes/camiseta2.jpg">
           <img src="imagenes/camiseta1.jpg" alt="RAW Training Tee" class="product-img-main" />
           <div class="product-badge-bop">Bajo Pedido</div>
           <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
@@ -351,27 +421,27 @@
         </div>
       </article>
 
-      <!-- PRODUCTO 2 -->
+      <!-- PRODUCTO 2 jersey-->
       <article class="product-card"
                data-product-id="RR-002"
-               data-product-name="RAW Compression Pro"
+               data-product-name="RAW Performance Quarter-Zip"
                data-product-price="29.99"
-               data-product-cat="Mallas de compresión"
-               data-product-desc="Compresión graduada. Tejido técnico opaco. Bolsillo lateral integrado."
-               data-img-front="imagenes/compression_frente.jpg"
+               data-product-cat="Sudadera Deportiva"
+               data-product-desc="Tejido térmico ultra ligero y elástico. Ideal para calentamientos y entrenamientos al aire libre."
+               data-img-front="imagenes/jersey2.jpg"
                data-img-back="imagenes/compression_espalda.jpg"
                data-sizes="XS,S,M,L,XL"
                data-colors="Negro,Gris Carbón,Azul Noche"
                onclick="openProductModal(this)">
-        <div class="product-img-wrap" data-front="imagenes/compression_frente.jpg" data-back="imagenes/compression_espalda.jpg">
-          <div class="product-img-placeholder"><i class="fa-solid fa-person-running"></i><span>Foto del producto</span></div>
+        <div class="product-img-wrap" data-front="imagenes/jersey2.jpg" data-back="imagenes/compression_espalda.jpg">
+          <img src="imagenes/jersey2.jpg" alt="RAW Sport Hoodie" class="product-img-main" />
           <div class="product-badge-bop">Bajo Pedido</div>
           <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
         </div>
         <div class="product-body">
-          <p class="product-cat">Mallas de compresión</p>
-          <h3 class="product-name">RAW Compression Pro</h3>
-          <p class="product-desc">Compresión graduada. Tejido técnico opaco. Bolsillo lateral integrado.</p>
+          <p class="product-cat">Sudadera Deportiva</p>
+          <h3 class="product-name">RAW Performance Quarter-Zip</h3>
+          <p class="product-desc">Tejido térmico ultra ligero y elástico. Ideal para calentamientos y entrenamientos al aire libre.</p>
           <p class="product-price">29,99 <span class="currency">€</span></p>
           <div class="product-selectors">
             <div class="selector-group">
@@ -404,20 +474,20 @@
         </div>
       </article>
 
-      <!-- PRODUCTO 3 -->
+      <!-- PRODUCTO 3 jersey-->
       <article class="product-card"
                data-product-id="RR-003"
                data-product-name="RAW Industrial Hoodie"
                data-product-price="34.99"
                data-product-cat="Sudadera"
                data-product-desc="Fleece 380g. Capucha estructurada. Logo bordado. Tiro oversize."
-               data-img-front="imagenes/hoodie_frente.jpg"
+               data-img-front="imagenes/jersey1.jpg"
                data-img-back="imagenes/hoodie_espalda.jpg"
                data-sizes="S,M,L,XL,XXL"
                data-colors="Negro,Grafito,Crema"
                onclick="openProductModal(this)">
-        <div class="product-img-wrap" data-front="imagenes/hoodie_frente.jpg" data-back="imagenes/hoodie_espalda.jpg">
-          <div class="product-img-placeholder"><i class="fa-solid fa-vest"></i><span>Foto del producto</span></div>
+        <div class="product-img-wrap" data-front="imagenes/jersey1.jpg" data-back="imagenes/hoodie_espalda.jpg">
+          <img src="imagenes/jersey1.jpg" alt="RAW Industrial Hoodie" class="product-img-main" />
           <div class="product-badge-bop">Bajo Pedido</div>
           <div class="product-badge-new">Nuevo</div>
           <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
@@ -458,27 +528,27 @@
         </div>
       </article>
 
-      <!-- PRODUCTO 4 -->
+      <!-- PRODUCTO 4 pantalon-->
       <article class="product-card"
                data-product-id="RR-004"
-               data-product-name="RAW Rep Shorts"
+               data-product-name="RAW Aero 2-in-1 Shorts"
                data-product-price="24.99"
                data-product-cat="Shorts"
-               data-product-desc="Tejido elástico 2-way. Bolsillo con cremallera. Interior de compresión integrado."
-               data-img-front="imagenes/calcetines1.jpg"
+               data-product-desc="Pantalón exterior ultraligero con malla interior de compresión integrada. Bolsillo oculto para el móvil y cintura elástica con cordón interior."
+               data-img-front="imagenes/pantalon1.jpg"
                data-img-back="imagenes/shorts_espalda.jpg"
                data-sizes="S,M,L,XL"
                data-colors="Negro,Caqui,Naranja RAW"
                onclick="openProductModal(this)">
-        <div class="product-img-wrap" data-front="imagenes/calcetines1.jpg" data-back="imagenes/shorts_espalda.jpg">
-          <img src="imagenes/calcetines1.jpg" alt="RAW Rep Shorts" class="product-img-main" />
+        <div class="product-img-wrap" data-front="imagenes/pantalon1.jpg" data-back="imagenes/shorts_espalda.jpg">
+          <img src="imagenes/pantalon1.jpg" alt="RAW Rep Shorts" class="product-img-main" />
           <div class="product-badge-bop">Bajo Pedido</div>
           <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
         </div>
         <div class="product-body">
           <p class="product-cat">Shorts</p>
-          <h3 class="product-name">RAW Rep Shorts</h3>
-          <p class="product-desc">Tejido elástico 2-way. Bolsillo con cremallera. Interior de compresión integrado.</p>
+          <h3 class="product-name">RAW Aero 2-in-1 Shorts</h3>
+          <p class="product-desc">Pantalón exterior ultraligero con malla interior de compresión integrada. Bolsillo oculto para el móvil y cintura elástica con cordón interior.</p>
           <p class="product-price">24,99 <span class="currency">€</span></p>
           <div class="product-selectors">
             <div class="selector-group">
@@ -511,28 +581,28 @@
         </div>
       </article>
 
-      <!-- PRODUCTO 5 -->
+      <!-- PRODUCTO 5 calcetines-->
       <article class="product-card"
                data-product-id="RR-005"
-               data-product-name="RAW Tank Muscle"
-               data-product-price="29.99"
-               data-product-cat="Camiseta sin mangas"
-               data-product-desc="Corte muscle fit. Costuras laterales reforzadas. 100% algodón ring-spun."
-               data-img-front="imagenes/tank_frente.jpg"
+               data-product-name="RAW Cushion Crew Socks"
+               data-product-price="9.99"
+               data-product-cat="Accesorios / Calcetines"
+               data-product-desc="Calcetines Gimnasio"
+               data-img-front="imagenes/botella1.jpg"
                data-img-back="imagenes/tank_espalda.jpg"
                data-sizes="S,M,L,XL,XXL"
                data-colors="Negro,Blanco,Rojo RAW"
                onclick="openProductModal(this)">
-        <div class="product-img-wrap" data-front="imagenes/tank_frente.jpg" data-back="imagenes/tank_espalda.jpg">
-          <div class="product-img-placeholder"><i class="fa-solid fa-tshirt"></i><span>Foto del producto</span></div>
+        <div class="product-img-wrap" data-front="imagenes/calcetines1.jpg" data-back="imagenes/calcetines2.jpg">
+          <img src="imagenes/calcetines1.jpg" alt="RAW Rep Shorts" class="product-img-main" />
           <div class="product-badge-bop">Bajo Pedido</div>
           <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
         </div>
         <div class="product-body">
-          <p class="product-cat">Camiseta sin mangas</p>
-          <h3 class="product-name">RAW Tank Muscle</h3>
-          <p class="product-desc">Corte muscle fit. Costuras laterales reforzadas. 100% algodón ring-spun.</p>
-          <p class="product-price">29,99 <span class="currency">€</span></p>
+          <p class="product-cat">Accesorios / Calcetines</p>
+          <h3 class="product-name">RAW Cushion Crew Socks</h3>
+          <p class="product-desc">Pack de calcetines de media caña con planta acolchada anti-impactos. Banda elástica en el arco del pie para evitar desplazamientos y rozaduras.</p>
+          <p class="product-price">9,99 <span class="currency">€</span></p>
           <div class="product-selectors">
             <div class="selector-group">
               <label for="talla-005">Talla</label>
@@ -564,29 +634,192 @@
         </div>
       </article>
 
-      <!-- PRODUCTO 6 -->
+      <!-- PRODUCTO 8 — Top mujer -->
+      <article class="product-card"
+               data-product-id="RR-008"
+               data-product-name="RAW Core Sports Bra"
+               data-product-price="14.99"
+               data-product-cat="Ropa mujer / Tops"
+               data-product-desc="Sujeción media-alta con copas extraíbles. Diseño de espalda cruzada para total libertad de movimiento. Banda elástica inferior de ajuste seguro."
+               data-img-front="imagenes/top1.jpg"
+               data-img-back="imagenes/top2.jpg"
+               data-sizes="XS,S,M,L,XL"
+               data-colors="Negro Guerrero,Camuflaje,Naranja RAW"
+               onclick="openProductModal(this)">
+        <div class="product-img-wrap" data-front="imagenes/top1.jpg" data-back="imagenes/top2.jpg">
+          <img src="imagenes/top1.jpg" alt="Muñequeras de Fuerza RAW" class="product-img-main" />
+          <div class="product-badge-bop">Bajo Pedido</div>
+          <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
+        </div>
+        <div class="product-body">
+          <p class="product-cat">Ropa mujer / Tops</p>
+          <h3 class="product-name">RAW Core Sports Bra</h3>
+          <p class="product-desc">Sujeción media-alta con copas extraíbles. Diseño de espalda cruzada para total libertad de movimiento. Banda elástica inferior de ajuste seguro.</p>
+          <p class="product-price">14,99 <span class="currency">€</span></p>
+          <div class="product-selectors">
+            <div class="selector-group">
+              <label for="talla-005">Talla</label>
+              <div class="select-wrap">
+                <select id="talla-005" name="talla" class="rr-select" data-variant="size" onclick="event.stopPropagation()">
+                  <option value="">— Elige talla —</option>
+                  <option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option>
+                </select>
+                <i class="fa-solid fa-chevron-down select-arrow"></i>
+              </div>
+            </div>
+            <div class="selector-group">
+              <label for="color-005">Color</label>
+              <div class="select-wrap">
+                <select id="color-005" name="color" class="rr-select" data-variant="color" onclick="event.stopPropagation()">
+                  <option value="">— Elige color —</option>
+                  <option>Negro</option><option>Blanco</option><option>Rojo RAW</option>
+                </select>
+                <i class="fa-solid fa-chevron-down select-arrow"></i>
+              </div>
+            </div>
+          </div>
+          <p class="delivery-notice"><i class="fa-solid fa-clock"></i> Fabricación y entrega: <strong>10-15 días laborables</strong></p>
+          <button class="btn btn-primary full-width rr-add-to-cart"
+                  data-product-id="RR-005" data-product-name="RAW Tank Muscle" data-product-price="29.99"
+                  onclick="event.stopPropagation(); handleAddToCart(this)">
+            <i class="fa-solid fa-bag-shopping"></i> Añadir al carrito
+          </button>
+        </div>
+      </article>
+
+
+      <!-- PRODUCTO 9 — Mallas mujer -->
+      <article class="product-card"
+               data-product-id="RR-009"
+               data-product-name="RAW Sculpt Lift Leggings"
+               data-product-price="24.99"
+               data-product-cat="Ropa mujer / Mallas"
+               data-product-desc="Cintura alta compresiva con efecto moldeador push-up sin costuras (seamless). Tejido técnico opaco a prueba de sentadillas (squat-proof)."
+               data-img-front="imagenes/mallas1.jpg"
+               data-img-back="imagenes/mallas2.jpg"
+               data-sizes="XS,S,M,L,XL"
+               data-colors="Negro Guerrero,Camuflaje,Naranja RAW"
+               onclick="openProductModal(this)">
+        <div class="product-img-wrap" data-front="imagenes/mallas1.jpg" data-back="imagenes/mallas2.jpg">
+          <img src="imagenes/mallas1.jpg" alt="Muñequeras de Fuerza RAW" class="product-img-main" />
+          <div class="product-badge-bop">Bajo Pedido</div>
+          <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
+        </div>
+        <div class="product-body">
+          <p class="product-cat">Ropa mujer / Mallas</p>
+          <h3 class="product-name">RAW Sculpt Lift Leggings</h3>
+          <p class="product-desc">Cintura alta compresiva con efecto moldeador push-up sin costuras (seamless). Tejido técnico opaco a prueba de sentadillas (squat-proof).</p>
+          <p class="product-price">24,99 <span class="currency">€</span></p>
+          <div class="product-selectors">
+            <div class="selector-group">
+              <label for="talla-005">Talla</label>
+              <div class="select-wrap">
+                <select id="talla-005" name="talla" class="rr-select" data-variant="size" onclick="event.stopPropagation()">
+                  <option value="">— Elige talla —</option>
+                  <option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option>
+                </select>
+                <i class="fa-solid fa-chevron-down select-arrow"></i>
+              </div>
+            </div>
+            <div class="selector-group">
+              <label for="color-005">Color</label>
+              <div class="select-wrap">
+                <select id="color-005" name="color" class="rr-select" data-variant="color" onclick="event.stopPropagation()">
+                  <option value="">— Elige color —</option>
+                  <option>Negro</option><option>Blanco</option><option>Rojo RAW</option>
+                </select>
+                <i class="fa-solid fa-chevron-down select-arrow"></i>
+              </div>
+            </div>
+          </div>
+          <p class="delivery-notice"><i class="fa-solid fa-clock"></i> Fabricación y entrega: <strong>10-15 días laborables</strong></p>
+          <button class="btn btn-primary full-width rr-add-to-cart"
+                  data-product-id="RR-005" data-product-name="RAW Tank Muscle" data-product-price="29.99"
+                  onclick="event.stopPropagation(); handleAddToCart(this)">
+            <i class="fa-solid fa-bag-shopping"></i> Añadir al carrito
+          </button>
+        </div>
+      </article>
+
+      <!-- PRODUCTO 10 — Gorra -->
+      <article class="product-card"
+               data-product-id="RR-010"
+               data-product-name="RAW Stealth Cap"
+               data-product-price="19.99"
+               data-product-cat="Accesorios / Gorras"
+               data-product-desc="Estructura de 6 paneles con visera semicurva. Cierre trasero ajustable de alta resistencia. Tejido transpirable con banda interna para el sudor."
+               data-img-front="imagenes/gorra.jpg"
+               data-img-back="imagenes/gorra2.jpg"
+               data-sizes="Única (Ajustable)"
+               data-colors="Negro Guerrero,Camuflaje,Naranja RAW"
+               onclick="openProductModal(this)">
+        <div class="product-img-wrap" data-front="imagenes/gorra.jpg" data-back="imagenes/gorra2.jpg">
+          <img src="imagenes/gorra.jpg" alt="Muñequeras de Fuerza RAW" class="product-img-main" />
+          <div class="product-badge-bop">Bajo Pedido</div>
+          <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
+        </div>
+        <div class="product-body">
+          <p class="product-cat">Accesorios / Gorras</p>
+          <h3 class="product-name">RAW Stealth Cap</h3>
+          <p class="product-desc">Estructura de 6 paneles con visera semicurva. Cierre trasero ajustable de alta resistencia. Tejido transpirable con banda interna para el sudor.</p>
+          <p class="product-price">19,99 <span class="currency">€</span></p>
+          <div class="product-selectors">
+            <!-- Selector de Talla Ajustable -->
+            <div class="selector-group">
+              <label for="talla-008">Tamaño</label>
+              <div class="select-wrap">
+                <select id="talla-008" name="talla" class="rr-select" data-variant="size" onclick="event.stopPropagation()">
+                  <option value="Única (Ajustable)">Ajustable</option>
+                </select>
+                <i class="fa-solid fa-chevron-down select-arrow"></i>
+              </div>
+            </div>
+            <!-- Selector de Color -->
+            <div class="selector-group">
+              <label for="color-008">Color</label>
+              <div class="select-wrap">
+                <select id="color-008" name="color" class="rr-select" data-variant="color" onclick="event.stopPropagation()">
+                  <option value="">— Elige color —</option>
+                  <option>Negro Guerrero</option>
+                  <option>Camuflaje</option>
+                  <option>Naranja RAW</option>
+                </select>
+                <i class="fa-solid fa-chevron-down select-arrow"></i>
+              </div>
+            </div>
+          </div>
+          <p class="delivery-notice"><i class="fa-solid fa-clock"></i> Fabricación y entrega: <strong>10-15 días laborables</strong></p>
+          <button class="btn btn-primary full-width rr-add-to-cart"
+                  data-product-id="RR-008" data-product-name="Muñequeras de Fuerza RAW" data-product-price="14.99"
+                  onclick="event.stopPropagation(); handleAddToCart(this)">
+            <i class="fa-solid fa-bag-shopping"></i> Añadir al carrito
+          </button>
+        </div>
+      </article>
+
+      <!-- PRODUCTO 6 Muñequeras-->
       <article class="product-card"
                data-product-id="RR-006"
-               data-product-name="RAW Shell Jacket"
-               data-product-price="69.99"
-               data-product-cat="Chaqueta técnica"
-               data-product-desc="Cortavientos ligero. Capucha plegable. Reflectantes en costuras. Ideal entrenamiento outdoor."
-               data-img-front="imagenes/jacket_frente.jpg"
-               data-img-back="imagenes/jacket_espalda.jpg"
+               data-product-name="RAW Heavy Duty Wrist Wraps"
+               data-product-price="17.99"
+               data-product-cat="Accesorios / Gimnasio"
+               data-product-desc="Soporte de algodón elástico reforzado con costuras dobles. Cierre de velcro industrial y lazo de pulgar para un ajuste seguro en levantamientos pesados."
+               data-img-front="imagenes/muñequeras1.jpg"
+               data-img-back="imagenes/muñequeras2.jpg"
                data-sizes="S,M,L,XL"
                data-colors="Negro,Naranja RAW,Verde Militar"
                onclick="openProductModal(this)">
-        <div class="product-img-wrap" data-front="imagenes/jacket_frente.jpg" data-back="imagenes/jacket_espalda.jpg">
-          <div class="product-img-placeholder"><i class="fa-solid fa-mitten"></i><span>Foto del producto</span></div>
+        <div class="product-img-wrap" data-front="imagenes/muñequeras1.jpg" data-back="imagenes/muñequeras2.jpg">
+          <img src="imagenes/muñequeras1.jpg" alt="RAW Rep Shorts" class="product-img-main" />
           <div class="product-badge-bop">Bajo Pedido</div>
           <div class="product-badge-new">Nuevo</div>
           <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
         </div>
         <div class="product-body">
-          <p class="product-cat">Chaqueta técnica</p>
-          <h3 class="product-name">RAW Shell Jacket</h3>
-          <p class="product-desc">Cortavientos ligero. Capucha plegable. Reflectantes en costuras. Ideal entrenamiento outdoor.</p>
-          <p class="product-price">69,99 <span class="currency">€</span></p>
+          <p class="product-cat">Accesorios / Gimnasio</p>
+          <h3 class="product-name">RAW Heavy Duty Wrist Wraps</h3>
+          <p class="product-desc">Soporte de algodón elástico reforzado con costuras dobles. Cierre de velcro industrial y lazo de pulgar para un ajuste seguro en levantamientos pesados.</p>
+          <p class="product-price">17,99 <span class="currency">€</span></p>
           <div class="product-selectors">
             <div class="selector-group">
               <label for="talla-006">Talla</label>
@@ -618,27 +851,27 @@
         </div>
       </article>
 
-            <!-- PRODUCTO 7 — Botella de Agua -->
+            <!-- PRODUCTO 7 — botella -->
       <article class="product-card"
                data-product-id="RR-007"
-               data-product-name="Botella Térmica RAW"
+               data-product-name="RAW Thermo Insulated Bottle"
                data-product-price="19.99"
-               data-product-cat="Accesorios"
-               data-product-desc="Acero inoxidable de doble capa. Mantiene frío 24h y calor 12h. Tapón hermético a prueba de fugas. Libre de BPA."
+               data-product-cat="Accesorios / Hidratación"
+               data-product-desc="Botella termica 750ml"
                data-img-front="imagenes/botella1.jpg"
-               data-img-back="imagenes/botella1.jpg"
+               data-img-back="imagenes/botella2.jpg"
                data-sizes="Única (750ml)"
                data-colors="Negro Mate,Acero Cepillado,Naranja RAW"
                onclick="openProductModal(this)">
-        <div class="product-img-wrap" data-front="imagenes/botella1.jpg" data-back="imagenes/botella1.jpg">
+        <div class="product-img-wrap" data-front="imagenes/botella1.jpg" data-back="imagenes/botella2.jpg">
           <img src="imagenes/botella1.jpg" alt="Botella Térmica RAW" class="product-img-main" />
           <div class="product-badge-bop">Bajo Pedido</div>
           <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
         </div>
         <div class="product-body">
-          <p class="product-cat">Accesorios</p>
-          <h3 class="product-name">Botella Térmica RAW</h3>
-          <p class="product-desc">Acero inoxidable de doble capa. Mantiene frío 24h. Capacidad: 750ml.</p>
+          <p class="product-cat">Accesorios / Hidratación</p>
+          <h3 class="product-name">RAW Thermo Insulated Bottle</h3>
+          <p class="product-desc">Botella RAW de 750ml</p>
           <p class="product-price">19,99 <span class="currency">€</span></p>
           <div class="product-selectors">
             <!-- Selector de Capacidad / Tamaño único -->
@@ -668,62 +901,6 @@
           <p class="delivery-notice"><i class="fa-solid fa-clock"></i> Fabricación y entrega: <strong>10-15 días laborables</strong></p>
           <button class="btn btn-primary full-width rr-add-to-cart"
                   data-product-id="RR-007" data-product-name="Botella Térmica RAW" data-product-price="19.99"
-                  onclick="event.stopPropagation(); handleAddToCart(this)">
-            <i class="fa-solid fa-bag-shopping"></i> Añadir al carrito
-          </button>
-        </div>
-      </article>
-
-            <!-- PRODUCTO 8 — Muñequeras de Gimnasio -->
-      <article class="product-card"
-               data-product-id="RR-008"
-               data-product-name="Muñequeras de Fuerza RAW"
-               data-product-price="14.99"
-               data-product-cat="Accesorios"
-               data-product-desc="Soporte premium para muñecas con costuras reforzadas. Velcro de grado industrial y lazo de pulgar elástico para un ajuste perfecto en levantamientos pesados."
-               data-img-front="imagenes/munequeras1.jpg"
-               data-img-back="imagenes/munequeras1.jpg"
-               data-sizes="Única (Ajustable)"
-               data-colors="Negro Guerrero,Camuflaje,Naranja RAW"
-               onclick="openProductModal(this)">
-        <div class="product-img-wrap" data-front="imagenes/munequeras1.jpg" data-back="imagenes/munequeras1.jpg">
-          <img src="imagenes/munequeras1.jpg" alt="Muñequeras de Fuerza RAW" class="product-img-main" />
-          <div class="product-badge-bop">Bajo Pedido</div>
-          <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
-        </div>
-        <div class="product-body">
-          <p class="product-cat">Accesorios</p>
-          <h3 class="product-name">Muñequeras de Fuerza RAW</h3>
-          <p class="product-desc">Costuras reforzadas y velcro industrial. Máxima estabilidad en tus récords.</p>
-          <p class="product-price">14,99 <span class="currency">€</span></p>
-          <div class="product-selectors">
-            <!-- Selector de Talla Ajustable -->
-            <div class="selector-group">
-              <label for="talla-008">Tamaño</label>
-              <div class="select-wrap">
-                <select id="talla-008" name="talla" class="rr-select" data-variant="size" onclick="event.stopPropagation()">
-                  <option value="Única (Ajustable)">Ajustable</option>
-                </select>
-                <i class="fa-solid fa-chevron-down select-arrow"></i>
-              </div>
-            </div>
-            <!-- Selector de Color -->
-            <div class="selector-group">
-              <label for="color-008">Color</label>
-              <div class="select-wrap">
-                <select id="color-008" name="color" class="rr-select" data-variant="color" onclick="event.stopPropagation()">
-                  <option value="">— Elige color —</option>
-                  <option>Negro Guerrero</option>
-                  <option>Camuflaje</option>
-                  <option>Naranja RAW</option>
-                </select>
-                <i class="fa-solid fa-chevron-down select-arrow"></i>
-              </div>
-            </div>
-          </div>
-          <p class="delivery-notice"><i class="fa-solid fa-clock"></i> Fabricación y entrega: <strong>10-15 días laborables</strong></p>
-          <button class="btn btn-primary full-width rr-add-to-cart"
-                  data-product-id="RR-008" data-product-name="Muñequeras de Fuerza RAW" data-product-price="14.99"
                   onclick="event.stopPropagation(); handleAddToCart(this)">
             <i class="fa-solid fa-bag-shopping"></i> Añadir al carrito
           </button>
@@ -936,10 +1113,10 @@
         </a>
         <p class="footer-tagline">Entrenamiento sin concesiones.</p>
         <div class="social-links">
-          <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-          <a href="#" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
-          <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
-          <a href="#" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://www.tiktok.com" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+          <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+          <a href="https://www.x.com" target="_blank" rel="noopener noreferrer" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
         </div>
         <!-- Badges de pago -->
         <div class="payment-badges">
@@ -1068,12 +1245,100 @@
         <i class="fa-solid fa-industry"></i>
         Prenda fabricada bajo pedido · Entrega 10-15 días lab.
       </div>
-      <a href="https://www.paypal.com/es/home" target="_blank" rel="noopener" class="btn btn-primary full-width cart-pay-btn">
-        <i class="fa-brands fa-paypal"></i> Pagar con PayPal
-      </a>
-      <a href="https://www.revolut.com" target="_blank" rel="noopener" class="btn btn-ghost full-width cart-pay-btn" style="margin-top:10px">
-        <i class="fa-solid fa-bolt"></i> Pagar con Revolut
-      </a>
+
+      <!-- Panel de métodos de pago (visual, futuro) -->
+      <div id="cartPaymentPanel">
+        <a href="https://www.paypal.com/es/home" target="_blank" rel="noopener" class="btn btn-primary full-width cart-pay-btn">
+          <i class="fa-brands fa-paypal"></i> Pagar con PayPal
+        </a>
+        <a href="https://www.revolut.com" target="_blank" rel="noopener" class="btn btn-ghost full-width cart-pay-btn" style="margin-top:10px">
+          <i class="fa-solid fa-bolt"></i> Pagar con Revolut
+        </a>
+        <!-- Botón tarjeta bancaria (visual, abre panel de campos) -->
+        <button class="btn btn-ghost full-width cart-pay-btn" style="margin-top:10px" onclick="toggleCardPanel()">
+          <i class="fa-solid fa-credit-card"></i> Pagar con Tarjeta Bancaria
+        </button>
+        <!-- Panel visual de campos de tarjeta -->
+        <div id="cardFieldsPanel" style="display:none; margin-top:12px; padding:14px; border:1px solid rgba(255,255,255,0.12); border-radius:8px; background:rgba(255,255,255,0.04);">
+          <p style="font-size:11px; color:var(--text-muted); margin-bottom:10px; letter-spacing:.05em;">DATOS DE TARJETA (próximamente activo)</p>
+          <input type="text" placeholder="Número de tarjeta" maxlength="19" style="width:100%;padding:10px 12px;border:1px solid rgba(255,255,255,0.15);border-radius:6px;background:rgba(0,0,0,0.3);color:var(--text);font-size:13px;margin-bottom:8px;box-sizing:border-box;" />
+          <div style="display:flex;gap:8px;">
+            <input type="text" placeholder="MM/AA" maxlength="5" style="flex:1;padding:10px 12px;border:1px solid rgba(255,255,255,0.15);border-radius:6px;background:rgba(0,0,0,0.3);color:var(--text);font-size:13px;" />
+            <input type="text" placeholder="CVV" maxlength="3" style="flex:1;padding:10px 12px;border:1px solid rgba(255,255,255,0.15);border-radius:6px;background:rgba(0,0,0,0.3);color:var(--text);font-size:13px;" />
+          </div>
+          <p style="font-size:10px;color:var(--text-muted);margin-top:8px;text-align:center;"><i class="fa-solid fa-lock"></i> Pasarela de pago en integración — disponible pronto</p>
+        </div>
+
+        <!-- Separador visual -->
+        <div style="display:flex;align-items:center;gap:10px;margin:16px 0 10px;">
+          <div style="flex:1;height:1px;background:rgba(255,255,255,0.1);"></div>
+          <span style="font-size:11px;color:var(--text-muted);letter-spacing:.08em;">O MEJOR AÚN</span>
+          <div style="flex:1;height:1px;background:rgba(255,255,255,0.1);"></div>
+        </div>
+
+        <!-- Botón destacado Reservar sin pagar -->
+        <button class="btn full-width" id="btnReservar"
+                onclick="showReservaForm()"
+                style="margin-top:0;background:linear-gradient(135deg,var(--accent) 0%,#ff8c00 100%);color:#000;font-weight:700;font-size:14px;letter-spacing:.06em;padding:14px;border:none;cursor:pointer;border-radius:6px;position:relative;overflow:hidden;">
+          <i class="fa-solid fa-bookmark"></i>&nbsp; Reservar sin pagar
+          <span style="display:block;font-size:10px;font-weight:500;letter-spacing:.04em;margin-top:2px;opacity:.85;">✦ Recomendado para el Lanzamiento</span>
+        </button>
+        <p style="font-size:10px;color:var(--text-muted);text-align:center;margin-top:8px;line-height:1.5;">
+          <i class="fa-solid fa-envelope"></i> Recibirás un correo de confirmación automático al instante con los detalles de tu reserva.
+        </p>
+      </div>
+
+      <!-- Formulario de reserva (oculto hasta clic) -->
+      <div id="cartReservaForm" style="display:none;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;">
+          <button onclick="hideReservaForm()" style="background:none;border:none;color:var(--text-muted);cursor:pointer;padding:4px;"><i class="fa-solid fa-arrow-left"></i></button>
+          <h4 style="margin:0;font-size:14px;letter-spacing:.06em;color:var(--text);">DATOS PARA TU RESERVA</h4>
+        </div>
+        <div style="background:rgba(255,140,0,0.08);border:1px solid rgba(255,140,0,0.25);border-radius:6px;padding:10px 12px;margin-bottom:14px;">
+          <p style="font-size:11px;color:var(--accent);margin:0;line-height:1.5;">
+            <i class="fa-solid fa-circle-info"></i> Sin compromiso de pago. Te contactaremos para confirmar tu pedido. Recibirás un <strong>correo automático de confirmación</strong> al instante.
+          </p>
+        </div>
+
+        <!-- Campo oculto para los productos del carrito -->
+        <input type="hidden" id="reserva-productos-hidden" name="Productos_Reservados" />
+
+        <form id="formReserva"
+              action="https://formsubmit.co/rawrepublic.reservas@gmail.com"
+              method="POST">
+
+          <!-- Configuración FormSubmit -->
+          <input type="hidden" name="_subject" value="🔥 Nueva Reserva RAW Republic" />
+          <input type="hidden" name="_template" value="table" />
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="hidden" name="_autoresponse" value="¡Gracias por tu reserva en RAW Republic! Hemos registrado tus productos. Muy pronto nos pondremos en contacto contigo a través de este correo o por teléfono para indicarte los siguientes pasos. ¡Forja tu carácter!" />
+          <input type="hidden" name="_next" value="https://rawrepublic.es/gracias.html" />
+          <!-- Campo dinámico con productos del carrito -->
+          <input type="hidden" name="Productos_Reservados" id="reserva-productos-field" />
+
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;gap:8px;">
+              <input type="text" name="Nombre" placeholder="Nombre *" required
+                     style="flex:1;padding:10px 12px;border:1px solid rgba(255,255,255,0.15);border-radius:6px;background:rgba(0,0,0,0.3);color:var(--text);font-size:13px;" />
+              <input type="text" name="Apellidos" placeholder="Apellidos *" required
+                     style="flex:1;padding:10px 12px;border:1px solid rgba(255,255,255,0.15);border-radius:6px;background:rgba(0,0,0,0.3);color:var(--text);font-size:13px;" />
+            </div>
+            <input type="email" name="Email" placeholder="Correo electrónico *" required
+                   style="width:100%;padding:10px 12px;border:1px solid rgba(255,255,255,0.15);border-radius:6px;background:rgba(0,0,0,0.3);color:var(--text);font-size:13px;box-sizing:border-box;" />
+            <input type="tel" name="Telefono" placeholder="Teléfono *" required
+                   style="width:100%;padding:10px 12px;border:1px solid rgba(255,255,255,0.15);border-radius:6px;background:rgba(0,0,0,0.3);color:var(--text);font-size:13px;box-sizing:border-box;" />
+          </div>
+
+          <button type="submit" onclick="prepareReservaSubmit()"
+                  style="width:100%;margin-top:14px;padding:14px;background:linear-gradient(135deg,var(--accent) 0%,#ff8c00 100%);color:#000;font-weight:700;font-size:14px;letter-spacing:.06em;border:none;border-radius:6px;cursor:pointer;">
+            <i class="fa-solid fa-paper-plane"></i>&nbsp; Confirmar Reserva
+          </button>
+          <p style="font-size:10px;color:var(--text-muted);text-align:center;margin-top:8px;line-height:1.5;">
+            Al confirmar, recibirás un correo automático de confirmación con los detalles de tu reserva.
+          </p>
+        </form>
+      </div>
+
       <button class="cart-clear-btn" onclick="clearCart()">
         <i class="fa-solid fa-trash"></i> Vaciar carrito
       </button>
@@ -1292,6 +1557,32 @@
   </div>
 
 
+  <script>
+    function toggleCardPanel() {
+      var p = document.getElementById('cardFieldsPanel');
+      p.style.display = p.style.display === 'none' ? 'block' : 'none';
+    }
+    function showReservaForm() {
+      document.getElementById('cartPaymentPanel').style.display = 'none';
+      document.getElementById('cartReservaForm').style.display = 'block';
+    }
+    function hideReservaForm() {
+      document.getElementById('cartReservaForm').style.display = 'none';
+      document.getElementById('cartPaymentPanel').style.display = 'block';
+    }
+    function prepareReservaSubmit() {
+      var items = [];
+      document.querySelectorAll('#cartItemsList li').forEach(function(item) {
+        var name  = item.querySelector('.cart-item-name')  ? item.querySelector('.cart-item-name').textContent.trim()  : '';
+        var meta  = item.querySelector('.cart-item-meta')  ? item.querySelector('.cart-item-meta').textContent.trim()  : '';
+        var price = item.querySelector('.cart-item-price') ? item.querySelector('.cart-item-price').textContent.trim() : '';
+        var qty   = item.querySelector('.cart-item-qty')   ? item.querySelector('.cart-item-qty').textContent.trim()   : '';
+        if (name) items.push(name + ' | ' + meta + ' | Cant: ' + qty + ' | ' + price);
+      });
+      document.getElementById('reserva-productos-field').value =
+        items.length ? items.join(' // ') : 'Sin detalle de productos';
+    }
+  </script>
   <script src="script.js"></script>
 </body>
 </html>

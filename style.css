@@ -324,6 +324,256 @@ ul { list-style: none; }
 
 
 /* ─────────────────────────────────────────────────────────────
+   1b. DROPDOWN SUBMENÚS
+───────────────────────────────────────────────────────────── */
+
+.nav-item-dropdown {
+  position: relative;
+}
+
+.nav-link-dropdown {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  position: relative;
+  transition: color var(--transition);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.nav-link-dropdown::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 60%;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 2px;
+  transition: transform var(--transition);
+}
+
+.nav-item-dropdown:hover .nav-link-dropdown,
+.nav-item-dropdown.open .nav-link-dropdown {
+  color: var(--white);
+}
+
+.nav-item-dropdown:hover .nav-link-dropdown::after,
+.nav-item-dropdown.open .nav-link-dropdown::after {
+  transform: translateX(-50%) scaleX(1);
+}
+
+.nav-chevron {
+  font-size: 0.6rem;
+  transition: transform var(--transition);
+  margin-top: 1px;
+}
+
+.nav-item-dropdown:hover .nav-chevron,
+.nav-item-dropdown.open .nav-chevron {
+  transform: rotate(180deg);
+}
+
+/* Panel flotante */
+.dropdown-panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-6px);
+  min-width: 240px;
+  background: rgba(16, 16, 16, 0.97);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 16px 8px;
+  display: flex;
+  gap: 8px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,106,0,0.08);
+  z-index: 1000;
+}
+
+/* Puente invisible que cubre el hueco entre el botón y el panel,
+   evitando que el hover se pierda al mover el cursor hacia abajo */
+.dropdown-panel::before {
+  content: '';
+  position: absolute;
+  top: -14px;        /* cubre el gap de 10px + margen de seguridad */
+  left: 0;
+  right: 0;
+  height: 14px;
+}
+
+.nav-item-dropdown:hover .dropdown-panel,
+.nav-item-dropdown.open .dropdown-panel {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.dropdown-col {
+  flex: 1;
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dropdown-heading {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  padding: 4px 12px 8px;
+  margin-bottom: 2px;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: var(--radius-sm);
+  font-family: 'Barlow', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  transition: color var(--transition), background var(--transition), transform 0.15s;
+  text-decoration: none;
+}
+
+.dropdown-item i {
+  width: 16px;
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 0.8rem;
+  transition: color var(--transition);
+  flex-shrink: 0;
+}
+
+.dropdown-item:hover {
+  color: var(--white);
+  background: rgba(255,255,255,0.06);
+  transform: translateX(3px);
+}
+
+.dropdown-item:hover i {
+  color: var(--accent);
+}
+
+.dropdown-item--hot {
+  color: var(--accent);
+}
+
+.dropdown-item--hot i {
+  color: var(--accent);
+}
+
+.dropdown-item--hot:hover {
+  background: rgba(255,106,0,0.10);
+}
+
+.dropdown-col + .dropdown-col {
+  border-left: 1px solid var(--border);
+  padding-left: 8px;
+}
+
+/* ── Móvil ── */
+@media (max-width: 900px) {
+  .nav-item-dropdown {
+    width: 100%;
+  }
+
+  .nav-link-dropdown {
+    padding: 12px 24px;
+    font-size: 1rem;
+    border-radius: 0;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .nav-link-dropdown::after { display: none; }
+
+  .dropdown-panel {
+    position: static;
+    transform: none !important;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    min-width: unset;
+    width: 100%;
+    background: rgba(255,255,255,0.03);
+    border: none;
+    border-left: 3px solid var(--accent);
+    border-radius: 0;
+    padding: 4px 0 4px 16px;
+    flex-direction: column;
+    gap: 0;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    display: none;
+    margin-bottom: 4px;
+  }
+
+  .nav-item-dropdown.open .dropdown-panel {
+    display: flex;
+  }
+
+  .dropdown-col {
+    min-width: unset;
+  }
+
+  .dropdown-col + .dropdown-col {
+    border-left: none;
+    padding-left: 0;
+    border-top: 1px solid var(--border);
+    padding-top: 4px;
+    margin-top: 4px;
+  }
+
+  .dropdown-heading {
+    font-size: 0.6rem;
+    padding: 6px 12px 4px;
+  }
+
+  .dropdown-item {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+  }
+
+  .dropdown-item:hover {
+    transform: none;
+    background: rgba(255,106,0,0.06);
+  }
+
+  .nav-item-dropdown.open .nav-link-dropdown {
+    color: var(--accent);
+    background: rgba(255,106,0,0.06);
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────
    2. HERO
 ───────────────────────────────────────────────────────────── */
 .hero {
@@ -2613,3 +2863,140 @@ section {
 
   .faq-answer { padding: 0 18px 16px; }
 }
+
+
+/* ─────────────────────────────────────────────────────────────
+   21. SISTEMA DE RESERVAS — Nuevos elementos del carrito
+───────────────────────────────────────────────────────────── */
+
+/* Footer del drawer: scrollable en pantallas pequeñas */
+.cart-drawer-footer {
+  max-height: 70vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.cart-drawer-footer::-webkit-scrollbar { width: 3px; }
+.cart-drawer-footer::-webkit-scrollbar-track { background: transparent; }
+.cart-drawer-footer::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+
+/* Panel de pago — layout vertical */
+#cartPaymentPanel {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Botón "Reservar sin pagar" */
+#btnReservar {
+  position: relative;
+  overflow: hidden;
+  transition: filter var(--transition), transform 0.15s, box-shadow var(--transition);
+  border: none;
+  border-radius: var(--radius-sm);
+}
+
+#btnReservar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+#btnReservar:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(255,106,0,0.45);
+}
+
+#btnReservar:active { transform: scale(0.97); }
+
+/* Panel visual de campos de tarjeta */
+#cardFieldsPanel {
+  animation: fadeUp 0.2s ease forwards;
+}
+
+#cardFieldsPanel input {
+  transition: border-color var(--transition);
+  font-family: 'Barlow', sans-serif;
+}
+
+#cardFieldsPanel input:focus {
+  outline: none;
+  border-color: rgba(255,255,255,0.35) !important;
+}
+
+#cardFieldsPanel input::placeholder { color: rgba(255,255,255,0.22); }
+
+/* Formulario de reserva */
+#cartReservaForm {
+  animation: fadeUp 0.22s ease forwards;
+}
+
+#formReserva input {
+  font-family: 'Barlow', sans-serif;
+  transition: border-color var(--transition);
+}
+
+#formReserva input:focus {
+  outline: none;
+  border-color: var(--accent) !important;
+}
+
+#formReserva input::placeholder { color: rgba(255,255,255,0.22); }
+
+#formReserva input:invalid:not(:placeholder-shown) {
+  border-color: rgba(239,68,68,0.5) !important;
+}
+
+/* Botón confirmar reserva */
+#formReserva button[type="submit"] {
+  font-family: 'Barlow Condensed', sans-serif;
+  transition: filter var(--transition), transform 0.15s, box-shadow var(--transition);
+  border-radius: var(--radius-sm);
+}
+
+#formReserva button[type="submit"]:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(255,106,0,0.40);
+}
+
+#formReserva button[type="submit"]:active { transform: scale(0.97); }
+
+/* Feature strip (barra de características bajo categorías) */
+.feature-strip {
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-top: 60px;
+}
+
+.feature-item {
+  flex: 1;
+  min-width: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 18px 20px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  transition: color var(--transition), background var(--transition);
+}
+
+.feature-item:last-child { border-right: none; }
+.feature-item i { color: var(--accent); font-size: 1rem; flex-shrink: 0; }
+.feature-item:hover { color: var(--white); background: var(--bg-3); }
+
+/* Partículas nutrición */
+.nutr-particles { position: absolute; inset: 0; pointer-events: none; }

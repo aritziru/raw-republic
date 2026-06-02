@@ -65,20 +65,84 @@ const SHIPPING_COST = 4.95;     // Coste de envío (€)
     navbar.classList.toggle('scrolled', window.scrollY > 60);
   }, { passive: true });
 
+  // ── Dropdowns ──
+  const dropdowns = document.querySelectorAll('.nav-item-dropdown');
+
+  dropdowns.forEach(dropdown => {
+    const trigger = dropdown.querySelector('.nav-link-dropdown');
+
+    // Mobile: click toggle
+    trigger.addEventListener('click', (e) => {
+      const isMobile = window.innerWidth <= 900;
+      if (!isMobile) return; // en desktop el CSS hover lo gestiona
+
+      e.preventDefault();
+      const isOpen = dropdown.classList.toggle('open');
+      trigger.setAttribute('aria-expanded', isOpen);
+
+      // Cerrar los otros dropdowns abiertos
+      dropdowns.forEach(other => {
+        if (other !== dropdown) {
+          other.classList.remove('open');
+          other.querySelector('.nav-link-dropdown')
+               .setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+
+    // Soporte teclado desktop
+    trigger.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        const isOpen = dropdown.classList.toggle('open');
+        trigger.setAttribute('aria-expanded', isOpen);
+      }
+      if (e.key === 'Escape') {
+        dropdown.classList.remove('open');
+        trigger.setAttribute('aria-expanded', 'false');
+        trigger.focus();
+      }
+    });
+
+    // Cerrar al hacer clic fuera (desktop)
+    document.addEventListener('click', (e) => {
+      if (!dropdown.contains(e.target)) {
+        dropdown.classList.remove('open');
+        trigger.setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
+
+  // Al hacer clic en un item del dropdown, cerrar todo el menú (móvil)
+  document.querySelectorAll('.dropdown-item').forEach(item => {
+    item.addEventListener('click', () => {
+      dropdowns.forEach(d => d.classList.remove('open'));
+      if (navLinks) navLinks.classList.remove('open');
+      if (hamburger) {
+        hamburger.classList.remove('active');
+        hamburger.setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
+
   // Hamburger — menú móvil
   if (hamburger && navLinks) {
     hamburger.addEventListener('click', () => {
       const open = navLinks.classList.toggle('open');
       hamburger.classList.toggle('active', open);
       hamburger.setAttribute('aria-expanded', open);
+      if (!open) {
+        dropdowns.forEach(d => d.classList.remove('open'));
+      }
     });
 
-    // Cerrar menú al hacer clic en un enlace (móvil)
-    navLinks.querySelectorAll('.nav-link').forEach(link => {
+    // Cerrar menú al hacer clic en un enlace normal (móvil)
+    navLinks.querySelectorAll('a.nav-link').forEach(link => {
       link.addEventListener('click', () => {
         navLinks.classList.remove('open');
         hamburger.classList.remove('active');
         hamburger.setAttribute('aria-expanded', 'false');
+        dropdowns.forEach(d => d.classList.remove('open'));
       });
     });
   }
@@ -373,6 +437,17 @@ function closeCartDrawer() {
   if (!document.querySelector('.modal-overlay.open')) {
     document.body.classList.remove('modal-open');
   }
+  // Resetear panel de reserva al cerrar el carrito
+  const payPanel    = document.getElementById('cartPaymentPanel');
+  const reservaForm = document.getElementById('cartReservaForm');
+  if (payPanel)    payPanel.style.display    = '';
+  if (reservaForm) reservaForm.style.display = 'none';
+  // Resetear el formulario de reserva si existe
+  const formReserva = document.getElementById('formReserva');
+  if (formReserva) formReserva.reset();
+  // Cerrar panel visual de tarjeta si estaba abierto
+  const cardPanel = document.getElementById('cardFieldsPanel');
+  if (cardPanel) cardPanel.style.display = 'none';
 }
 
 // Botón del icono del carrito en la navbar
@@ -492,7 +567,14 @@ function renderCart() {
   if (footerEl) footerEl.style.display = '';
 
   // Renderizar items
-  listEl.innerHTML = cart.map(item => `
+  listEl.innerHTML = cart.map(item => {
+    // Construir texto de variantes para el formulario de reserva
+    const metaParts = [];
+    if (item.talla) metaParts.push(`Talla: ${item.talla}`);
+    if (item.color) metaParts.push(`Color: ${item.color}`);
+    const metaText = metaParts.join(' · ');
+
+    return `
     <li class="cart-item" data-key="${escHtml(item.key)}">
       <div class="cart-item-img">
         ${item.img
@@ -504,18 +586,20 @@ function renderCart() {
         <p class="cart-item-name">${escHtml(item.name)}</p>
         ${item.talla ? `<span class="cart-item-variant">Talla: ${escHtml(item.talla)}</span>` : ''}
         ${item.color ? `<span class="cart-item-variant">Color: ${escHtml(item.color)}</span>` : ''}
+        <span class="cart-item-meta" style="display:none">${escHtml(metaText)}</span>
         <p class="cart-item-price">${(item.price * item.qty).toFixed(2).replace('.', ',')} €</p>
       </div>
       <div class="cart-item-controls">
         <button class="cart-qty-btn" onclick="updateCartQty('${escHtml(item.key)}', -1)" aria-label="Restar">−</button>
-        <span class="cart-qty">${item.qty}</span>
+        <span class="cart-item-qty cart-qty">${item.qty}</span>
         <button class="cart-qty-btn" onclick="updateCartQty('${escHtml(item.key)}', 1)" aria-label="Sumar">+</button>
         <button class="cart-remove-btn" onclick="removeCartItem('${escHtml(item.key)}')" aria-label="Eliminar">
           <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
     </li>
-  `).join('');
+  `;
+  }).join('');
 
   // Totales
   if (subEl)   subEl.textContent  = `${subtotal.toFixed(2).replace('.', ',')} €`;
@@ -703,7 +787,65 @@ function handleContactSubmit(e) {
 
 
 /* ─────────────────────────────────────────────────────────────
-   15. INIT — arranque al cargar el DOM
+   15. FILTRO DE CATÁLOGO — desde el menú de navegación
+───────────────────────────────────────────────────────────── */
+
+/**
+ * Filtra las tarjetas del catálogo por categoría y hace scroll hasta él.
+ * @param {string} cat  — valor de data-filter del enlace del menú
+ *                        ('camiseta' | 'sudadera' | 'pantalon' | 'conjunto' |
+ *                         'nueva' | 'oferta' | 'bolsa' | 'gorra' |
+ *                         'munequera' | 'botella' | 'todo')
+ */
+function filterAndScrollTo(cat) {
+  // Mapa de filtro → categorías que coinciden en data-product-cat
+  const catMap = {
+    'camiseta':  ['camiseta técnica', 'camiseta'],
+    'sudadera':  ['sudadera', 'hoodie'],
+    'pantalon':  ['pantalón', 'pantalon', 'shorts', 'leggins', 'mallas'],
+    'conjunto':  ['conjunto'],
+    'nueva':     ['nueva temporada'],
+    'oferta':    ['oferta'],
+    'bolsa':     ['bolsa', 'mochila'],
+    'gorra':     ['gorra', 'gorro'],
+    'munequera': ['muñequera', 'munequera', 'cinta', 'accesorios'],
+    'botella':   ['botella'],
+    'todo':      null,   // null = mostrar todos
+  };
+
+  const allowed = catMap[cat] ?? null;
+  const cards   = document.querySelectorAll('#catalogo .product-card');
+
+  cards.forEach(card => {
+    const productCat = (card.dataset.productCat || '').toLowerCase();
+    const show = !allowed || allowed.some(k => productCat.includes(k));
+    card.style.display = show ? '' : 'none';
+  });
+
+  // Scroll suave a la sección del catálogo
+  const section = document.getElementById('catalogo');
+  if (section) {
+    const offset = section.getBoundingClientRect().top + window.scrollY - 80; // 80 = altura navbar
+    window.scrollTo({ top: offset, behavior: 'smooth' });
+  }
+
+  // Cerrar el menú desplegable en móvil
+  document.querySelectorAll('.nav-item-dropdown.open').forEach(d => d.classList.remove('open'));
+}
+
+// Conectar los enlaces del menú con data-filter al filtro del catálogo
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.dropdown-item[data-filter]').forEach(link => {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      filterAndScrollTo(this.dataset.filter);
+    });
+  });
+});
+
+
+/* ─────────────────────────────────────────────────────────────
+   16. INIT — arranque al cargar el DOM
 ───────────────────────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
   // Renderizar carrito vacío (actualiza el badge a 0)
