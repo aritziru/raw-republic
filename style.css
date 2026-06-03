@@ -44,14 +44,39 @@ html {
 }
 
 body {
-  background-color: var(--bg);
+  background-color: var(--scroll-bg, var(--bg));
   color: var(--text);
   font-family: 'Barlow', sans-serif;
   font-weight: 400;
   line-height: 1.6;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  transition: background-color 1.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+/* ── Temas de scroll — fondo dinámico ── */
+body.theme-fire { --scroll-bg: #0a0a0a; }
+body.theme-sun  { --scroll-bg: #090800; }
+body.theme-snow { --scroll-bg: #04080f; }
+body.theme-gym  { --scroll-bg: #080808; }
+
+/* Canvas de partículas globales (bodyParticleCanvas) */
+#bodyParticleCanvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Asegurar que todo el contenido va por encima del canvas */
+.navbar, .hero, section, footer, .modal-overlay,
+#cartDrawer, #cartOverlay {
+  position: relative;
+  z-index: 1;
+}
+
 
 body.modal-open {
   overflow: hidden;
@@ -400,7 +425,6 @@ ul { list-style: none; }
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
   box-shadow: 0 16px 48px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,106,0,0.08);
   z-index: 1000;
 }
@@ -416,12 +440,17 @@ ul { list-style: none; }
   height: 14px;
 }
 
+.dropdown-panel {
+  transition: opacity 0.2s ease 0.1s, transform 0.2s ease 0.1s, visibility 0.2s 0.1s;
+}
+
 .nav-item-dropdown:hover .dropdown-panel,
 .nav-item-dropdown.open .dropdown-panel {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
   transform: translateX(-50%) translateY(0);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
 }
 
 .dropdown-col {
@@ -623,10 +652,11 @@ ul { list-style: none; }
   position: absolute;
   bottom: -10px;
   border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 6px 2px rgba(255,106,0,0.5);
+  background: var(--spark-color, var(--accent));
+  box-shadow: 0 0 6px 2px var(--spark-glow, rgba(255,106,0,0.5));
   animation: sparkRise linear infinite both;
   pointer-events: none;
+  transition: background 1.2s ease, box-shadow 1.2s ease;
 }
 
 @keyframes sparkRise {
@@ -3026,3 +3056,469 @@ section {
   border-color: rgba(251, 191, 36, 0.45);
 }
 .toast--warning i { color: #fbbf24; }
+
+
+/* ══════════════════════════════════════════════════════════════
+   RAW Republic — MEGA-MENÚ PREMIUM
+   ══════════════════════════════════════════════════════════════ */
+
+/* ─── Contenedor flotante principal ─── */
+.mega-panel {
+  position: absolute;
+  top: calc(100% + 2px);          /* gap mínimo: imperceptible visualmente pero sin banda muerta */
+  left: 50%;
+  transform: translateX(-50%) translateY(-8px);
+  display: flex;
+  flex-direction: row;
+  min-width: 680px;
+  max-width: 780px;
+  background: rgba(12, 12, 12, 0.97);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-top: 2px solid var(--accent);
+  border-radius: 14px;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.75), 0 0 0 1px rgba(255,106,0,0.06);
+  z-index: 1000;                  /* encima de tarjetas y elementos del catálogo */
+}
+
+/* Pseudoelemento puente — extiende el área de hover 20px hacia arriba,
+   cubriendo el gap residual entre el botón y el borde del panel */
+.mega-panel::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background: transparent;
+}
+
+/* Panel pequeño para Accesorios */
+.mega-panel--sm {
+  min-width: 300px;
+  max-width: 340px;
+}
+
+/* Mismo puente para el panel de Accesorios */
+.mega-panel--sm::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background: transparent;
+}
+
+/* Puente div — refuerzo adicional con pointer-events explícito */
+.mega-bridge {
+  position: absolute;
+  top: -20px;                     /* ampliado de -16px a -20px */
+  left: 0;
+  right: 0;
+  height: 20px;
+  background: transparent;
+  pointer-events: auto;           /* captura eventos del ratón en el hueco */
+  z-index: 1001;
+}
+
+/* Mostrar al hover o clase .open (móvil via JS) */
+/* transition-delay:0 en apertura = respuesta inmediata
+   transition-delay:0.1s en cierre (estado base) = aguanta 100ms al cambiar de pestaña */
+.mega-panel {
+  transition: opacity 0.28s cubic-bezier(0.4,0,0.2,1) 0.1s,
+              transform 0.28s cubic-bezier(0.4,0,0.2,1) 0.1s,
+              visibility 0.28s 0.1s;
+}
+
+.mega-parent:hover .mega-panel,
+.mega-parent.open .mega-panel {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+  transition: opacity 0.28s cubic-bezier(0.4,0,0.2,1),
+              transform 0.28s cubic-bezier(0.4,0,0.2,1),
+              visibility 0.28s;
+}
+
+.mega-parent:hover .nav-chevron,
+.mega-parent.open .nav-chevron {
+  transform: rotate(180deg);
+}
+
+.mega-parent:hover .nav-link-dropdown,
+.mega-parent.open .nav-link-dropdown {
+  color: var(--white);
+}
+
+.mega-parent:hover .nav-link-dropdown::after,
+.mega-parent.open .nav-link-dropdown::after {
+  transform: translateX(-50%) scaleX(1);
+}
+
+/* ─── Columnas ─── */
+.mega-col {
+  display: flex;
+  flex-direction: column;
+  padding: 24px 20px;
+}
+
+.mega-col--nav {
+  flex: 0 0 280px;
+  gap: 0;
+}
+
+.mega-col--full {
+  flex: 1;
+}
+
+/* Divisor vertical entre columnas */
+.mega-divider {
+  width: 1px;
+  background: rgba(255,255,255,0.06);
+  flex-shrink: 0;
+}
+
+/* Separador horizontal entre categorías */
+.mega-sep {
+  height: 1px;
+  background: rgba(255,255,255,0.05);
+  margin: 12px 0;
+}
+
+/* ─── Bloque de categoría ─── */
+.mega-category { position: relative; }
+
+.mega-category__trigger {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  transition: color 0.2s, background 0.2s;
+}
+
+.mega-category__trigger:hover,
+.mega-category:hover .mega-category__trigger {
+  color: var(--white);
+  background: rgba(255,106,0,0.07);
+}
+
+/* Versión sin botón (encabezado estático para accesorios) */
+.mega-category__static {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  color: var(--text-muted);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.mega-category__icon {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  background: rgba(255,106,0,0.10);
+  color: var(--accent);
+  font-size: 0.75rem;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+
+.mega-category__trigger:hover .mega-category__icon,
+.mega-category:hover .mega-category__icon {
+  background: rgba(255,106,0,0.20);
+}
+
+.mega-category__label { flex: 1; text-align: left; }
+
+.mega-category__arrow {
+  font-size: 0.55rem;
+  color: var(--text-dim);
+  transition: color 0.2s, transform 0.2s;
+  margin-left: auto;
+}
+
+.mega-category:hover .mega-category__arrow {
+  color: var(--accent);
+  transform: translateX(2px);
+}
+
+/* ─── SubColumna — aparece al hover sobre la categoría ─── */
+.mega-subcol {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 4px 12px 8px 50px;
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.3s ease, opacity 0.25s ease;
+}
+
+.mega-category:hover .mega-subcol {
+  max-height: 300px;
+  opacity: 1;
+}
+
+/* Siempre visible (accesorios) */
+.mega-subcol--visible {
+  max-height: 300px !important;
+  opacity: 1 !important;
+  padding-top: 2px;
+  padding-bottom: 10px;
+}
+
+/* Encabezado de subgrupo (Deporte/Gym, Vestir/Urbano) */
+.mega-subheading {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  opacity: 0.7;
+  padding: 6px 0 4px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.mega-subheading i { font-size: 0.58rem; }
+.mega-subheading--mt { margin-top: 6px; }
+
+/* ─── Ítem de submenú ─── */
+.mega-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px 6px 0;
+  font-family: 'Barlow', sans-serif;
+  font-size: 0.84rem;
+  font-weight: 400;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-radius: 4px;
+  transition: color 0.18s, padding-left 0.18s;
+  white-space: nowrap;
+}
+
+/* Sobrescribir el transform del .dropdown-item base para los mega-items */
+.mega-item.dropdown-item:hover {
+  transform: none;
+  padding-left: 4px;
+  color: var(--white);
+  background: transparent;
+}
+
+.mega-item__dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--text-dim);
+  flex-shrink: 0;
+  transition: background 0.18s;
+}
+
+.mega-item:hover .mega-item__dot { background: var(--accent); }
+
+/* Badge "Nuevo" */
+.mega-badge {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.57rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: var(--accent);
+  color: #000;
+  padding: 1px 6px;
+  border-radius: 20px;
+  margin-left: 3px;
+  line-height: 1.8;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   COLUMNA VISUAL — partículas dinámicas (lado derecho del panel)
+───────────────────────────────────────────────────────────── */
+.mega-col--visual {
+  flex: 1;
+  position: relative;
+  min-height: 260px;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 0 12px 12px 0;
+}
+
+.mega-visual__bg {
+  position: absolute;
+  inset: 0;
+}
+
+/* Canvas de partículas del mega-menú */
+#megaParticleCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ─── Base de todas las imágenes (ocultas, sustituidas por canvas) ─── */
+.mega-visual__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  opacity: 0;
+  transform: scale(1.05);
+  transition:
+    opacity 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity, transform;
+}
+
+/* Las imágenes estáticas han sido sustituidas por el canvas de partículas dinámicas.
+   El canvas #megaParticleCanvas se gestiona desde initMegaMenu() en script.js */
+
+/* Gradiente de oscurecimiento sobre la imagen */
+.mega-col--visual::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(12,12,12,0.10) 0%,
+    rgba(12,12,12,0.0)  40%,
+    rgba(12,12,12,0.65) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Etiqueta de texto sobre la imagen */
+.mega-visual__label {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.mega-visual__tag {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+}
+
+.mega-visual__name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 1.5rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #fff;
+  line-height: 1;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.5);
+  transition: opacity 0.25s;
+}
+
+/* Marca de agua RAW */
+.mega-visual__watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 5.5rem;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.055);
+  text-transform: uppercase;
+  pointer-events: none;
+  z-index: 2;
+  user-select: none;
+}
+
+/* ─── Responsive móvil ─── */
+@media (max-width: 900px) {
+  .mega-parent { width: 100%; }
+
+  .mega-panel,
+  .mega-panel--sm {
+    position: static;
+    transform: none !important;
+    min-width: unset;
+    max-width: unset;
+    width: 100%;
+    flex-direction: column;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    background: rgba(255,255,255,0.03);
+    border: none;
+    border-top: none;
+    border-radius: 0;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    display: none;
+  }
+
+  .mega-parent.open .mega-panel,
+  .mega-parent.open .mega-panel--sm {
+    display: flex;
+  }
+
+  .mega-col--visual { display: none; }
+  .mega-divider     { display: none; }
+
+  .mega-col--nav {
+    flex: unset;
+    width: 100%;
+    padding: 8px 0;
+  }
+
+  .mega-category__trigger {
+    padding: 12px 24px;
+    font-size: 0.95rem;
+    border-radius: 0;
+  }
+
+  .mega-subcol {
+    max-height: 400px !important;
+    opacity: 1 !important;
+    padding-left: 48px;
+  }
+
+  .mega-item { padding: 7px 0; font-size: 0.9rem; }
+  .mega-sep  { margin: 4px 0; }
+}
