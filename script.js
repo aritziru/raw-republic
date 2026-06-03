@@ -445,8 +445,21 @@ document.addEventListener('keydown', e => {
 
 /** Abre el drawer lateral del carrito */
 function openCartDrawer() {
-  document.getElementById('cartDrawer')?.classList.add('open');
-  document.getElementById('cartOverlay')?.classList.add('open');
+  // Cerrar mega menús abiertos para evitar solapamiento visual
+  document.querySelectorAll('.mega-parent.open').forEach(el => el.classList.remove('open'));
+  document.querySelectorAll('.nav-item-dropdown.open').forEach(el => el.classList.remove('open'));
+
+  const drawer  = document.getElementById('cartDrawer');
+  const overlay = document.getElementById('cartOverlay');
+
+  if (!drawer || !overlay) return;
+
+  // Forzar z-index correctos en línea (garantía extra)
+  overlay.style.cssText += ';z-index:1090 !important;position:fixed !important;';
+  drawer.style.cssText  += ';z-index:1091 !important;position:fixed !important;';
+
+  overlay.classList.add('open');
+  drawer.classList.add('open');
   document.body.classList.add('modal-open');
 }
 

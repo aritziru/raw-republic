@@ -71,8 +71,7 @@ body.theme-gym  { --scroll-bg: #080808; }
 }
 
 /* Asegurar que todo el contenido va por encima del canvas */
-.navbar, .hero, section, footer, .modal-overlay,
-#cartDrawer, #cartOverlay {
+.navbar, .hero, section, footer, .modal-overlay {
   position: relative;
   z-index: 1;
 }
@@ -80,6 +79,13 @@ body.theme-gym  { --scroll-bg: #080808; }
 
 body.modal-open {
   overflow: hidden;
+  /* Permit touch scrolling inside fixed elements on iOS */
+  touch-action: none;
+}
+/* But allow scrolling INSIDE the cart drawer itself */
+body.modal-open #cartDrawer {
+  touch-action: pan-y;
+  overflow-y: auto;
 }
 
 img {
@@ -1982,7 +1988,7 @@ section {
   inset: 0;
   background: rgba(0,0,0,0.65);
   backdrop-filter: blur(4px);
-  z-index: 990;
+  z-index: 1090;
   opacity: 0;
   pointer-events: none;
   transition: opacity var(--transition);
@@ -1999,15 +2005,16 @@ section {
   right: 0;
   bottom: 0;
   width: 420px;
-  max-width: 95vw;
+  max-width: 100vw;
   background: var(--bg-2);
   border-left: 1px solid var(--border);
-  z-index: 991;
+  z-index: 1091;
   display: flex;
   flex-direction: column;
   transform: translateX(100%);
   transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: -8px 0 40px rgba(0,0,0,0.55);
+  overflow: hidden;
 }
 
 .cart-drawer.open {
@@ -2226,6 +2233,9 @@ section {
   border-top: 1px solid var(--border);
   flex-shrink: 0;
   background: var(--bg-2);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
 }
 
 .cart-summary {
@@ -2799,9 +2809,10 @@ section {
   .stat { padding: 0 20px; }
   .stat-num { font-size: 1.5rem; }
 
+  /* Modal producto: columna en tablet/móvil */
   .modal-producto-box {
     flex-direction: column;
-    max-height: 90vh;
+    max-height: 92vh;
     overflow-y: auto;
   }
 
@@ -2812,6 +2823,23 @@ section {
 
   .gallery-slide.active {
     min-height: 260px;
+  }
+
+  /* Selectores en el modal de producto en tablet */
+  .modal-producto-detail .product-selectors {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  /* Selectores en tarjetas de catálogo — asegurar legibilidad en tablet */
+  .product-selectors {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .rr-select {
+    font-size: 0.82rem;
+    min-height: 38px;
   }
 }
 
@@ -2831,14 +2859,54 @@ section {
 
   .scroll-indicator { display: none; }
 
+  /* ── Catálogo: 1 columna, tamaños cómodos ── */
   .product-grid {
     grid-template-columns: 1fr;
+    gap: 20px;
   }
 
-  .product-img-wrap { height: 280px; }
+  /* Imagen de producto más baja en móvil */
+  .product-img-wrap { height: 240px; }
 
+  /* Cuerpo de tarjeta con fuentes legibles */
+  .product-body { padding: 16px; gap: 8px; }
+  .product-name { font-size: 1.1rem; }
+  .product-desc { font-size: 0.82rem; }
+  .product-price { font-size: 1.4rem; }
+
+  /* Selectores en dos columnas — legibles en móvil */
+  .product-selectors {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 8px;
+  }
+
+  .selector-group label {
+    font-size: 0.7rem;
+  }
+
+  /* Select con altura táctil mínima */
+  .rr-select {
+    font-size: 0.82rem;
+    padding: 9px 28px 9px 10px;
+    min-height: 38px;
+  }
+
+  /* Botón añadir al carrito — más alto para dedos */
+  .btn.full-width,
+  .rr-add-to-cart {
+    padding: 13px 16px;
+    font-size: 0.88rem;
+    min-height: 44px;
+  }
+
+  /* Aviso entrega */
+  .delivery-notice { font-size: 0.76rem; }
+
+  /* Formulario de contacto en 1 columna */
   .form-row { grid-template-columns: 1fr; }
 
+  /* Footer */
   .footer-top {
     grid-template-columns: 1fr;
     padding: 48px 16px 36px;
@@ -2855,13 +2923,54 @@ section {
 
   .carrier-grid { grid-template-columns: 1fr; }
 
-  .modal-overlay { padding: 10px; }
+  /* Modal overlay sin padding lateral excesivo */
+  .modal-overlay { padding: 8px; }
 
   .modal-body,
-  .modal-header { padding-left: 18px; padding-right: 18px; }
+  .modal-header { padding-left: 16px; padding-right: 16px; }
 
-  .cart-drawer { width: 100%; }
+  /* Modal producto en columna */
+  .modal-producto-box {
+    flex-direction: column;
+    max-height: 92vh;
+    overflow-y: auto;
+  }
 
+  .modal-gallery {
+    width: 100%;
+    min-height: 240px;
+  }
+
+  .gallery-slide.active { min-height: 240px; }
+
+  /* Selectores del modal de producto */
+  .modal-producto-detail .product-selectors {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  /* Drawer del carrito a ancho completo en móvil */
+  .cart-drawer {
+    width: 100%;
+    max-width: 100%;
+    top: 0;
+    bottom: 0;
+    border-left: none;
+    border-top: 2px solid var(--accent);
+  }
+  .cart-drawer-body {
+    padding: 12px 16px;
+  }
+  .cart-drawer-footer {
+    max-height: 60vh;
+    overflow-y: auto;
+    padding: 14px 16px;
+  }
+  .cart-drawer-header {
+    padding: 16px 16px;
+  }
+
+  /* Formulario nutrición */
   .nutr-form { flex-direction: column; }
   .nutr-form .btn { width: 100%; justify-content: center; }
 
@@ -2888,6 +2997,15 @@ section {
   }
 
   .faq-answer { padding: 0 18px 16px; }
+
+  /* Top ventas a 1 columna en móvil pequeño */
+  .top-ventas-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Mega-menú en móvil — items más cómodos */
+  .mega-item { padding: 8px 0; font-size: 0.92rem; }
+  .mega-subheading { font-size: 0.65rem; }
 }
 
 
