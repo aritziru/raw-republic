@@ -468,6 +468,12 @@ function handleAddToCart(btn) {
   const talla = card?.querySelector('[data-variant="size"]')?.value  || '';
   const color = card?.querySelector('[data-variant="color"]')?.value || '';
 
+  // ── Validación obligatoria ──
+  if (!talla || !color) {
+    showToast('Selecciona una talla y un color antes de continuar.', 'error');
+    return;
+  }
+
   addItemToCart({ id, name, price, talla, color, img: '' });
 }
 
@@ -479,6 +485,12 @@ function addToCartFromModal() {
 
   const talla = document.getElementById('mp-talla')?.value || '';
   const color = document.getElementById('mp-color')?.value || '';
+
+  // ── Validación obligatoria ──
+  if (!talla || !color) {
+    showToast('Selecciona una talla y un color antes de continuar.', 'error');
+    return;
+  }
 
   addItemToCart({
     id:    currentProductData.id,
@@ -637,16 +649,34 @@ function escHtml(str) {
 ───────────────────────────────────────────────────────────── */
 let toastTimer = null;
 
-function showToast(msg) {
+/**
+ * Muestra una notificación toast integrada en el estilo de la web.
+ * @param {string} msg   — Texto del mensaje
+ * @param {'success'|'error'|'warning'} [type='success']
+ */
+function showToast(msg, type = 'success') {
   const toast = document.getElementById('toast');
   if (!toast) return;
 
-  toast.querySelector('i')?.nextSibling && (toast.childNodes[1].textContent = ' ' + msg);
-  toast.innerHTML = `<i class="fa-solid fa-check-circle"></i> ${escHtml(msg)}`;
+  // Iconos según tipo
+  const icons = {
+    success: 'fa-check-circle',
+    error:   'fa-triangle-exclamation',
+    warning: 'fa-circle-info',
+  };
+  const icon = icons[type] || icons.success;
+
+  toast.innerHTML = `<i class="fa-solid ${icon}"></i> ${escHtml(msg)}`;
+
+  // Clases de variante
+  toast.classList.remove('toast--success', 'toast--error', 'toast--warning');
+  toast.classList.add(`toast--${type}`);
   toast.classList.add('show');
 
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toast.classList.remove('show'), 3000);
+  // Los errores se quedan un poco más
+  const duration = type === 'error' ? 4500 : 3000;
+  toastTimer = setTimeout(() => toast.classList.remove('show'), duration);
 }
 
 
@@ -797,29 +827,60 @@ function handleContactSubmit(e) {
  *                         'nueva' | 'oferta' | 'bolsa' | 'gorra' |
  *                         'munequera' | 'botella' | 'todo')
  */
+/**
+ * Restablece el catálogo mostrando todos los productos y limpia cualquier
+ * filtro activo. Lo llaman los botones "Ver toda la colección".
+ */
+function resetCatalog() {
+  // Mostrar todas las tarjetas del catálogo
+  document.querySelectorAll('#catalogo .product-card').forEach(card => {
+    card.style.display = '';
+  });
+
+  // Limpiar clase .active de los enlaces de filtro del menú
+  document.querySelectorAll('.dropdown-item[data-filter]').forEach(link => {
+    link.classList.remove('active');
+  });
+}
+
 function filterAndScrollTo(cat) {
-  // Mapa de filtro → categorías que coinciden en data-product-cat
+  // Mapa de filtro → { section, cats }
+  // section: filtra por data-section del article (null = sin restricción de sección)
+  // cats: filtra por data-product-cat (null = mostrar todos de esa sección)
   const catMap = {
-    'camiseta':  ['camiseta técnica', 'camiseta'],
-    'sudadera':  ['sudadera', 'hoodie'],
-    'pantalon':  ['pantalón', 'pantalon', 'shorts', 'leggins', 'mallas'],
-    'conjunto':  ['conjunto'],
-    'nueva':     ['nueva temporada'],
-    'oferta':    ['oferta'],
-    'bolsa':     ['bolsa', 'mochila'],
-    'gorra':     ['gorra', 'gorro'],
-    'munequera': ['muñequera', 'munequera', 'cinta', 'accesorios'],
-    'botella':   ['botella'],
+    // ── ROPA ──────────────────────────────────────────────────────
+    'camiseta':  { section: 'ropa', cats: ['camiseta'] },
+    'sudadera':  { section: 'ropa', cats: ['sudadera', 'hoodie'] },
+    'pantalon':  { section: 'ropa', cats: ['pantalón', 'pantalon', 'shorts', 'mallas', 'leggings'] },
+    'conjunto':  { section: 'ropa', cats: ['conjunto'] },
+    'nueva':     { section: null,   cats: ['nueva temporada'] },
+    'oferta':    { section: null,   cats: ['oferta'] },
+    // ── ACCESORIOS ────────────────────────────────────────────────
+    'bolsa':     { section: 'accesorios', cats: ['bolsa', 'mochila'] },
+    'gorra':     { section: 'accesorios', cats: ['gorra', 'gorro'] },
+    'munequera': { section: 'accesorios', cats: ['muñequera', 'munequera', 'cinta', 'gimnasio'] },
+    'botella':   { section: 'accesorios', cats: ['botella', 'hidratación', 'hidratacion'] },
     'todo':      null,   // null = mostrar todos
   };
 
-  const allowed = catMap[cat] ?? null;
-  const cards   = document.querySelectorAll('#catalogo .product-card');
+  const rule  = catMap[cat] ?? null;
+  const cards = document.querySelectorAll('#catalogo .product-card');
 
   cards.forEach(card => {
-    const productCat = (card.dataset.productCat || '').toLowerCase();
-    const show = !allowed || allowed.some(k => productCat.includes(k));
-    card.style.display = show ? '' : 'none';
+    if (!rule) {
+      // "todo" — mostrar todo
+      card.style.display = '';
+      return;
+    }
+    const productCat     = (card.dataset.productCat || '').toLowerCase();
+    const productSection = (card.dataset.section    || '').toLowerCase();
+
+    // Filtro por sección (ropa vs accesorios)
+    const sectionOk = !rule.section || productSection === rule.section;
+    // Filtro por sub-categoría de producto
+    const catOk     = !rule.cats   || rule.cats.some(k => productCat.includes(k));
+
+    card.style.display = (sectionOk && catOk) ? '' : 'none';
   });
 
   // Scroll suave a la sección del catálogo
@@ -828,6 +889,11 @@ function filterAndScrollTo(cat) {
     const offset = section.getBoundingClientRect().top + window.scrollY - 80; // 80 = altura navbar
     window.scrollTo({ top: offset, behavior: 'smooth' });
   }
+
+  // Marcar el enlace activo en el menú y limpiar los demás
+  document.querySelectorAll('.dropdown-item[data-filter]').forEach(link => {
+    link.classList.toggle('active', link.dataset.filter === cat);
+  });
 
   // Cerrar el menú desplegable en móvil
   document.querySelectorAll('.nav-item-dropdown.open').forEach(d => d.classList.remove('open'));

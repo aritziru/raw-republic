@@ -20,20 +20,8 @@
       <a href="#inicio" class="logo">
         <span class="logo-raw">RAW</span>
         <span class="logo-republic">Republic</span>
-        <!-- Zarpazo estilo Monster: Silueta triangular, desuniforme y asimétrica -->
-        <svg class="logo-claw" viewBox="0 0 100 100" xmlns="http://w3.org" aria-hidden="true" 
-             style="width: 32px; height: 32px; margin-left: 12px; filter: drop-shadow(0px 0px 5px var(--accent)); transform: rotate(12deg); transform-origin: center;">
-          <g fill="var(--accent)">
-            <!-- Garra Izquierda: Más corta y retrasada, inicia el triángulo -->
-            <path d="M 18,22 C 24,35 15,48 20,62 C 23,70 17,77 14,84 C 16,72 24,56 19,41 C 15,29 20,24 18,22 Z" />
-            
-            <!-- Garra Central: La más larga, gruesa e imponente, el vértice del triángulo -->
-            <path d="M 45,3 C 55,25 40,52 47,75 C 51,85 41,94 36,102 C 40,86 53,66 45,42 C 40,25 48,10 45,3 Z" />
-            
-            <!-- Garra Derecha: Longitud intermedia y con desgarro curvado -->
-            <path d="M 72,12 C 78,28 71,46 75,62 C 78,70 73,76 70,82 C 72,70 79,56 74,40 C 70,28 75,18 72,12 Z" />
-          </g>
-        </svg>
+        <!-- Tu logotipo en formato imagen -->
+        <img src="imagenes/logo3.png" alt="Logo RAW Republic" class="logo-img" />
       </a>
 
       <!-- [3] Nav links — sección activa via JS -->
@@ -151,7 +139,7 @@
         <a href="#top-ventas" class="btn btn-primary">
           Ver Top Ventas <i class="fa-solid fa-fire"></i>
         </a>
-        <a href="#catalogo" class="btn btn-ghost">Ver toda la colección</a>
+        <a href="#catalogo" class="btn btn-ghost" onclick="resetCatalog()">Ver toda la colección</a>
       </div>
     </div>
     <div class="hero-stat-bar">
@@ -287,7 +275,7 @@
 
     <!-- CTA hacia catálogo completo -->
     <div class="top-ventas-cta">
-      <a href="#catalogo" class="btn btn-outline btn-lg">
+      <a href="#catalogo" class="btn btn-outline btn-lg" onclick="resetCatalog()">
         Ver toda la colección <i class="fa-solid fa-arrow-down"></i>
       </a>
     </div>
@@ -372,6 +360,7 @@
                data-product-name="RAW Training Tee"
                data-product-price="24.99"
                data-product-cat="Camiseta técnica"
+               data-section="ropa"
                data-product-desc="Tejido dry-fit 4-way stretch. Anti-odor. Costuras planas sin rozaduras."
                data-img-front="imagenes/camiseta1.jpg"
                data-img-back="imagenes/camiseta2.jpg"
@@ -427,6 +416,7 @@
                data-product-name="RAW Performance Quarter-Zip"
                data-product-price="29.99"
                data-product-cat="Sudadera Deportiva"
+               data-section="ropa"
                data-product-desc="Tejido térmico ultra ligero y elástico. Ideal para calentamientos y entrenamientos al aire libre."
                data-img-front="imagenes/jersey2.jpg"
                data-img-back="imagenes/compression_espalda.jpg"
@@ -480,6 +470,7 @@
                data-product-name="RAW Industrial Hoodie"
                data-product-price="34.99"
                data-product-cat="Sudadera"
+               data-section="ropa"
                data-product-desc="Fleece 380g. Capucha estructurada. Logo bordado. Tiro oversize."
                data-img-front="imagenes/jersey1.jpg"
                data-img-back="imagenes/hoodie_espalda.jpg"
@@ -534,6 +525,7 @@
                data-product-name="RAW Aero 2-in-1 Shorts"
                data-product-price="24.99"
                data-product-cat="Shorts"
+               data-section="ropa"
                data-product-desc="Pantalón exterior ultraligero con malla interior de compresión integrada. Bolsillo oculto para el móvil y cintura elástica con cordón interior."
                data-img-front="imagenes/pantalon1.jpg"
                data-img-back="imagenes/shorts_espalda.jpg"
@@ -587,6 +579,7 @@
                data-product-name="RAW Cushion Crew Socks"
                data-product-price="9.99"
                data-product-cat="Accesorios / Calcetines"
+               data-section="accesorios"
                data-product-desc="Calcetines Gimnasio"
                data-img-front="imagenes/botella1.jpg"
                data-img-back="imagenes/tank_espalda.jpg"
@@ -640,6 +633,7 @@
                data-product-name="RAW Core Sports Bra"
                data-product-price="14.99"
                data-product-cat="Ropa mujer / Tops"
+               data-section="ropa"
                data-product-desc="Sujeción media-alta con copas extraíbles. Diseño de espalda cruzada para total libertad de movimiento. Banda elástica inferior de ajuste seguro."
                data-img-front="imagenes/top1.jpg"
                data-img-back="imagenes/top2.jpg"
@@ -694,6 +688,7 @@
                data-product-name="RAW Sculpt Lift Leggings"
                data-product-price="24.99"
                data-product-cat="Ropa mujer / Mallas"
+               data-section="ropa"
                data-product-desc="Cintura alta compresiva con efecto moldeador push-up sin costuras (seamless). Tejido técnico opaco a prueba de sentadillas (squat-proof)."
                data-img-front="imagenes/mallas1.jpg"
                data-img-back="imagenes/mallas2.jpg"
@@ -747,6 +742,7 @@
                data-product-name="RAW Stealth Cap"
                data-product-price="19.99"
                data-product-cat="Accesorios / Gorras"
+               data-section="accesorios"
                data-product-desc="Estructura de 6 paneles con visera semicurva. Cierre trasero ajustable de alta resistencia. Tejido transpirable con banda interna para el sudor."
                data-img-front="imagenes/gorra.jpg"
                data-img-back="imagenes/gorra2.jpg"
@@ -803,6 +799,7 @@
                data-product-name="RAW Heavy Duty Wrist Wraps"
                data-product-price="17.99"
                data-product-cat="Accesorios / Gimnasio"
+               data-section="accesorios"
                data-product-desc="Soporte de algodón elástico reforzado con costuras dobles. Cierre de velcro industrial y lazo de pulgar para un ajuste seguro en levantamientos pesados."
                data-img-front="imagenes/muñequeras1.jpg"
                data-img-back="imagenes/muñequeras2.jpg"
@@ -857,6 +854,7 @@
                data-product-name="RAW Thermo Insulated Bottle"
                data-product-price="19.99"
                data-product-cat="Accesorios / Hidratación"
+               data-section="accesorios"
                data-product-desc="Botella termica 750ml"
                data-img-front="imagenes/botella1.jpg"
                data-img-back="imagenes/botella2.jpg"
@@ -934,8 +932,14 @@
           <div class="cd-block"><span id="cd-secs">00</span><label>seg</label></div>
         </div>
       </div>
-      <form class="nutr-form" onsubmit="handleNewsletterSubmit(event)">
-        <input type="email" placeholder="Tu email para ser el primero" required />
+      <form class="nutr-form"
+            action="https://formsubmit.co/rawrepublic.reservas@gmail.com"
+            method="POST">
+        <!-- FormSubmit: configuración oculta -->
+        <input type="hidden" name="_subject" value="Nuevo Aviso Nutrición - RAW Republic" />
+        <input type="hidden" name="_next" value="https://raw-republic.github.io" />
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="email" name="email" placeholder="Tu email para ser el primero" required />
         <button type="submit" class="btn btn-primary">
           Avísame <i class="fa-solid fa-bell"></i>
         </button>
@@ -1070,13 +1074,21 @@
         </div>
       </div>
 
-      <form class="contact-form" onsubmit="handleContactSubmit(event)">
+      <form class="contact-form"
+            action="https://formsubmit.co/rawrepublic.reservas@gmail.com"
+            method="POST">
+        <!-- FormSubmit: configuración oculta -->
+        <input type="hidden" name="_subject" value="Nueva Duda/Consulta sobre Pedido - RAW Republic" />
+        <input type="hidden" name="_next" value="https://raw-republic.github.io" />
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="hidden" name="_template" value="table" />
+
         <div class="form-row">
-          <input type="text" placeholder="Tu nombre" required />
-          <input type="email" placeholder="Tu email" required />
+          <input type="text" name="nombre" placeholder="Tu nombre" required />
+          <input type="email" name="email" placeholder="Tu email" required />
         </div>
         <div class="form-row">
-          <input type="text" placeholder="Nº de pedido (si lo tienes)" />
+          <input type="text" name="numero_pedido" placeholder="Nº de pedido (si lo tienes)" />
           <select class="rr-select contact-select" name="motivo">
             <option value="">— Motivo de contacto —</option>
             <option value="estado-pedido">Estado de mi pedido</option>
@@ -1086,11 +1098,10 @@
             <option value="otro">Otro</option>
           </select>
         </div>
-        <textarea placeholder="Describe tu consulta con el máximo detalle posible..." rows="5" required></textarea>
+        <textarea name="mensaje" placeholder="Describe tu consulta con el máximo detalle posible..." rows="5" required></textarea>
         <button type="submit" class="btn btn-primary full-width">
           Enviar consulta <i class="fa-solid fa-paper-plane"></i>
         </button>
-        <p id="contact-success" class="nutr-success hidden">✓ Consulta enviada. Te respondemos en menos de 24h laborables.</p>
       </form>
     </div>
   </section>
@@ -1172,7 +1183,7 @@
     </div>
 
     <div class="footer-bottom">
-      <p>© 2025 RAW Republic. Todos los derechos reservados. · Madrid, España</p>
+      <p>© 2026 RAW Republic. Todos los derechos reservados. · Vitoria-Gasteiz, España</p>
       <div class="footer-bottom-links">
         <a href="#" onclick="openModal('modal-terminos'); return false;">Términos</a>
         <span>·</span>
@@ -1312,7 +1323,7 @@
           <input type="hidden" name="_template" value="table" />
           <input type="hidden" name="_captcha" value="false" />
           <input type="hidden" name="_autoresponse" value="¡Gracias por tu reserva en RAW Republic! Hemos registrado tus productos. Muy pronto nos pondremos en contacto contigo a través de este correo o por teléfono para indicarte los siguientes pasos. ¡Forja tu carácter!" />
-          <input type="hidden" name="_next" value="https://rawrepublic.netlify.app" />
+          <input type="hidden" name="_next" value="https://github.io" />
           <!-- Campo dinámico con productos del carrito -->
           <input type="hidden" name="Productos_Reservados" id="reserva-productos-field" />
 

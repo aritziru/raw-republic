@@ -138,24 +138,20 @@ ul { list-style: none; }
   text-transform: uppercase;
 }
 
-/* [4] SVG Zarpazo de tigre */
-.logo-claw {
-  width: 22px;
-  height: 28px;
+/* Logo real (imagen) en la navbar */
+.logo-img {
+  width: 32px;
+  height: auto;
+  vertical-align: middle;
   flex-shrink: 0;
-  margin-left: 2px;
-  filter: drop-shadow(0 0 4px var(--accent-glow));
-  transition: filter var(--transition);
+  margin-left: 6px;
+  object-fit: contain;
+  border-radius: 4px;
 }
 
-.logo:hover .logo-claw {
-  filter: drop-shadow(0 0 8px var(--accent));
-}
-
-.logo-claw--sm {
-  width: 18px;
-  height: 22px;
-}
+/* Clases antiguas mantenidas por si se usan en otro sitio — vacías */
+.logo-claw { display: none; }
+.logo-claw--sm { display: none; }
 
 /* ── Nav links ── */
 .nav-links {
@@ -3000,3 +2996,33 @@ section {
 
 /* Partículas nutrición */
 .nutr-particles { position: absolute; inset: 0; pointer-events: none; }
+
+
+/* ─────────────────────────────────────────────────────────────
+   22. TOAST — variantes de color (error / warning)
+───────────────────────────────────────────────────────────── */
+
+/* Éxito — naranja acento (comportamiento por defecto) */
+.toast--success i { color: var(--accent); }
+
+/* Error — rojo integrado con el diseño oscuro */
+.toast--error {
+  border-color: rgba(239, 68, 68, 0.5);
+  background: linear-gradient(
+    135deg,
+    rgba(30, 8, 8, 0.92) 0%,
+    rgba(20, 20, 20, 0.95) 100%
+  );
+  box-shadow:
+    0 0 0 1px rgba(239, 68, 68, 0.2),
+    0 6px 28px rgba(239, 68, 68, 0.25),
+    0 2px 8px rgba(0,0,0,0.6);
+}
+
+.toast--error i { color: #f87171; }
+
+/* Warning — ámbar */
+.toast--warning {
+  border-color: rgba(251, 191, 36, 0.45);
+}
+.toast--warning i { color: #fbbf24; }
