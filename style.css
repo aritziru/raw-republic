@@ -3640,3 +3640,117 @@ section {
   .mega-item { padding: 7px 0; font-size: 0.9rem; }
   .mega-sep  { margin: 4px 0; }
 }
+
+
+/* ─────────────────────────────────────────────────────────────
+   CATALOG VIEW TOGGLE — solo móvil (botón 1 col / 2 col)
+───────────────────────────────────────────────────────────── */
+
+/* Oculto en desktop — solo aparece en móvil */
+.catalog-view-toggle {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  /* Mostrar el toggle */
+  .catalog-view-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 4px;
+    margin-bottom: 16px;
+    padding: 0 2px;
+  }
+
+  .view-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--text-dim, #888);
+    font-size: 15px;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+  }
+
+  .view-btn.active {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(255, 107, 0, 0.08);
+  }
+
+  .view-btn:hover:not(.active) {
+    border-color: rgba(255,255,255,0.2);
+    color: var(--text, #f0f0f0);
+  }
+
+  /* ── Vista compacta: 2 columnas ── */
+  #mainProductGrid.view-compact {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  #mainProductGrid.view-compact .product-card {
+    border-radius: 10px;
+  }
+
+  #mainProductGrid.view-compact .product-img-wrap {
+    height: 150px;
+  }
+
+  #mainProductGrid.view-compact .product-body {
+    padding: 10px;
+    gap: 5px;
+  }
+
+  #mainProductGrid.view-compact .product-name {
+    font-size: 0.82rem;
+    line-height: 1.2;
+  }
+
+  #mainProductGrid.view-compact .product-desc {
+    display: none; /* ocultar descripción en compact para ahorrar espacio */
+  }
+
+  #mainProductGrid.view-compact .product-price {
+    font-size: 1.05rem;
+  }
+
+  #mainProductGrid.view-compact .product-tags {
+    display: none;
+  }
+
+  #mainProductGrid.view-compact .product-selectors {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    margin-top: 6px;
+  }
+
+  #mainProductGrid.view-compact .selector-group label {
+    font-size: 0.65rem;
+  }
+
+  #mainProductGrid.view-compact .rr-select {
+    font-size: 0.75rem;
+    padding: 7px 22px 7px 8px;
+    min-height: 34px;
+  }
+
+  #mainProductGrid.view-compact .btn.full-width,
+  #mainProductGrid.view-compact .rr-add-to-cart {
+    padding: 9px 10px;
+    font-size: 0.75rem;
+    min-height: 38px;
+    letter-spacing: 0.04em;
+  }
+
+  /* Subsección anchors en compact no rompen el grid */
+  #mainProductGrid.view-compact .subseccion-anchor,
+  #mainProductGrid.view-compact .subseccion-header {
+    grid-column: 1 / -1;
+  }
+}

@@ -398,8 +398,18 @@
       </div>
     </div>
 
+    <!-- Botón alternar vista (solo móvil) -->
+    <div class="catalog-view-toggle" id="catalogViewToggle" aria-label="Cambiar vista de productos">
+      <button class="view-btn active" id="viewBtnSingle" onclick="setCatalogView('single')" aria-label="Vista una columna" title="Una columna">
+        <i class="fa-solid fa-list"></i>
+      </button>
+      <button class="view-btn" id="viewBtnCompact" onclick="setCatalogView('compact')" aria-label="Vista dos columnas" title="Dos columnas">
+        <i class="fa-solid fa-grip"></i>
+      </button>
+    </div>
+
     <!-- Grid de productos (todos) — [5] hover-carousel activado -->
-    <div class="product-grid">
+    <div class="product-grid" id="mainProductGrid">
 
       <!-- ── SUBSECCIÓN VERANO ── -->
       <div id="seccion-verano" class="subseccion-anchor" data-theme="sun" style="display:contents"></div>
@@ -1433,6 +1443,14 @@
         <!-- FormSubmit: configuración oculta -->
         <input type="hidden" name="_subject" value="Nuevo Aviso Nutrición - RAW Republic" />
         <input type="hidden" name="_next" value="https://aritziru.github.io/raw-republic/gracias-nutricion.html" />
+        <input type="hidden" name="_captcha" value="false" />
+        <!-- Campo de email visible -->
+        <input type="email"
+               name="email"
+               placeholder="Tu correo electrónico"
+               required
+               autocomplete="email"
+               aria-label="Email para recibir el aviso de lanzamiento" />
         <button type="submit" class="btn btn-primary">
           Avísame <i class="fa-solid fa-bell"></i>
         </button>

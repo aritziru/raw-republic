@@ -1600,3 +1600,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
 })();
 
+
+/* ─────────────────────────────────────────────────────────────
+   CATALOG VIEW TOGGLE — alterna 1 columna / 2 columnas (móvil)
+───────────────────────────────────────────────────────────── */
+function setCatalogView(mode) {
+  const grid       = document.getElementById('mainProductGrid');
+  const btnSingle  = document.getElementById('viewBtnSingle');
+  const btnCompact = document.getElementById('viewBtnCompact');
+  if (!grid) return;
+
+  if (mode === 'compact') {
+    grid.classList.add('view-compact');
+    btnCompact?.classList.add('active');
+    btnSingle?.classList.remove('active');
+    try { localStorage.setItem('rawCatalogView', 'compact'); } catch(e) {}
+  } else {
+    grid.classList.remove('view-compact');
+    btnSingle?.classList.add('active');
+    btnCompact?.classList.remove('active');
+    try { localStorage.setItem('rawCatalogView', 'single'); } catch(e) {}
+  }
+}
+
+/* Restaurar preferencia guardada al cargar */
+document.addEventListener('DOMContentLoaded', function () {
+  try {
+    const saved = localStorage.getItem('rawCatalogView');
+    if (saved === 'compact') setCatalogView('compact');
+  } catch(e) {}
+});
