@@ -1773,14 +1773,14 @@
 
       <!-- Panel de métodos de pago (visual, futuro) -->
       <div id="cartPaymentPanel">
-        <button type="button" class="btn btn-primary full-width cart-pay-btn" onclick="showReservaForm()">
-          <i class="fa-brands fa-paypal"></i> Proceder al pago
+        <button type="button" class="btn btn-primary full-width cart-pay-btn" onclick="showReservaForm('paypal')">
+          <i class="fa-brands fa-paypal"></i> Pagar con PayPal
         </button>
-        <a href="https://www.revolut.com" target="_blank" rel="noopener" class="btn btn-ghost full-width cart-pay-btn" style="margin-top:10px">
+        <button type="button" class="btn btn-ghost full-width cart-pay-btn" style="margin-top:10px" onclick="showReservaForm('revolut')">
           <i class="fa-solid fa-bolt"></i> Pagar con Revolut
-        </a>
-        <!-- Botón tarjeta bancaria (visual, abre panel de campos) -->
-        <button class="btn btn-ghost full-width cart-pay-btn" style="margin-top:10px" onclick="toggleCardPanel()">
+        </button>
+        <!-- Botón tarjeta bancaria -->
+        <button class="btn btn-ghost full-width cart-pay-btn" style="margin-top:10px" onclick="showReservaForm('tarjeta')">
           <i class="fa-solid fa-credit-card"></i> Pagar con Tarjeta Bancaria
         </button>
         <!-- Panel visual de campos de tarjeta -->
@@ -2142,41 +2142,67 @@
 
 
   <script>
+    /* ══════════════════════════════════════════════════════════
+     *  CONFIGURACIÓN DE ENLACES DE PAGO
+     *  ─────────────────────────────────────────────────────────
+     *  PAYPAL_LINK : https://www.paypal.com/paypalme/TuUsuario/
+     *               (el importe se añade automáticamente al final)
+     *  REVOLUT_LINK: tu enlace de cobro de Revolut
+     *  CARD_LINK   : URL de tu pasarela de tarjeta — dejar vacío
+     *               hasta que esté integrada
+     * ══════════════════════════════════════════════════════════ */
+    var PAYPAL_LINK  = 'https://www.paypal.com/paypalme/TuUsuario/';
+    var REVOLUT_LINK = 'https://revolut.me/TuUsuario/';
+    var CARD_LINK    = ''; // pendiente de integración
+
+    /* Método de pago elegido antes de abrir el formulario */
+    var metodoPagoElegido = 'paypal';
+
+    /* ── Abre el formulario guardando el método elegido ── */
+    function showReservaForm(metodo) {
+      metodoPagoElegido = metodo || 'paypal';
+      document.getElementById('cartPaymentPanel').style.display = 'none';
+      document.getElementById('cartReservaForm').style.display  = 'block';
+    }
+
+    function hideReservaForm() {
+      document.getElementById('cartReservaForm').style.display  = 'none';
+      document.getElementById('cartPaymentPanel').style.display = 'block';
+    }
+
     function toggleCardPanel() {
       var p = document.getElementById('cardFieldsPanel');
       p.style.display = p.style.display === 'none' ? 'block' : 'none';
     }
-    function showReservaForm() {
-      document.getElementById('cartPaymentPanel').style.display = 'none';
-      document.getElementById('cartReservaForm').style.display = 'block';
-    }
-    function hideReservaForm() {
-      document.getElementById('cartReservaForm').style.display = 'none';
-      document.getElementById('cartPaymentPanel').style.display = 'block';
+
+    /* ── Devuelve la URL de pago según el método elegido ── */
+    function getPaymentUrl(totalNum) {
+      if (metodoPagoElegido === 'revolut') {
+        return REVOLUT_LINK ? REVOLUT_LINK + totalNum.toFixed(2) : 'https://www.revolut.com';
+      }
+      if (metodoPagoElegido === 'tarjeta') {
+        return CARD_LINK || null;
+      }
+      /* paypal por defecto */
+      if (PAYPAL_LINK && PAYPAL_LINK.indexOf('TuUsuario') === -1) {
+        return PAYPAL_LINK + totalNum.toFixed(2);
+      }
+      return null;
     }
 
-    /**
-     * prepareReservaSubmit — rellena los campos ocultos del form y,
-     * tras el envío por FormSubmit, redirige a PayPal con el importe total.
-     *
-     * INSTRUCCIONES PARA ACTIVAR PAYPAL:
-     *   1. Ve a tu cuenta PayPal → "Solicitar dinero" → crea un enlace de pago.
-     *   2. Copia el enlace (ej: https://www.paypal.com/paypalme/TuUsuario/IMPORTE)
-     *      o el enlace del botón que genera PayPal Business.
-     *   3. Pega ese enlace como valor de PAYPAL_LINK abajo.
-     *   4. El script sustituirá automáticamente IMPORTE por el total del carrito
-     *      si usas el formato https://www.paypal.com/paypalme/TuUsuario/
-     */
-    var PAYPAL_LINK = 'https://www.paypal.com/paypalme/TuUsuario/';
-    // ↑ ╔══════════════════════════════════════════════════════╗
-    //   ║  PEGA AQUÍ TU ENLACE DE PAGO DE PAYPAL              ║
-    //   ╚══════════════════════════════════════════════════════╝
-
+    /* ══════════════════════════════════════════════════════════
+     *  prepareReservaSubmit
+     *  1. Valida el formulario
+     *  2. Rellena campos ocultos (productos + total)
+     *  3. Envía datos a FormSubmit en SEGUNDO PLANO (fetch)
+     *     → el correo con la dirección te llega igualmente
+     *  4. En cuanto el fetch termina → window.location.href
+     *     salta a la URL de pago (sin redirigir a gracias.html)
+     * ══════════════════════════════════════════════════════════ */
     function prepareReservaSubmit(e) {
-      /* ── PASO 0: Frenar el envío automático ── */
       e.preventDefault();
 
-      /* ── PASO 1: Validar todos los campos obligatorios ── */
+      /* ── PASO 1: Validar ── */
       var form = document.getElementById('formReserva');
       if (!form.checkValidity()) {
         form.reportValidity();
@@ -2196,20 +2222,37 @@
         items.length ? items.join(' // ') : 'Sin detalle de productos';
 
       /* ── PASO 3: Recoger importe total ── */
-      var totalEl = document.getElementById('cartTotal');
+      var totalEl   = document.getElementById('cartTotal');
       var totalText = totalEl ? totalEl.textContent.trim() : '0,00 €';
       document.getElementById('reserva-total-field').value = totalText;
+      var totalNum  = parseFloat(totalText.replace(',', '.').replace(/[^0-9.]/g, '')) || 0;
 
-      /* ── PASO 4: Calcular importe numérico para PayPal ── */
-      var totalNum = parseFloat(totalText.replace(',', '.').replace(/[^0-9.]/g, '')) || 0;
+      /* ── PASO 4: URL de pago destino ── */
+      var paymentUrl = getPaymentUrl(totalNum);
 
-      /* ── PASO 5: Abrir PayPal inmediatamente (antes de que el navegador abandone la página) ── */
-      if (PAYPAL_LINK && PAYPAL_LINK.indexOf('TuUsuario') === -1 && totalNum > 0) {
-        window.open(PAYPAL_LINK + totalNum.toFixed(2), '_blank');
-      }
+      /* ── PASO 5: Bloquear botón para evitar doble envío ── */
+      var btn = document.getElementById('btnConfirmarPedido');
+      if (btn) { btn.disabled = true; btn.textContent = 'Enviando…'; }
 
-      /* ── PASO 6: Enviar el formulario a FormSubmit (redirige a la página de gracias) ── */
-      form.submit();
+      /* ── PASO 6: Envío en SEGUNDO PLANO a FormSubmit ── */
+      fetch(form.action, {
+        method : 'POST',
+        body   : new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      })
+      .finally(function() {
+        /* .finally() garantiza la redirección aunque FormSubmit falle */
+        if (paymentUrl) {
+          window.location.href = paymentUrl;
+        } else {
+          /* Tarjeta sin integración: aviso y reactiva el botón */
+          if (btn) {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fa-solid fa-credit-card"></i> Confirmar y Pagar con Tarjeta';
+          }
+          alert('La pasarela de tarjeta bancaria está en integración.\nPor favor elige PayPal o Revolut para completar tu pedido.');
+        }
+      });
     }
   </script>
   <script src="script.js"></script>
