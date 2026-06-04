@@ -1632,3 +1632,449 @@ document.addEventListener('DOMContentLoaded', function () {
     if (saved === 'compact') setCatalogView('compact');
   } catch(e) {}
 });
+
+
+/* ─────────────────────────────────────────────────────────────
+   REVIEWS — Sistema de reseñas con PIN admin
+   Almacenamiento: localStorage (pendientes + publicadas)
+   Admin PIN: cámbialo en ADMIN_PIN
+───────────────────────────────────────────────────────────── */
+(function initReviews() {
+
+  /* ══ CONFIGURACIÓN ══════════════════════════════════════════ */
+  const ADMIN_PIN  = '1234';          // ← CAMBIA ESTE PIN
+  const LS_KEY_PUB = 'rr_reviews_pub';
+  const LS_KEY_PEN = 'rr_reviews_pen';
+
+  /* ══ ESTADO ═════════════════════════════════════════════════ */
+  let selectedStars    = 0;
+  let adminUnlocked    = false;
+  let adminCurrentTab  = 'pending';
+  let editingReviewId  = null;    // para saber si editamos o respondemos
+
+  /* ══ UTILIDADES ═════════════════════════════════════════════ */
+  function loadPub() {
+    try { return JSON.parse(localStorage.getItem(LS_KEY_PUB)) || []; } catch(e) { return []; }
+  }
+  function loadPen() {
+    try { return JSON.parse(localStorage.getItem(LS_KEY_PEN)) || []; } catch(e) { return []; }
+  }
+  function savePub(arr) { localStorage.setItem(LS_KEY_PUB, JSON.stringify(arr)); }
+  function savePen(arr) { localStorage.setItem(LS_KEY_PEN, JSON.stringify(arr)); }
+
+  function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
+
+  function starsHTML(n, cls) {
+    let s = '';
+    for (let i = 1; i <= 5; i++) {
+      s += `<i class="fa-star ${i <= n ? 'fa-solid' : 'fa-regular'} ${cls || 'rv-star'}"></i>`;
+    }
+    return s;
+  }
+
+  function formatDate(ts) {
+    const d = new Date(ts);
+    return d.toLocaleDateString('es-ES', { day:'2-digit', month:'short', year:'numeric' });
+  }
+
+  /* ══ RENDER PÚBLICO ══════════════════════════════════════════ */
+  function renderPublic() {
+    const list    = document.getElementById('reviewsList');
+    const empty   = document.getElementById('reviewsEmpty');
+    const summary = document.getElementById('reviewsSummary');
+    const avgStars= document.getElementById('reviewsAvgStars');
+    const avgNum  = document.getElementById('reviewsAvgNum');
+    const avgLabel= document.getElementById('reviewsAvgLabel');
+    if (!list) return;
+
+    const reviews = loadPub();
+
+    if (!reviews.length) {
+      empty && (empty.style.display = '');
+      summary && (summary.style.display = 'none');
+      list.innerHTML = '';
+      if (empty) list.appendChild(empty);
+      return;
+    }
+
+    /* Resumen */
+    const avg = reviews.reduce((a, r) => a + r.stars, 0) / reviews.length;
+    if (summary) {
+      summary.style.display = 'flex';
+      avgStars.innerHTML    = starsHTML(Math.round(avg), 'rv-star-sm');
+      avgNum.textContent    = avg.toFixed(1);
+      avgLabel.textContent  = `(${reviews.length} reseña${reviews.length !== 1 ? 's' : ''})`;
+    }
+
+    /* Cards */
+    empty && (empty.style.display = 'none');
+    list.innerHTML = '';
+
+    const sorted = [...reviews].sort((a, b) => b.ts - a.ts);
+    sorted.forEach(r => {
+      const card = document.createElement('article');
+      card.className = 'rv-card';
+      card.dataset.id = r.id;
+      let replyHTML = '';
+      if (r.reply) {
+        replyHTML = `<div class="rv-reply">
+          <span class="rv-reply-label"><i class="fa-solid fa-reply"></i> RAW Republic</span>
+          <p class="rv-reply-text">${escapeHTML(r.reply)}</p>
+        </div>`;
+      }
+      card.innerHTML = `
+        <div class="rv-card-top">
+          <div class="rv-avatar">${r.nombre.charAt(0).toUpperCase()}</div>
+          <div class="rv-card-meta">
+            <span class="rv-nombre">${escapeHTML(r.nombre)}</span>
+            <div class="rv-stars-row">${starsHTML(r.stars)}<span class="rv-date">${formatDate(r.ts)}</span></div>
+          </div>
+        </div>
+        <p class="rv-texto">${escapeHTML(r.comentario)}</p>
+        ${replyHTML}
+      `;
+      list.appendChild(card);
+    });
+  }
+
+  function escapeHTML(str) {
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+              .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  }
+
+  /* ══ ESTRELLAS DEL FORMULARIO ════════════════════════════════ */
+  function initStarPicker() {
+    const stars = document.querySelectorAll('#rfStars .rf-star');
+    stars.forEach(star => {
+      star.addEventListener('mouseenter', () => highlightStars(+star.dataset.val, stars));
+      star.addEventListener('mouseleave', () => highlightStars(selectedStars, stars));
+      star.addEventListener('click', () => {
+        selectedStars = +star.dataset.val;
+        highlightStars(selectedStars, stars);
+      });
+    });
+  }
+
+  function highlightStars(n, stars) {
+    stars.forEach(s => {
+      const v = +s.dataset.val;
+      s.classList.toggle('fa-solid',   v <= n);
+      s.classList.toggle('fa-regular', v >  n);
+      s.classList.toggle('rf-star--on', v <= n);
+    });
+  }
+
+  /* ══ ENVÍO DE RESEÑA ═════════════════════════════════════════ */
+  window.submitReview = function() {
+    const nombre    = (document.getElementById('rfNombre')?.value || '').trim();
+    const email     = (document.getElementById('rfEmail')?.value || '').trim();
+    const comentario= (document.getElementById('rfComentario')?.value || '').trim();
+    const sentMsg   = document.getElementById('rfSentMsg');
+
+    if (!nombre || !email || !comentario || !selectedStars) {
+      alert('Por favor, rellena todos los campos y elige una valoración.');
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      alert('Introduce un email válido.');
+      return;
+    }
+
+    const pending = loadPen();
+    pending.push({ id: uid(), nombre, email, comentario, stars: selectedStars, ts: Date.now() });
+    savePen(pending);
+
+    /* Reset form */
+    document.getElementById('rfNombre').value = '';
+    document.getElementById('rfEmail').value  = '';
+    document.getElementById('rfComentario').value = '';
+    selectedStars = 0;
+    highlightStars(0, document.querySelectorAll('#rfStars .rf-star'));
+
+    if (sentMsg) { sentMsg.style.display = ''; setTimeout(() => { sentMsg.style.display = 'none'; }, 5000); }
+  };
+
+  /* ══ PANEL ADMIN — acceso ════════════════════════════════════ */
+  window.openAdminReviews = function() {
+    adminUnlocked = false;
+    const pinPanel   = document.getElementById('adminPinPanel');
+    const adminPanel = document.getElementById('adminPanel');
+    const pinInput   = document.getElementById('adminPinInput');
+    const pinError   = document.getElementById('adminPinError');
+    if (pinPanel)   pinPanel.style.display   = '';
+    if (adminPanel) adminPanel.style.display = 'none';
+    if (pinInput)   { pinInput.value = ''; pinInput.focus(); }
+    if (pinError)   pinError.style.display = 'none';
+    openModal('modal-admin-reviews');
+  };
+
+  window.checkAdminPin = function() {
+    const val   = (document.getElementById('adminPinInput')?.value || '');
+    const error = document.getElementById('adminPinError');
+    if (val === ADMIN_PIN) {
+      adminUnlocked = true;
+      document.getElementById('adminPinPanel').style.display = 'none';
+      document.getElementById('adminPanel').style.display    = '';
+      showAdminTab('pending');
+    } else {
+      if (error) error.style.display = '';
+    }
+  };
+
+  /* Enter en el input del PIN */
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && document.getElementById('adminPinInput') === document.activeElement) {
+      window.checkAdminPin();
+    }
+  });
+
+  /* ══ PANEL ADMIN — tabs y lista ══════════════════════════════ */
+  window.showAdminTab = function(tab) {
+    adminCurrentTab = tab;
+    const tabPen   = document.getElementById('tabPending');
+    const tabPub   = document.getElementById('tabPublished');
+    const penBadge = document.getElementById('pendingBadge');
+    const pubBadge = document.getElementById('publishedBadge');
+
+    if (tabPen) tabPen.classList.toggle('active', tab === 'pending');
+    if (tabPub) tabPub.classList.toggle('active', tab === 'published');
+
+    const pending   = loadPen();
+    const published = loadPub();
+    if (penBadge) penBadge.textContent = pending.length;
+    if (pubBadge) pubBadge.textContent = published.length;
+
+    renderAdminList(tab === 'pending' ? pending : published, tab);
+  };
+
+  function renderAdminList(reviews, tab) {
+    const container = document.getElementById('adminReviewsList');
+    if (!container) return;
+
+    if (!reviews.length) {
+      container.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:24px 0;">No hay reseñas en esta sección.</p>';
+      return;
+    }
+
+    container.innerHTML = '';
+    const sorted = [...reviews].sort((a, b) => b.ts - a.ts);
+    sorted.forEach(r => {
+      const card = document.createElement('div');
+      card.className = 'admin-rv-card';
+      let replyBadge = r.reply ? `<span class="admin-rv-replied"><i class="fa-solid fa-reply"></i> Respondida</span>` : '';
+      let buttonsHTML = '';
+
+      if (tab === 'pending') {
+        buttonsHTML = `
+          <button class="admin-rv-btn admin-rv-btn--approve" onclick="adminApprove('${r.id}')">
+            <i class="fa-solid fa-check"></i> Publicar
+          </button>
+          <button class="admin-rv-btn admin-rv-btn--edit" onclick="adminEditReview('${r.id}','pending')">
+            <i class="fa-solid fa-pen"></i> Editar
+          </button>
+          <button class="admin-rv-btn admin-rv-btn--delete" onclick="adminDelete('${r.id}','pending')">
+            <i class="fa-solid fa-trash"></i>
+          </button>`;
+      } else {
+        buttonsHTML = `
+          <button class="admin-rv-btn admin-rv-btn--reply" onclick="adminReply('${r.id}')">
+            <i class="fa-solid fa-reply"></i> ${r.reply ? 'Editar resp.' : 'Responder'}
+          </button>
+          <button class="admin-rv-btn admin-rv-btn--edit" onclick="adminEditReview('${r.id}','published')">
+            <i class="fa-solid fa-pen"></i> Editar
+          </button>
+          <button class="admin-rv-btn admin-rv-btn--delete" onclick="adminDelete('${r.id}','published')">
+            <i class="fa-solid fa-trash"></i>
+          </button>`;
+      }
+
+      card.innerHTML = `
+        <div class="admin-rv-top">
+          <div>
+            <strong class="admin-rv-nombre">${escapeHTML(r.nombre)}</strong>
+            <span class="admin-rv-email">${escapeHTML(r.email)}</span>
+          </div>
+          <div class="admin-rv-right">
+            ${starsHTML(r.stars, 'rv-star-sm')}
+            <span class="admin-rv-date">${formatDate(r.ts)}</span>
+            ${replyBadge}
+          </div>
+        </div>
+        <p class="admin-rv-texto">${escapeHTML(r.comentario)}</p>
+        ${r.reply ? `<p class="admin-rv-reply-preview"><i class="fa-solid fa-reply"></i> ${escapeHTML(r.reply)}</p>` : ''}
+        <div class="admin-rv-actions">${buttonsHTML}</div>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  /* ══ ACCIONES ADMIN ══════════════════════════════════════════ */
+  window.adminApprove = function(id) {
+    let pending  = loadPen();
+    let published= loadPub();
+    const idx    = pending.findIndex(r => r.id === id);
+    if (idx === -1) return;
+    const [rev]  = pending.splice(idx, 1);
+    delete rev.email; // no guardar email en publicadas
+    published.push(rev);
+    savePen(pending);
+    savePub(published);
+    renderPublic();
+    showAdminTab('pending');
+  };
+
+  window.adminDelete = function(id, tab) {
+    if (!confirm('¿Eliminar esta reseña?')) return;
+    if (tab === 'pending') {
+      savePen(loadPen().filter(r => r.id !== id));
+      showAdminTab('pending');
+    } else {
+      savePub(loadPub().filter(r => r.id !== id));
+      renderPublic();
+      showAdminTab('published');
+    }
+  };
+
+  window.adminEditReview = function(id, tab) {
+    const reviews = tab === 'pending' ? loadPen() : loadPub();
+    const rev = reviews.find(r => r.id === id);
+    if (!rev) return;
+    editingReviewId = id;
+
+    const title = document.getElementById('editReviewTitle');
+    const body  = document.getElementById('editReviewBody');
+    if (title) title.textContent = 'Editar reseña';
+
+    body.innerHTML = `
+      <div style="margin-bottom:12px;">
+        <label style="font-size:12px;color:var(--text-muted);display:block;margin-bottom:4px;">Nombre</label>
+        <input class="rf-input" id="editNombre" type="text" value="${escapeHTML(rev.nombre)}" maxlength="60" style="width:100%"/>
+      </div>
+      <div style="margin-bottom:12px;">
+        <label style="font-size:12px;color:var(--text-muted);display:block;margin-bottom:4px;">Comentario</label>
+        <textarea class="rf-textarea" id="editComentario" rows="4" maxlength="600" style="width:100%">${escapeHTML(rev.comentario)}</textarea>
+      </div>
+      <div style="margin-bottom:20px;">
+        <label style="font-size:12px;color:var(--text-muted);display:block;margin-bottom:6px;">Estrellas</label>
+        <div id="editStarPicker" style="display:flex;gap:6px;">
+          ${[1,2,3,4,5].map(n => `<i class="fa-star ${n<=rev.stars?'fa-solid':'fa-regular'} edit-star" data-val="${n}" style="font-size:22px;cursor:pointer;color:${n<=rev.stars?'var(--accent)':'var(--text-muted)'};transition:color .15s;"></i>`).join('')}
+        </div>
+      </div>
+      <button class="btn btn-primary" style="width:100%" onclick="saveEditReview('${id}','${tab}')">
+        <i class="fa-solid fa-floppy-disk"></i> Guardar cambios
+      </button>
+    `;
+
+    /* Star picker edición */
+    let editStars = rev.stars;
+    body.querySelectorAll('.edit-star').forEach(star => {
+      star.addEventListener('mouseenter', () => {
+        body.querySelectorAll('.edit-star').forEach(s => {
+          const v = +s.dataset.val;
+          s.classList.toggle('fa-solid', v <= +star.dataset.val);
+          s.classList.toggle('fa-regular', v > +star.dataset.val);
+          s.style.color = v <= +star.dataset.val ? 'var(--accent)' : 'var(--text-muted)';
+        });
+      });
+      star.addEventListener('mouseleave', () => {
+        body.querySelectorAll('.edit-star').forEach(s => {
+          const v = +s.dataset.val;
+          s.classList.toggle('fa-solid', v <= editStars);
+          s.classList.toggle('fa-regular', v > editStars);
+          s.style.color = v <= editStars ? 'var(--accent)' : 'var(--text-muted)';
+        });
+      });
+      star.addEventListener('click', () => {
+        editStars = +star.dataset.val;
+        body.dataset.editStars = editStars;
+      });
+    });
+    body.dataset.editStars = editStars;
+
+    closeModal('modal-admin-reviews');
+    openModal('modal-edit-review');
+  };
+
+  window.saveEditReview = function(id, tab) {
+    const nombre     = (document.getElementById('editNombre')?.value || '').trim();
+    const comentario = (document.getElementById('editComentario')?.value || '').trim();
+    const stars      = parseInt(document.getElementById('editReviewBody')?.dataset.editStars) || 0;
+    if (!nombre || !comentario || !stars) { alert('Rellena todos los campos.'); return; }
+
+    if (tab === 'pending') {
+      const pending = loadPen();
+      const rev = pending.find(r => r.id === id);
+      if (rev) { rev.nombre = nombre; rev.comentario = comentario; rev.stars = stars; }
+      savePen(pending);
+    } else {
+      const published = loadPub();
+      const rev = published.find(r => r.id === id);
+      if (rev) { rev.nombre = nombre; rev.comentario = comentario; rev.stars = stars; }
+      savePub(published);
+      renderPublic();
+    }
+    closeModal('modal-edit-review');
+    openModal('modal-admin-reviews');
+    showAdminTab(tab);
+  };
+
+  window.adminReply = function(id) {
+    const published = loadPub();
+    const rev = published.find(r => r.id === id);
+    if (!rev) return;
+
+    const title = document.getElementById('editReviewTitle');
+    const body  = document.getElementById('editReviewBody');
+    if (title) title.textContent = 'Responder reseña';
+
+    body.innerHTML = `
+      <div style="background:var(--surface-2);border-radius:8px;padding:14px;margin-bottom:16px;">
+        <strong style="font-size:13px;">${escapeHTML(rev.nombre)}</strong>
+        <div style="margin:4px 0;">${starsHTML(rev.stars, 'rv-star-sm')}</div>
+        <p style="color:var(--text-muted);font-size:13px;margin:0;">${escapeHTML(rev.comentario)}</p>
+      </div>
+      <label style="font-size:12px;color:var(--text-muted);display:block;margin-bottom:6px;">Tu respuesta</label>
+      <textarea class="rf-textarea" id="replyText" rows="4" maxlength="600" placeholder="Escribe tu respuesta..." style="width:100%">${rev.reply ? escapeHTML(rev.reply) : ''}</textarea>
+      <div style="display:flex;gap:10px;margin-top:16px;">
+        <button class="btn btn-primary" style="flex:1" onclick="saveReply('${id}')">
+          <i class="fa-solid fa-floppy-disk"></i> Guardar
+        </button>
+        ${rev.reply ? `<button class="btn btn-ghost" style="flex:0 0 auto;" onclick="deleteReply('${id}')"><i class="fa-solid fa-trash"></i> Borrar resp.</button>` : ''}
+      </div>
+    `;
+    closeModal('modal-admin-reviews');
+    openModal('modal-edit-review');
+  };
+
+  window.saveReply = function(id) {
+    const text = (document.getElementById('replyText')?.value || '').trim();
+    if (!text) { alert('Escribe una respuesta.'); return; }
+    const published = loadPub();
+    const rev = published.find(r => r.id === id);
+    if (rev) rev.reply = text;
+    savePub(published);
+    renderPublic();
+    closeModal('modal-edit-review');
+    openModal('modal-admin-reviews');
+    showAdminTab('published');
+  };
+
+  window.deleteReply = function(id) {
+    if (!confirm('¿Eliminar esta respuesta?')) return;
+    const published = loadPub();
+    const rev = published.find(r => r.id === id);
+    if (rev) delete rev.reply;
+    savePub(published);
+    renderPublic();
+    closeModal('modal-edit-review');
+    openModal('modal-admin-reviews');
+    showAdminTab('published');
+  };
+
+  /* ══ INIT ════════════════════════════════════════════════════ */
+  document.addEventListener('DOMContentLoaded', function() {
+    initStarPicker();
+    renderPublic();
+  });
+
+})();
