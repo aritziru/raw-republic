@@ -249,20 +249,21 @@
         </div>
       </article>
 
-      <!-- TOP 2 — RAW Industrial Hoodie -->
+      <!-- TOP 2 — Camiseta Chica -->
       <article class="product-card featured-card"
                data-product-id="RR-003"
-               data-product-name="RAW Industrial Hoodie"
+               data-product-name="Camiseta Chica Gimnasio"
                data-product-price="34.99"
                data-product-cat="Sudadera"
                data-product-desc="Fleece 380g. Capucha estructurada. Logo bordado. Tiro oversize."
-               data-img-front="imagenes/jersey1.jpg"
-               data-img-back="imagenes/jersey2.jpg"
-               data-sizes="S,M,L,XL,XXL"
-               data-colors="Negro,Grafito,Crema"
+               data-img-front="imagenes/camisetachica2.jpg"
+               data-img-back="imagenes/camisetachica1.jpg"
+               data-img-third="imagenes/camisetachica3.jpg"
+               data-sizes="XS,S,M,L,XL"
+               data-colors="Blanco,Negro,Rosa"
                onclick="openProductModal(this)">
-        <div class="product-img-wrap" data-front="imagenes/jersey1.jpg" data-back="imagenes/jersey2.jpg">
-          <img src="imagenes/jersey1.png" alt="RAW Industrial Hoodie" class="product-img-placeholder" style="object-fit: cover; width: 100%; height: 100%;">
+        <div class="product-img-wrap" data-front="imagenes/camisetachica2.jpg" data-back="imagenes/camisetachica1.jpg" data-third="imagenes/camisetachica3.jpg">
+          <img src="imagenes/camisetachica2.png" alt="RAW Industrial Hoodie" class="product-img-placeholder" style="object-fit: cover; width: 100%; height: 100%;">
           <div class="product-badge-bop">Bajo Pedido</div>
           <div class="product-badge-new">Nuevo</div>
           <div class="product-badge-top"><i class="fa-solid fa-fire"></i> Top 2</div>
@@ -270,7 +271,7 @@
         </div>
         <div class="product-body">
           <p class="product-cat">Sudadera</p>
-          <h3 class="product-name">RAW Industrial Hoodie</h3>
+          <h3 class="product-name">Camiseta Chica Gimnasio</h3>
           <p class="product-desc">Fleece 380g. Capucha estructurada. Logo bordado. Tiro oversize.</p>
           <p class="product-price">34.99 <span class="currency">€</span></p>
           <p class="delivery-notice"><i class="fa-solid fa-clock"></i> Entrega: <strong>10-15 días lab.</strong></p>
@@ -284,17 +285,17 @@
         </div>
       </article>
 
-      <!-- TOP 3 — RAW Rep Shorts -->
+      <!-- TOP 3 — RAW Socks -->
       <article class="product-card featured-card"
                data-product-id="RR-004"
-               data-product-name="RAW Rep Shorts"
+               data-product-name="RAW Cushion Crew Socks"
                data-product-price="24.99"
-               data-product-cat="Shorts"
-               data-product-desc="Tejido elástico 2-way. Bolsillo con cremallera. Interior de compresión integrado."
+               data-product-cat="Accesorios / Calcetines"
+               data-product-desc="Par de calcetines de media caña con planta acolchada anti-impactos. Banda elástica en el arco del pie para evitar desplazamientos y rozaduras."
                data-img-front="imagenes/calcetines1.jpg"
                data-img-back="imagenes/calcetines2.jpg"
-               data-sizes="S,M,L,XL"
-               data-colors="Negro,Caqui,Naranja RAW"
+               data-sizes="XS (EU 31-35),S (EU 35-38),M (EU 38-42),L (EU 43-46)"
+               data-colors="Blanco,Negro"
                onclick="openProductModal(this)">
         <div class="product-img-wrap" data-front="imagenes/calcetines1.jpg" data-back="imagenes/calcetines2.jpg">
           <img src="imagenes/calcetines1.jpg" alt="RAW Rep Shorts" class="product-img-main" />
@@ -303,9 +304,9 @@
           <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
         </div>
         <div class="product-body">
-          <p class="product-cat">Shorts</p>
-          <h3 class="product-name">RAW Rep Shorts</h3>
-          <p class="product-desc">Tejido elástico 2-way. Bolsillo con cremallera. Interior de compresión integrado.</p>
+          <p class="product-cat">Accesorios / Calcetines</p>
+          <h3 class="product-name">RAW Cushion Crew Socks</h3>
+          <p class="product-desc">Par de calcetines de media caña con planta acolchada anti-impactos. Banda elástica en el arco del pie para evitar desplazamientos y rozaduras.</p>
           <p class="product-price">24,99 <span class="currency">€</span></p>
           <p class="delivery-notice"><i class="fa-solid fa-clock"></i> Entrega: <strong>10-15 días lab.</strong></p>
           <button class="btn btn-primary full-width rr-add-to-cart"
@@ -439,7 +440,7 @@
           <p class="product-price">24,99 <span class="currency">€</span></p>
           <div class="product-selectors">
             <div class="selector-group">
-              <label for="talla-001">Talla</label>
+              <label for="talla-001" class="talla-label-row">Talla<button type="button" class="guia-tallas-btn" onclick="event.stopPropagation();openModal('modal-guia-tallas')" aria-label="Consultar guía de tallas"><i class="fa-solid fa-ruler-horizontal"></i> Guía de tallas</button></label>
               <div class="select-wrap">
                 <select id="talla-001" name="talla" class="rr-select" data-variant="size" onclick="event.stopPropagation()">
                   <option value="">— Elige talla —</option>
@@ -495,7 +496,7 @@
           <p class="product-price">29,99 <span class="currency">€</span></p>
           <div class="product-selectors">
             <div class="selector-group">
-              <label for="talla-002">Talla</label>
+              <label for="talla-002" class="talla-label-row">Talla<button type="button" class="guia-tallas-btn" onclick="event.stopPropagation();openModal('modal-guia-tallas')" aria-label="Consultar guía de tallas"><i class="fa-solid fa-ruler-horizontal"></i> Guía de tallas</button></label>
               <div class="select-wrap">
                 <select id="talla-002" name="talla" class="rr-select" data-variant="size" onclick="event.stopPropagation()">
                   <option value="">— Elige talla —</option>
@@ -532,13 +533,14 @@
                data-product-cat="Camiseta sin mangas"
                data-section="ropa"
                data-product-desc="Camiseta de tirantes en tejido mesh ultraventilado. Corte regular con bajo recto y costuras reforzadas. Ideal para sesiones de alta intensidad en calor."
-               data-img-front=""
-               data-img-back=""
-               data-sizes="XS,S,M,L,XL,XXL"
-               data-colors="Negro,Blanco,Naranja RAW"
+               data-img-front="imagenes/tirantes1.jpg"
+               data-img-back="imagenes/tirantes2.jpg"
+               data-img-third="imagenes/tirantes3.jpg"
+               data-sizes="S,M,L,XL,XXL"
+               data-colors="Negro,Blanco"
                onclick="openProductModal(this)">
-        <div class="product-img-wrap" data-front="" data-back="">
-          <div class="product-img-placeholder"><i class="fa-solid fa-shirt"></i><span>Foto próximamente</span></div>
+        <div class="product-img-wrap" data-front="imagenes/tirantes1.jpg" data-back="imagenes/tirantes2.jpg" data-third="imagenes/tirantes2.jpg">
+          <img src="imagenes/tirantes1.jpg" alt="RAW Sport Hoodie" class="product-img-main" />
           <div class="product-badge-bop">Bajo Pedido</div>
           <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
         </div>
@@ -549,12 +551,12 @@
           <p class="product-price">19,99 <span class="currency">€</span></p>
           <div class="product-selectors">
             <div class="selector-group">
-              <label for="talla-013">Talla</label>
+              <label for="talla-013" class="talla-label-row">Talla<button type="button" class="guia-tallas-btn" onclick="event.stopPropagation();openModal('modal-guia-tallas')" aria-label="Consultar guía de tallas"><i class="fa-solid fa-ruler-horizontal"></i> Guía de tallas</button></label>
               <div class="select-wrap">
                 <select id="talla-013" name="talla" class="rr-select" data-variant="size" onclick="event.stopPropagation()">
                   <option value="">— Elige talla —</option>
-                  <option>XS</option><option>S</option><option>M</option>
-                  <option>L</option><option>XL</option><option>XXL</option>
+                  <option>S</option><option>M</option><option>L</option>
+                  <option>XL</option><option>XXL</option>
                 </select>
                 <i class="fa-solid fa-chevron-down select-arrow"></i>
               </div>
@@ -564,7 +566,7 @@
               <div class="select-wrap">
                 <select id="color-013" name="color" class="rr-select" data-variant="color" onclick="event.stopPropagation()">
                   <option value="">— Elige color —</option>
-                  <option>Negro</option><option>Blanco</option><option>Naranja RAW</option>
+                  <option>Negro</option><option>Blanco</option>
                 </select>
                 <i class="fa-solid fa-chevron-down select-arrow"></i>
               </div>
@@ -587,13 +589,13 @@
                data-product-cat="Pantalón corto técnico"
                data-section="ropa"
                data-product-desc="Short deportivo de tejido ligero 4-way stretch con cintura elástica ajustable. Bolsillo lateral con cremallera y bajo con apertura para mayor libertad de movimiento."
-               data-img-front=""
+               data-img-front="imagenes/pantalon1.jpg"
                data-img-back=""
                data-sizes="S,M,L,XL,XXL"
-               data-colors="Negro,Gris Carbón,Azul Noche"
+               data-colors="Negro,Blanco"
                onclick="openProductModal(this)">
-        <div class="product-img-wrap" data-front="" data-back="">
-          <div class="product-img-placeholder"><i class="fa-solid fa-person-running"></i><span>Foto próximamente</span></div>
+        <div class="product-img-wrap" data-front="imagenes/pantalon1.jpg" data-back="imagenes/pantalon2.jpg">
+          <img src="imagenes/pantalon1.jpg" alt="RAW Sport Hoodie" class="product-img-main" />
           <div class="product-badge-bop">Bajo Pedido</div>
           <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
         </div>
@@ -604,7 +606,7 @@
           <p class="product-price">22,99 <span class="currency">€</span></p>
           <div class="product-selectors">
             <div class="selector-group">
-              <label for="talla-014">Talla</label>
+              <label for="talla-014" class="talla-label-row">Talla<button type="button" class="guia-tallas-btn" onclick="event.stopPropagation();openModal('modal-guia-tallas')" aria-label="Consultar guía de tallas"><i class="fa-solid fa-ruler-horizontal"></i> Guía de tallas</button></label>
               <div class="select-wrap">
                 <select id="talla-014" name="talla" class="rr-select" data-variant="size" onclick="event.stopPropagation()">
                   <option value="">— Elige talla —</option>
@@ -618,7 +620,7 @@
               <div class="select-wrap">
                 <select id="color-014" name="color" class="rr-select" data-variant="color" onclick="event.stopPropagation()">
                   <option value="">— Elige color —</option>
-                  <option>Negro</option><option>Gris Carbón</option><option>Azul Noche</option>
+                  <option>Negro</option><option>Blanco</option>
                 </select>
                 <i class="fa-solid fa-chevron-down select-arrow"></i>
               </div>
@@ -662,7 +664,7 @@
           <p class="product-price">34,99 <span class="currency">€</span></p>
           <div class="product-selectors">
             <div class="selector-group">
-              <label for="talla-003">Talla</label>
+              <label for="talla-003" class="talla-label-row">Talla<button type="button" class="guia-tallas-btn" onclick="event.stopPropagation();openModal('modal-guia-tallas')" aria-label="Consultar guía de tallas"><i class="fa-solid fa-ruler-horizontal"></i> Guía de tallas</button></label>
               <div class="select-wrap">
                 <select id="talla-003" name="talla" class="rr-select" data-variant="size" onclick="event.stopPropagation()">
                   <option value="">— Elige talla —</option>
@@ -718,7 +720,7 @@
           <p class="product-price">59,99 <span class="currency">€</span></p>
           <div class="product-selectors">
             <div class="selector-group">
-              <label for="talla-011">Talla</label>
+              <label for="talla-011" class="talla-label-row">Talla<button type="button" class="guia-tallas-btn" onclick="event.stopPropagation();openModal('modal-guia-tallas')" aria-label="Consultar guía de tallas"><i class="fa-solid fa-ruler-horizontal"></i> Guía de tallas</button></label>
               <div class="select-wrap">
                 <select id="talla-011" name="talla" class="rr-select" data-variant="size" onclick="event.stopPropagation()">
                   <option value="">— Elige talla —</option>
@@ -772,7 +774,7 @@
           <p class="product-price">24,99 <span class="currency">€</span></p>
           <div class="product-selectors">
             <div class="selector-group">
-              <label for="talla-004">Talla</label>
+              <label for="talla-004" class="talla-label-row">Talla<button type="button" class="guia-tallas-btn" onclick="event.stopPropagation();openModal('modal-guia-tallas')" aria-label="Consultar guía de tallas"><i class="fa-solid fa-ruler-horizontal"></i> Guía de tallas</button></label>
               <div class="select-wrap">
                 <select id="talla-004" name="talla" class="rr-select" data-variant="size" onclick="event.stopPropagation()">
                   <option value="">— Elige talla —</option>
@@ -826,7 +828,7 @@
           <p class="product-price">27,99 <span class="currency">€</span></p>
           <div class="product-selectors">
             <div class="selector-group">
-              <label for="talla-015">Talla</label>
+              <label for="talla-015" class="talla-label-row">Talla<button type="button" class="guia-tallas-btn" onclick="event.stopPropagation();openModal('modal-guia-tallas')" aria-label="Consultar guía de tallas"><i class="fa-solid fa-ruler-horizontal"></i> Guía de tallas</button></label>
               <div class="select-wrap">
                 <select id="talla-015" name="talla" class="rr-select" data-variant="size" onclick="event.stopPropagation()">
                   <option value="">— Elige talla —</option>
@@ -881,7 +883,7 @@
           <p class="product-price">39,99 <span class="currency">€</span></p>
           <div class="product-selectors">
             <div class="selector-group">
-              <label for="talla-016">Talla</label>
+              <label for="talla-016" class="talla-label-row">Talla<button type="button" class="guia-tallas-btn" onclick="event.stopPropagation();openModal('modal-guia-tallas')" aria-label="Consultar guía de tallas"><i class="fa-solid fa-ruler-horizontal"></i> Guía de tallas</button></label>
               <div class="select-wrap">
                 <select id="talla-016" name="talla" class="rr-select" data-variant="size" onclick="event.stopPropagation()">
                   <option value="">— Elige talla —</option>
@@ -938,7 +940,7 @@
           <p class="product-price">29,99 <span class="currency">€</span></p>
           <div class="product-selectors">
             <div class="selector-group">
-              <label for="talla-017">Talla</label>
+              <label for="talla-017" class="talla-label-row">Talla<button type="button" class="guia-tallas-btn" onclick="event.stopPropagation();openModal('modal-guia-tallas')" aria-label="Consultar guía de tallas"><i class="fa-solid fa-ruler-horizontal"></i> Guía de tallas</button></label>
               <div class="select-wrap">
                 <select id="talla-017" name="talla" class="rr-select" data-variant="size" onclick="event.stopPropagation()">
                   <option value="">— Elige talla —</option>
@@ -970,33 +972,34 @@
       <!-- PRODUCTO RR-018 — Gimnasio Placeholder 4 -->
       <article class="product-card"
                data-product-id="RR-018"
-               data-product-name="RAW Pump Tank Stringer"
+               data-product-name="Camniseta Gym Mujer"
                data-product-price="17.99"
                data-product-cat="Camiseta gym mujer"
                data-section="ropa"
                data-product-desc="Stringer de corte extreme drop con laterales completamente abiertos para máxima ventilación en el gimnasio. Tejido dry-fit 100% poliéster anti-pilling. Tiro largo."
                data-img-front="imagenes/camisetachica2.jpg"
                data-img-back="imagenes/camisetachica1.jpg"
-               data-sizes="S,M,L,XL,XXL"
-               data-colors="Negro,Blanco,Naranja RAW"
+               data-img-third="imagenes/camisetachica3.jpg"
+               data-sizes="XS,S,M,L,XL"
+               data-colors="Negro,Blanco,Rosa"
                onclick="openProductModal(this)">
-        <div class="product-img-wrap" data-front="imagenes/camisetachica2.jpg" data-back="imagenes/camisetachica1.jpg">
+        <div class="product-img-wrap" data-front="imagenes/camisetachica2.jpg" data-back="imagenes/camisetachica1.jpg" data-third="imagenes/camisetachica3.jpg">
           <img src="imagenes/camisetachica2.jpg" alt="RAW Rep Shorts" class="product-img-main" />
           <div class="product-badge-bop">Bajo Pedido</div>
           <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
         </div>
         <div class="product-body">
           <p class="product-cat">Camiseta gym mujer</p>
-          <h3 class="product-name">RAW Pump Tank Stringer</h3>
+          <h3 class="product-name">Camniseta Gym Mujer</h3>
           <p class="product-desc">Stringer de corte extreme drop con laterales completamente abiertos para máxima ventilación en el gimnasio. Tejido dry-fit 100% poliéster anti-pilling. Tiro largo.</p>
           <p class="product-price">17,99 <span class="currency">€</span></p>
           <div class="product-selectors">
             <div class="selector-group">
-              <label for="talla-018">Talla</label>
+              <label for="talla-018" class="talla-label-row">Talla<button type="button" class="guia-tallas-btn" onclick="event.stopPropagation();openModal('modal-guia-tallas')" aria-label="Consultar guía de tallas"><i class="fa-solid fa-ruler-horizontal"></i> Guía de tallas</button></label>
               <div class="select-wrap">
                 <select id="talla-018" name="talla" class="rr-select" data-variant="size" onclick="event.stopPropagation()">
                   <option value="">— Elige talla —</option>
-                  <option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option>
+                  <option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option>
                 </select>
                 <i class="fa-solid fa-chevron-down select-arrow"></i>
               </div>
@@ -1032,8 +1035,8 @@
                data-product-desc="Calcetines Gimnasio"
                data-img-front="imagenes/calcetines1.jpg"
                data-img-back="imagenes/calcetines2.jpg"
-               data-sizes="S,M,L,XL,XXL"
-               data-colors="Negro,Blanco,Rojo RAW"
+               data-sizes="XS (EU 31-35),S (EU 35-38),M (EU 38-42),L (43-46)"
+               data-colors="Blanco,Negro"
                onclick="openProductModal(this)">
         <div class="product-img-wrap" data-front="imagenes/calcetines1.jpg" data-back="imagenes/calcetines2.jpg">
           <img src="imagenes/calcetines1.jpg" alt="RAW Rep Shorts" class="product-img-main" />
@@ -1043,15 +1046,15 @@
         <div class="product-body">
           <p class="product-cat">Accesorios / Calcetines</p>
           <h3 class="product-name">RAW Cushion Crew Socks</h3>
-          <p class="product-desc">Pack de calcetines de media caña con planta acolchada anti-impactos. Banda elástica en el arco del pie para evitar desplazamientos y rozaduras.</p>
+          <p class="product-desc">Par de calcetines de media caña con planta acolchada anti-impactos. Banda elástica en el arco del pie para evitar desplazamientos y rozaduras.</p>
           <p class="product-price">9,99 <span class="currency">€</span></p>
           <div class="product-selectors">
             <div class="selector-group">
-              <label for="talla-005">Talla</label>
+              <label for="talla-005" class="talla-label-row">Talla<button type="button" class="guia-tallas-btn" onclick="event.stopPropagation();openModal('modal-guia-tallas')" aria-label="Consultar guía de tallas"><i class="fa-solid fa-ruler-horizontal"></i> Guía de tallas</button></label>
               <div class="select-wrap">
                 <select id="talla-005" name="talla" class="rr-select" data-variant="size" onclick="event.stopPropagation()">
                   <option value="">— Elige talla —</option>
-                  <option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option>
+                  <option>XS (EU 31-35)</option><option>S (EU 35-38)</option><option>M (EU 38-42)</option><option>L (43-46)</option>
                 </select>
                 <i class="fa-solid fa-chevron-down select-arrow"></i>
               </div>
@@ -1086,10 +1089,11 @@
                data-product-desc="Sujeción media-alta con copas extraíbles. Diseño de espalda cruzada para total libertad de movimiento. Banda elástica inferior de ajuste seguro."
                data-img-front="imagenes/top1.jpg"
                data-img-back="imagenes/top2.jpg"
+               data-img-third="imagenes/top3.jpg"
                data-sizes="XS,S,M,L,XL"
-               data-colors="Negro Guerrero,Camuflaje,Naranja RAW"
+               data-colors="Negro,Blanco"
                onclick="openProductModal(this)">
-        <div class="product-img-wrap" data-front="imagenes/top1.jpg" data-back="imagenes/top2.jpg">
+        <div class="product-img-wrap" data-front="imagenes/top1.jpg" data-back="imagenes/top2.jpg" data-third="imagenes/top3.jpg">
           <img src="imagenes/top1.jpg" alt="Muñequeras de Fuerza RAW" class="product-img-main" />
           <div class="product-badge-bop">Bajo Pedido</div>
           <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
@@ -1101,7 +1105,7 @@
           <p class="product-price">14,99 <span class="currency">€</span></p>
           <div class="product-selectors">
             <div class="selector-group">
-              <label for="talla-005">Talla</label>
+              <label for="talla-005" class="talla-label-row">Talla<button type="button" class="guia-tallas-btn" onclick="event.stopPropagation();openModal('modal-guia-tallas')" aria-label="Consultar guía de tallas"><i class="fa-solid fa-ruler-horizontal"></i> Guía de tallas</button></label>
               <div class="select-wrap">
                 <select id="talla-005" name="talla" class="rr-select" data-variant="size" onclick="event.stopPropagation()">
                   <option value="">— Elige talla —</option>
@@ -1115,7 +1119,7 @@
               <div class="select-wrap">
                 <select id="color-005" name="color" class="rr-select" data-variant="color" onclick="event.stopPropagation()">
                   <option value="">— Elige color —</option>
-                  <option>Negro</option><option>Blanco</option><option>Rojo RAW</option>
+                  <option>Negro</option><option>Blanco</option>
                 </select>
                 <i class="fa-solid fa-chevron-down select-arrow"></i>
               </div>
@@ -1141,10 +1145,11 @@
                data-product-desc="Cintura alta compresiva con efecto moldeador push-up sin costuras (seamless). Tejido técnico opaco a prueba de sentadillas (squat-proof)."
                data-img-front="imagenes/mallas1.jpg"
                data-img-back="imagenes/mallas2.jpg"
+               data-img-third="imagenes/mallas3.jpg"
                data-sizes="XS,S,M,L,XL"
-               data-colors="Negro Guerrero,Camuflaje,Naranja RAW"
+               data-colors="Negro,Azul,Rojo"
                onclick="openProductModal(this)">
-        <div class="product-img-wrap" data-front="imagenes/mallas1.jpg" data-back="imagenes/mallas2.jpg">
+        <div class="product-img-wrap" data-front="imagenes/mallas1.jpg" data-back="imagenes/mallas2.jpg" data-third="imagenes/mallas3.jpg">
           <img src="imagenes/mallas1.jpg" alt="Muñequeras de Fuerza RAW" class="product-img-main" />
           <div class="product-badge-bop">Bajo Pedido</div>
           <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
@@ -1156,7 +1161,7 @@
           <p class="product-price">24,99 <span class="currency">€</span></p>
           <div class="product-selectors">
             <div class="selector-group">
-              <label for="talla-005">Talla</label>
+              <label for="talla-005" class="talla-label-row">Talla<button type="button" class="guia-tallas-btn" onclick="event.stopPropagation();openModal('modal-guia-tallas')" aria-label="Consultar guía de tallas"><i class="fa-solid fa-ruler-horizontal"></i> Guía de tallas</button></label>
               <div class="select-wrap">
                 <select id="talla-005" name="talla" class="rr-select" data-variant="size" onclick="event.stopPropagation()">
                   <option value="">— Elige talla —</option>
@@ -1170,7 +1175,7 @@
               <div class="select-wrap">
                 <select id="color-005" name="color" class="rr-select" data-variant="color" onclick="event.stopPropagation()">
                   <option value="">— Elige color —</option>
-                  <option>Negro</option><option>Blanco</option><option>Rojo RAW</option>
+                  <option>Negro</option><option>Azul</option><option>Rojo</option>
                 </select>
                 <i class="fa-solid fa-chevron-down select-arrow"></i>
               </div>
@@ -1268,7 +1273,7 @@
           <p class="product-price">17,99 <span class="currency">€</span></p>
           <div class="product-selectors">
             <div class="selector-group">
-              <label for="talla-006">Talla</label>
+              <label for="talla-006" class="talla-label-row">Talla<button type="button" class="guia-tallas-btn" onclick="event.stopPropagation();openModal('modal-guia-tallas')" aria-label="Consultar guía de tallas"><i class="fa-solid fa-ruler-horizontal"></i> Guía de tallas</button></label>
               <div class="select-wrap">
                 <select id="talla-006" name="talla" class="rr-select" data-variant="size" onclick="event.stopPropagation()">
                   <option value="">— Elige talla —</option>
@@ -1307,10 +1312,11 @@
                data-product-desc="Botella termica 750ml"
                data-img-front="imagenes/botella1.jpg"
                data-img-back="imagenes/botella2.jpg"
+               data-img-third="imagenes/botella3.jpg"
                data-sizes="Única (750ml)"
-               data-colors="Negro Mate,Acero Cepillado,Naranja RAW"
+               data-colors="Negro,Blanco,Naranja RAW"
                onclick="openProductModal(this)">
-        <div class="product-img-wrap" data-front="imagenes/botella1.jpg" data-back="imagenes/botella2.jpg">
+        <div class="product-img-wrap" data-front="imagenes/botella1.jpg" data-back="imagenes/botella2.jpg" data-third="imagenes/botella3.jpg">
           <img src="imagenes/botella1.jpg" alt="Botella Térmica RAW" class="product-img-main" />
           <div class="product-badge-bop">Bajo Pedido</div>
           <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
@@ -1337,8 +1343,8 @@
               <div class="select-wrap">
                 <select id="color-007" name="color" class="rr-select" data-variant="color" onclick="event.stopPropagation()">
                   <option value="">— Elige color —</option>
-                  <option>Negro Mate</option>
-                  <option>Acero Cepillado</option>
+                  <option>Negro</option>
+                  <option>Blanco</option>
                   <option>Naranja RAW</option>
                 </select>
                 <i class="fa-solid fa-chevron-down select-arrow"></i>
@@ -1904,7 +1910,7 @@
         <!-- Selectores de talla y color -->
         <div class="product-selectors" style="margin-top:16px">
           <div class="selector-group">
-            <label for="mp-talla">Talla</label>
+            <label for="mp-talla" class="talla-label-row">Talla<button type="button" class="guia-tallas-btn" onclick="openModal('modal-guia-tallas')" aria-label="Consultar guía de tallas"><i class="fa-solid fa-ruler-horizontal"></i> Guía de tallas</button></label>
             <div class="select-wrap">
               <select id="mp-talla" class="rr-select" data-variant="size">
                 <option value="">— Elige talla —</option>
@@ -2102,5 +2108,21 @@
     }
   </script>
   <script src="script.js"></script>
+  <!-- ░░ MODAL GUÍA DE TALLAS ░░ -->
+  <div class="modal-overlay" id="modal-guia-tallas" role="dialog" aria-modal="true" aria-label="Guía de tallas">
+    <div class="modal-box modal-guia-tallas-box">
+      <button class="modal-close" onclick="closeModal('modal-guia-tallas')" aria-label="Cerrar">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <h2 class="modal-guia-title">
+        <i class="fa-solid fa-ruler-horizontal"></i> Guía de Tallas
+      </h2>
+      <div class="modal-guia-img-wrap">
+        <img src="imagenes/guiatallas.jpg" alt="Guía de tallas RAW Republic" class="modal-guia-img" />
+      </div>
+      <p class="modal-guia-note">¿Dudas? Escríbenos a <a href="mailto:rawrepublic.reservas@gmail.com">rawrepublic.reservas@gmail.com</a></p>
+    </div>
+  </div>
+
 </body>
 </html>

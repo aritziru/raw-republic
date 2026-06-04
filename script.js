@@ -264,10 +264,11 @@ function openProductModal(card) {
   const desc  = card.dataset.productDesc  || '';
   const front = card.dataset.imgFront     || '';
   const back  = card.dataset.imgBack      || '';
+  const third = card.dataset.imgThird     || '';
   const sizes = card.dataset.sizes ? card.dataset.sizes.split(',') : [];
   const colors= card.dataset.colors ? card.dataset.colors.split(',') : [];
 
-  currentProductData = { id, name, price, front, back };
+  currentProductData = { id, name, price, front, back, third };
 
   // Rellenar textos
   document.getElementById('mp-cat').textContent   = cat;
@@ -300,6 +301,7 @@ function openProductModal(card) {
   galleryImages = [];
   if (front) galleryImages.push(front);
   if (back  && back !== front) galleryImages.push(back);
+  if (third && third !== front && third !== back) galleryImages.push(third);
   // Si no hay ninguna imagen real, usamos un placeholder
   if (!galleryImages.length) galleryImages.push('');
 

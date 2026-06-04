@@ -3754,3 +3754,121 @@ section {
     grid-column: 1 / -1;
   }
 }
+
+
+/* ─────────────────────────────────────────────────────────────
+   GUÍA DE TALLAS — enlace inline + modal
+───────────────────────────────────────────────────────────── */
+
+/* Label de Talla: flex para alinear texto + botón guía */
+.talla-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  width: 100%;
+}
+
+/* Botón/enlace "Guía de tallas" */
+.guia-tallas-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+  opacity: 0.85;
+  padding: 2px 0;
+  transition: opacity 0.18s, color 0.18s;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.guia-tallas-btn i {
+  font-size: 0.68rem;
+}
+
+.guia-tallas-btn:hover {
+  opacity: 1;
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ── Modal guía de tallas ── */
+.modal-guia-tallas-box {
+  background: var(--bg-2, #111);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  max-width: 680px;
+  width: 94vw;
+  padding: 36px 32px 28px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.65);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-guia-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 1.4rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--white, #fff);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.modal-guia-title i {
+  color: var(--accent);
+  font-size: 1.1rem;
+}
+
+.modal-guia-img-wrap {
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: #0a0a0a;
+}
+
+.modal-guia-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.modal-guia-note {
+  font-size: 0.8rem;
+  color: var(--text-muted, #888);
+  text-align: center;
+}
+
+.modal-guia-note a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+  .modal-guia-tallas-box {
+    padding: 28px 18px 22px;
+  }
+  .guia-tallas-btn {
+    font-size: 0.65rem;
+  }
+}
