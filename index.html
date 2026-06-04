@@ -1773,9 +1773,9 @@
 
       <!-- Panel de métodos de pago (visual, futuro) -->
       <div id="cartPaymentPanel">
-        <a href="https://www.paypal.com/es/home" target="_blank" rel="noopener" class="btn btn-primary full-width cart-pay-btn">
-          <i class="fa-brands fa-paypal"></i> Pagar con PayPal
-        </a>
+        <button type="button" class="btn btn-primary full-width cart-pay-btn" onclick="showReservaForm()">
+          <i class="fa-brands fa-paypal"></i> Proceder al pago
+        </button>
         <a href="https://www.revolut.com" target="_blank" rel="noopener" class="btn btn-ghost full-width cart-pay-btn" style="margin-top:10px">
           <i class="fa-solid fa-bolt"></i> Pagar con Revolut
         </a>
@@ -1813,53 +1813,113 @@
         </p>
       </div>
 
-      <!-- Formulario de reserva (oculto hasta clic) -->
+      <!-- ══ FORMULARIO DE ENVÍO + CHECKOUT (oculto hasta clic) ══ -->
       <div id="cartReservaForm" style="display:none;">
+
+        <!-- Cabecera del paso -->
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;">
-          <button onclick="hideReservaForm()" style="background:none;border:none;color:var(--text-muted);cursor:pointer;padding:4px;"><i class="fa-solid fa-arrow-left"></i></button>
-          <h4 style="margin:0;font-size:14px;letter-spacing:.06em;color:var(--text);">DATOS PARA TU RESERVA</h4>
-        </div>
-        <div style="background:rgba(255,140,0,0.08);border:1px solid rgba(255,140,0,0.25);border-radius:6px;padding:10px 12px;margin-bottom:14px;">
-          <p style="font-size:11px;color:var(--accent);margin:0;line-height:1.5;">
-            <i class="fa-solid fa-circle-info"></i> Sin compromiso de pago. Te contactaremos para confirmar tu pedido. Recibirás un <strong>correo automático de confirmación</strong> al instante.
-          </p>
+          <button onclick="hideReservaForm()" style="background:none;border:none;color:var(--text-muted);cursor:pointer;padding:4px;" aria-label="Volver">
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
+          <h4 style="margin:0;font-size:13px;letter-spacing:.08em;color:var(--text);">
+            <i class="fa-solid fa-truck" style="color:var(--accent);margin-right:6px;"></i>DATOS DE ENVÍO Y PAGO
+          </h4>
         </div>
 
-        <!-- Campo oculto para los productos del carrito -->
-        <input type="hidden" id="reserva-productos-hidden" name="Productos_Reservados" />
+        <!-- Aviso informativo -->
+        <div style="background:rgba(255,140,0,0.08);border:1px solid rgba(255,140,0,0.25);border-radius:6px;padding:10px 12px;margin-bottom:16px;">
+          <p style="font-size:11px;color:var(--accent);margin:0;line-height:1.5;">
+            <i class="fa-solid fa-circle-info"></i> Rellena todos los campos para que podamos tramitar el envío físico de tu pedido. <strong>DNI/NIE obligatorio</strong> para facturación.
+          </p>
+        </div>
 
         <form id="formReserva"
               action="https://formsubmit.co/rawrepublic.reservas@gmail.com"
-              method="POST">
+              method="POST"
+              onsubmit="prepareReservaSubmit(event)">
 
-          <!-- Configuración FormSubmit -->
-          <input type="hidden" name="_subject" value="🔥 Nueva Reserva RAW Republic" />
-          <input type="hidden" name="_template" value="table" />
-          <input type="hidden" name="_captcha" value="false" />
-          <input type="hidden" name="_autoresponse" value="¡Gracias por tu reserva en RAW Republic! Hemos registrado tus productos. Muy pronto nos pondremos en contacto contigo a través de este correo o por teléfono para indicarte los siguientes pasos. ¡Forja tu carácter!" />
-          <input type="hidden" name="_next" value="https://aritziru.github.io/raw-republic/gracias.html" />
-          <input type="hidden" name="Productos_Reservados" id="reserva-productos-field" />
+          <!-- ── Campos ocultos FormSubmit ── -->
+          <input type="hidden" name="_subject"      value="🔥 Nuevo Pedido RAW Republic — Envío físico" />
+          <input type="hidden" name="_template"     value="table" />
+          <input type="hidden" name="_captcha"      value="false" />
+          <input type="hidden" name="_autoresponse" value="¡Gracias por tu pedido en RAW Republic! Hemos recibido tus datos de envío correctamente. Muy pronto nos pondremos en contacto contigo para confirmar los siguientes pasos. ¡Forja tu carácter!" />
+          <input type="hidden" name="_next"         value="https://aritziru.github.io/raw-republic/gracias.html" />
+          <!-- Campo dinámico con los productos del carrito -->
+          <input type="hidden" name="Productos_Pedido" id="reserva-productos-field" />
+          <!-- Campo dinámico con el importe total -->
+          <input type="hidden" name="Importe_Total" id="reserva-total-field" />
 
-          <div style="display:flex;flex-direction:column;gap:10px;">
-            <div style="display:flex;gap:8px;">
-              <input type="text" name="Nombre" placeholder="Nombre *" required
-                     style="flex:1;padding:10px 12px;border:1px solid rgba(255,255,255,0.15);border-radius:6px;background:rgba(0,0,0,0.3);color:var(--text);font-size:13px;" />
-              <input type="text" name="Apellidos" placeholder="Apellidos *" required
-                     style="flex:1;padding:10px 12px;border:1px solid rgba(255,255,255,0.15);border-radius:6px;background:rgba(0,0,0,0.3);color:var(--text);font-size:13px;" />
+          <!-- ── Sección: Datos personales ── -->
+          <p class="checkout-section-label">
+            <i class="fa-solid fa-user"></i> Datos personales
+          </p>
+          <div class="checkout-fields">
+            <div class="checkout-row">
+              <div class="checkout-field">
+                <label for="cf-nombre">Nombre *</label>
+                <input type="text" id="cf-nombre" name="Nombre" placeholder="Tu nombre" required autocomplete="given-name" />
+              </div>
+              <div class="checkout-field">
+                <label for="cf-apellidos">Apellidos *</label>
+                <input type="text" id="cf-apellidos" name="Apellidos" placeholder="Tus apellidos" required autocomplete="family-name" />
+              </div>
             </div>
-            <input type="email" name="Email" placeholder="Correo electrónico *" required
-                   style="width:100%;padding:10px 12px;border:1px solid rgba(255,255,255,0.15);border-radius:6px;background:rgba(0,0,0,0.3);color:var(--text);font-size:13px;box-sizing:border-box;" />
-            <input type="tel" name="Telefono" placeholder="Teléfono *" required
-                   style="width:100%;padding:10px 12px;border:1px solid rgba(255,255,255,0.15);border-radius:6px;background:rgba(0,0,0,0.3);color:var(--text);font-size:13px;box-sizing:border-box;" />
+            <div class="checkout-field checkout-field--full">
+              <label for="cf-dni">DNI / NIE *</label>
+              <input type="text" id="cf-dni" name="DNI_NIE" placeholder="12345678A" required
+                     pattern="[0-9XYZxyz][0-9]{6,7}[A-Za-z]"
+                     title="Introduce un DNI (12345678A) o NIE válido (X1234567A)" />
+            </div>
           </div>
 
-          <button type="submit" onclick="prepareReservaSubmit()"
-                  style="width:100%;margin-top:14px;padding:14px;background:linear-gradient(135deg,var(--accent) 0%,#ff8c00 100%);color:#000;font-weight:700;font-size:14px;letter-spacing:.06em;border:none;border-radius:6px;cursor:pointer;">
-            <i class="fa-solid fa-paper-plane"></i>&nbsp; Confirmar Reserva
-          </button>
-          <p style="font-size:10px;color:var(--text-muted);text-align:center;margin-top:8px;line-height:1.5;">
-            Al confirmar, recibirás un correo automático de confirmación con los detalles de tu reserva.
+          <!-- ── Sección: Contacto ── -->
+          <p class="checkout-section-label" style="margin-top:14px;">
+            <i class="fa-solid fa-envelope"></i> Contacto
           </p>
+          <div class="checkout-fields">
+            <div class="checkout-field checkout-field--full">
+              <label for="cf-email">Correo electrónico *</label>
+              <input type="email" id="cf-email" name="Email" placeholder="tucorreo@email.com" required autocomplete="email" />
+            </div>
+            <div class="checkout-field checkout-field--full">
+              <label for="cf-tel">Teléfono de contacto *</label>
+              <input type="tel" id="cf-tel" name="Telefono" placeholder="+34 600 000 000" required autocomplete="tel" />
+            </div>
+          </div>
+
+          <!-- ── Sección: Dirección de envío ── -->
+          <p class="checkout-section-label" style="margin-top:14px;">
+            <i class="fa-solid fa-location-dot"></i> Dirección de envío
+          </p>
+          <div class="checkout-fields">
+            <div class="checkout-field checkout-field--full">
+              <label for="cf-direccion">Calle, número, piso, puerta *</label>
+              <input type="text" id="cf-direccion" name="Direccion" placeholder="Calle Ejemplo, 10, 2º B" required autocomplete="street-address" />
+            </div>
+            <div class="checkout-row">
+              <div class="checkout-field checkout-field--cp">
+                <label for="cf-cp">Código Postal *</label>
+                <input type="text" id="cf-cp" name="Codigo_Postal" placeholder="28001"
+                       required maxlength="10" autocomplete="postal-code" />
+              </div>
+              <div class="checkout-field">
+                <label for="cf-ciudad">Ciudad / Provincia *</label>
+                <input type="text" id="cf-ciudad" name="Ciudad_Provincia" placeholder="Madrid" required autocomplete="address-level2" />
+              </div>
+            </div>
+          </div>
+
+          <!-- ── Botón de envío ── -->
+          <button type="submit" id="btnConfirmarPedido"
+                  style="width:100%;margin-top:18px;padding:15px;background:linear-gradient(135deg,var(--accent) 0%,#ff8c00 100%);color:#000;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:.08em;text-transform:uppercase;border:none;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity .2s,transform .2s;">
+            <i class="fa-brands fa-paypal"></i> Confirmar y Pagar con PayPal
+          </button>
+
+          <p style="font-size:10px;color:var(--text-muted);text-align:center;margin-top:10px;line-height:1.6;">
+            <i class="fa-solid fa-lock" style="color:var(--accent)"></i>
+            Al confirmar, tus datos de envío se registran y se abre PayPal en una nueva pestaña para completar el pago.
+          </p>
+
         </form>
       </div>
 
@@ -2094,7 +2154,36 @@
       document.getElementById('cartReservaForm').style.display = 'none';
       document.getElementById('cartPaymentPanel').style.display = 'block';
     }
-    function prepareReservaSubmit() {
+
+    /**
+     * prepareReservaSubmit — rellena los campos ocultos del form y,
+     * tras el envío por FormSubmit, redirige a PayPal con el importe total.
+     *
+     * INSTRUCCIONES PARA ACTIVAR PAYPAL:
+     *   1. Ve a tu cuenta PayPal → "Solicitar dinero" → crea un enlace de pago.
+     *   2. Copia el enlace (ej: https://www.paypal.com/paypalme/TuUsuario/IMPORTE)
+     *      o el enlace del botón que genera PayPal Business.
+     *   3. Pega ese enlace como valor de PAYPAL_LINK abajo.
+     *   4. El script sustituirá automáticamente IMPORTE por el total del carrito
+     *      si usas el formato https://www.paypal.com/paypalme/TuUsuario/
+     */
+    var PAYPAL_LINK = 'https://www.paypal.com/paypalme/TuUsuario/';
+    // ↑ ╔══════════════════════════════════════════════════════╗
+    //   ║  PEGA AQUÍ TU ENLACE DE PAGO DE PAYPAL              ║
+    //   ╚══════════════════════════════════════════════════════╝
+
+    function prepareReservaSubmit(e) {
+      /* ── PASO 0: Frenar el envío automático ── */
+      e.preventDefault();
+
+      /* ── PASO 1: Validar todos los campos obligatorios ── */
+      var form = document.getElementById('formReserva');
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      /* ── PASO 2: Recoger productos del carrito ── */
       var items = [];
       document.querySelectorAll('#cartItemsList li').forEach(function(item) {
         var name  = item.querySelector('.cart-item-name')  ? item.querySelector('.cart-item-name').textContent.trim()  : '';
@@ -2105,6 +2194,22 @@
       });
       document.getElementById('reserva-productos-field').value =
         items.length ? items.join(' // ') : 'Sin detalle de productos';
+
+      /* ── PASO 3: Recoger importe total ── */
+      var totalEl = document.getElementById('cartTotal');
+      var totalText = totalEl ? totalEl.textContent.trim() : '0,00 €';
+      document.getElementById('reserva-total-field').value = totalText;
+
+      /* ── PASO 4: Calcular importe numérico para PayPal ── */
+      var totalNum = parseFloat(totalText.replace(',', '.').replace(/[^0-9.]/g, '')) || 0;
+
+      /* ── PASO 5: Abrir PayPal inmediatamente (antes de que el navegador abandone la página) ── */
+      if (PAYPAL_LINK && PAYPAL_LINK.indexOf('TuUsuario') === -1 && totalNum > 0) {
+        window.open(PAYPAL_LINK + totalNum.toFixed(2), '_blank');
+      }
+
+      /* ── PASO 6: Enviar el formulario a FormSubmit (redirige a la página de gracias) ── */
+      form.submit();
     }
   </script>
   <script src="script.js"></script>
