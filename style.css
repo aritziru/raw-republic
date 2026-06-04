@@ -3872,3 +3872,122 @@ section {
     font-size: 0.65rem;
   }
 }
+
+
+/* ══════════════════════════════════════════════════════════════
+   CHECKOUT FORM — Formulario de envío integrado en el carrito
+   ══════════════════════════════════════════════════════════════ */
+
+/* Etiqueta de sección del formulario */
+.checkout-section-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent, #ff6b00);
+  margin: 0 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Contenedor de grupo de campos */
+.checkout-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Fila de dos columnas */
+.checkout-row {
+  display: flex;
+  gap: 8px;
+}
+
+.checkout-row .checkout-field {
+  flex: 1;
+}
+
+/* Campo individual */
+.checkout-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.checkout-field--full {
+  width: 100%;
+}
+
+/* Campo CP más estrecho */
+.checkout-field--cp {
+  flex: 0 0 90px !important;
+  max-width: 90px;
+}
+
+/* Etiquetas de campo */
+.checkout-field label {
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted, #888);
+  font-weight: 500;
+}
+
+/* Inputs del formulario */
+#formReserva input[type="text"],
+#formReserva input[type="email"],
+#formReserva input[type="tel"] {
+  width: 100%;
+  padding: 10px 11px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 6px;
+  color: var(--text, #f0f0f0);
+  font-family: 'Barlow', sans-serif;
+  font-size: 13px;
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  -webkit-appearance: none;
+}
+
+#formReserva input::placeholder {
+  color: rgba(255, 255, 255, 0.28);
+}
+
+#formReserva input:focus {
+  outline: none;
+  border-color: rgba(255, 107, 0, 0.55);
+  box-shadow: 0 0 0 2px rgba(255, 107, 0, 0.12);
+}
+
+#formReserva input:invalid:not(:placeholder-shown) {
+  border-color: rgba(255, 80, 80, 0.5);
+}
+
+/* Estado válido */
+#formReserva input:valid:not(:placeholder-shown) {
+  border-color: rgba(255, 107, 0, 0.35);
+}
+
+/* Botón de confirmación — hover */
+#btnConfirmarPedido:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+#btnConfirmarPedido:active {
+  transform: translateY(0);
+}
+
+/* Responsive — en móviles muy estrechos, apilar fila de nombre */
+@media (max-width: 360px) {
+  .checkout-row {
+    flex-direction: column;
+  }
+  .checkout-field--cp {
+    flex: 1 !important;
+    max-width: 100%;
+  }
+}
