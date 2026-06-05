@@ -4430,3 +4430,183 @@ section {
 
 /* ── Panel admin oculto en #adminPanel ── */
 #adminPanel { display: flex; flex-direction: column; overflow: hidden; flex: 1; }
+
+
+/* ════════════════════════════════════════════════════════════
+   MEJORAS v2 — Banner · Shimmer · Detalles visuales
+   ════════════════════════════════════════════════════════════ */
+
+/* ── 1. BANNER ENVÍO GRATIS ───────────────────────────────── */
+:root {
+  --banner-h: 34px;
+}
+
+.shipping-banner {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  height: var(--banner-h);
+  background: var(--accent);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.shipping-banner-inner {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.shipping-banner-track {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  animation: bannerScroll 22s linear infinite;
+  will-change: transform;
+}
+
+@keyframes bannerScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.sbt-item {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: #000;
+  white-space: nowrap;
+}
+.sbt-item strong { font-weight: 900; }
+.sbt-item i { opacity: .75; }
+
+.sbt-sep {
+  color: rgba(0,0,0,0.35);
+  font-size: 0.75rem;
+  flex-shrink: 0;
+}
+
+.shipping-banner-close {
+  flex-shrink: 0;
+  width: 30px; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  background: none; border: none;
+  color: rgba(0,0,0,0.6);
+  font-size: 12px;
+  cursor: pointer;
+  transition: color .15s;
+  padding-right: 6px;
+}
+.shipping-banner-close:hover { color: #000; }
+
+/* Empujar navbar y hero hacia abajo cuando el banner está visible */
+.navbar {
+  top: var(--banner-h) !important;
+}
+.hero {
+  padding-top: calc(var(--nav-h) + var(--banner-h)) !important;
+}
+
+
+/* ── 2. SHIMMER EN BOTÓN PRIMARIO ─────────────────────────── */
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -75%;
+  width: 50%; height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255,255,255,0.22) 50%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  pointer-events: none;
+}
+
+.btn-primary:hover::before {
+  animation: btnShimmer 0.55s ease forwards;
+}
+
+@keyframes btnShimmer {
+  from { left: -75%; }
+  to   { left: 125%; }
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 28px var(--accent-glow);
+}
+.btn-primary:active {
+  transform: translateY(0) scale(0.97);
+}
+
+
+/* ── 3. PRODUCT CARD — borde accent en hover ──────────────── */
+.product-card:hover {
+  border-color: rgba(255,106,0,0.30) !important;
+}
+
+
+/* ── 4. SECTION-LABEL — triángulo decorativo ─────────────── */
+.section-label::before {
+  content: '▸ ';
+  opacity: .55;
+  letter-spacing: 0;
+}
+
+
+/* ── 5. FOOTER — separador accent superior ────────────────── */
+.footer {
+  border-top: 2px solid var(--accent) !important;
+}
+
+
+/* ── 6. SCROLL TO TOP ─────────────────────────────────────── */
+#scrollTopBtn {
+  position: fixed;
+  bottom: 90px;
+  right: 22px;
+  z-index: 800;
+  width: 40px; height: 40px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  color: var(--text-muted);
+  font-size: 14px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity .3s, transform .3s, border-color .2s, color .2s;
+  pointer-events: none;
+}
+#scrollTopBtn.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+#scrollTopBtn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+
+/* ── 7. BOTONES DE PAGO DESHABILITADOS ────────────────────── */
+.pay-method-btn:disabled {
+  cursor: not-allowed !important;
+  opacity: 0.45 !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+.pay-method-btn:disabled::before {
+  display: none;
+}

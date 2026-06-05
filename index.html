@@ -12,6 +12,29 @@
 </head>
 <body>
 
+  <!-- ░░ BANNER ENVÍO GRATIS ░░ -->
+  <div class="shipping-banner" id="shippingBanner">
+    <div class="shipping-banner-inner">
+      <span class="shipping-banner-track">
+        <span class="sbt-item"><i class="fa-solid fa-truck-fast"></i>&nbsp; Envío gratis a partir de <strong>80€</strong></span>
+        <span class="sbt-sep">·</span>
+        <span class="sbt-item"><i class="fa-solid fa-industry"></i>&nbsp; Fabricación exclusiva bajo pedido</span>
+        <span class="sbt-sep">·</span>
+        <span class="sbt-item"><i class="fa-solid fa-shield-halved"></i>&nbsp; Pago 100% seguro</span>
+        <span class="sbt-sep">·</span>
+        <span class="sbt-item"><i class="fa-solid fa-truck-fast"></i>&nbsp; Envío gratis a partir de <strong>80€</strong></span>
+        <span class="sbt-sep">·</span>
+        <span class="sbt-item"><i class="fa-solid fa-industry"></i>&nbsp; Fabricación exclusiva bajo pedido</span>
+        <span class="sbt-sep">·</span>
+        <span class="sbt-item"><i class="fa-solid fa-shield-halved"></i>&nbsp; Pago 100% seguro</span>
+        <span class="sbt-sep">·</span>
+      </span>
+    </div>
+    <button class="shipping-banner-close" onclick="document.getElementById('shippingBanner').style.display='none'; document.documentElement.style.setProperty('--banner-h','0px');" aria-label="Cerrar banner">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </div>
+
   <!-- ░░ NAVBAR ░░ -->
   <header class="navbar" id="navbar">
     <div class="nav-inner">
@@ -1890,156 +1913,136 @@
         En este momento hay <strong id="live-viewers">5</strong> personas viendo uno de los artículos. ¡Date prisa antes de que se agote!
       </p>
 
-      <!-- Panel de métodos de pago (visual, futuro) -->
+      <!-- Panel de métodos de pago — botón único para abrir formulario -->
       <div id="cartPaymentPanel">
-        <button type="button" class="btn btn-primary full-width cart-pay-btn" onclick="showReservaForm('paypal')">
-          <i class="fa-brands fa-paypal"></i> Pagar con PayPal
-        </button>
-        <button type="button" class="btn btn-ghost full-width cart-pay-btn" style="margin-top:10px" onclick="showReservaForm('revolut')">
-          <i class="fa-solid fa-bolt"></i> Pagar con Revolut
-        </button>
-        <!-- Botón tarjeta bancaria -->
-        <button class="btn btn-ghost full-width cart-pay-btn" style="margin-top:10px" onclick="showReservaForm('tarjeta')">
-          <i class="fa-solid fa-credit-card"></i> Pagar con Tarjeta Bancaria
-        </button>
-        <!-- Panel visual de campos de tarjeta -->
-        <div id="cardFieldsPanel" style="display:none; margin-top:12px; padding:14px; border:1px solid rgba(255,255,255,0.12); border-radius:8px; background:rgba(255,255,255,0.04);">
-          <p style="font-size:11px; color:var(--text-muted); margin-bottom:10px; letter-spacing:.05em;">DATOS DE TARJETA (próximamente activo)</p>
-          <input type="text" placeholder="Número de tarjeta" maxlength="19" style="width:100%;padding:10px 12px;border:1px solid rgba(255,255,255,0.15);border-radius:6px;background:rgba(0,0,0,0.3);color:var(--text);font-size:13px;margin-bottom:8px;box-sizing:border-box;" />
-          <div style="display:flex;gap:8px;">
-            <input type="text" placeholder="MM/AA" maxlength="5" style="flex:1;padding:10px 12px;border:1px solid rgba(255,255,255,0.15);border-radius:6px;background:rgba(0,0,0,0.3);color:var(--text);font-size:13px;" />
-            <input type="text" placeholder="CVV" maxlength="3" style="flex:1;padding:10px 12px;border:1px solid rgba(255,255,255,0.15);border-radius:6px;background:rgba(0,0,0,0.3);color:var(--text);font-size:13px;" />
-          </div>
-          <p style="font-size:10px;color:var(--text-muted);margin-top:8px;text-align:center;"><i class="fa-solid fa-lock"></i> Pasarela de pago en integración — disponible pronto</p>
-        </div>
-
-        <!-- Separador visual -->
-        <div style="display:flex;align-items:center;gap:10px;margin:16px 0 10px;">
-          <div style="flex:1;height:1px;background:rgba(255,255,255,0.1);"></div>
-          <span style="font-size:11px;color:var(--text-muted);letter-spacing:.08em;">O MEJOR AÚN</span>
-          <div style="flex:1;height:1px;background:rgba(255,255,255,0.1);"></div>
-        </div>
-
-        <!-- Botón destacado Reservar sin pagar -->
-        <button class="btn full-width" id="btnReservar"
-                onclick="showReservaForm()"
-                style="margin-top:0;background:linear-gradient(135deg,var(--accent) 0%,#ff8c00 100%);color:#000;font-weight:700;font-size:14px;letter-spacing:.06em;padding:14px;border:none;cursor:pointer;border-radius:6px;position:relative;overflow:hidden;">
-          <i class="fa-solid fa-bookmark"></i>&nbsp; Reservar sin pagar
-          <span style="display:block;font-size:10px;font-weight:500;letter-spacing:.04em;margin-top:2px;opacity:.85;">✦ Recomendado para el Lanzamiento</span>
+        <button type="button" class="btn btn-primary full-width cart-pay-btn" onclick="showCheckoutForm()">
+          <i class="fa-solid fa-lock"></i> Proceder al pago
         </button>
         <p style="font-size:10px;color:var(--text-muted);text-align:center;margin-top:8px;line-height:1.5;">
-          <i class="fa-solid fa-envelope"></i> Recibirás un correo de confirmación automático al instante con los detalles de tu reserva.
+          <i class="fa-solid fa-shield-halved" style="color:var(--accent)"></i> Pago inmediato y seguro · Fabricación bajo pedido
         </p>
       </div>
 
-      <!-- ══ FORMULARIO DE ENVÍO + CHECKOUT (oculto hasta clic) ══ -->
-      <div id="cartReservaForm" style="display:none;">
+      <!-- ══ FORMULARIO DE ENVÍO + BOTONES DE PAGO ══ -->
+      <div id="cartCheckoutForm" style="display:none;">
 
         <!-- Cabecera del paso -->
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;">
-          <button onclick="hideReservaForm()" style="background:none;border:none;color:var(--text-muted);cursor:pointer;padding:4px;" aria-label="Volver">
+          <button onclick="hideCheckoutForm()" style="background:none;border:none;color:var(--text-muted);cursor:pointer;padding:4px;" aria-label="Volver">
             <i class="fa-solid fa-arrow-left"></i>
           </button>
           <h4 style="margin:0;font-size:13px;letter-spacing:.08em;color:var(--text);">
-            <i class="fa-solid fa-truck" style="color:var(--accent);margin-right:6px;"></i>DATOS DE ENVÍO Y PAGO
+            <i class="fa-solid fa-truck" style="color:var(--accent);margin-right:6px;"></i>DATOS DE ENVÍO
           </h4>
         </div>
 
         <!-- Aviso informativo -->
         <div style="background:rgba(255,140,0,0.08);border:1px solid rgba(255,140,0,0.25);border-radius:6px;padding:10px 12px;margin-bottom:16px;">
           <p style="font-size:11px;color:var(--accent);margin:0;line-height:1.5;">
-            <i class="fa-solid fa-circle-info"></i> Rellena todos los campos para que podamos tramitar el envío físico de tu pedido. <strong>DNI/NIE obligatorio</strong> para facturación.
+            <i class="fa-solid fa-circle-info"></i> Rellena todos los campos y elige tu método de pago. <strong>DNI/NIE obligatorio</strong> para facturación.
           </p>
         </div>
 
-        <form id="formReserva"
+        <form id="formPago"
               action="https://formsubmit.co/rawrepublic.reservas@gmail.com"
               method="POST"
-              onsubmit="prepareReservaSubmit(event)">
+              onsubmit="return false;">
 
           <!-- ── Campos ocultos FormSubmit ── -->
-          <input type="hidden" name="_subject"      value="🔥 Nuevo Pedido RAW Republic — Envío físico" />
+          <input type="hidden" name="_subject"      value="🔥 Nuevo Pedido RAW Republic — Pago inmediato" />
           <input type="hidden" name="_template"     value="table" />
           <input type="hidden" name="_captcha"      value="false" />
-          <input type="hidden" name="_autoresponse" value="¡Gracias por tu pedido en RAW Republic! Hemos recibido tus datos de envío correctamente. Muy pronto nos pondremos en contacto contigo para confirmar los siguientes pasos. ¡Forja tu carácter!" />
+          <input type="hidden" name="_autoresponse" value="¡Gracias por tu pedido en RAW Republic! Hemos recibido tus datos correctamente y tu pago está siendo procesado. En breve recibirás confirmación. ¡Forja tu carácter!" />
           <input type="hidden" name="_next"         value="https://aritziru.github.io/raw-republic/gracias.html" />
-          <!-- Campo dinámico con los productos del carrito -->
-          <input type="hidden" name="Productos_Pedido" id="reserva-productos-field" />
-          <!-- Campo dinámico con el importe total -->
-          <input type="hidden" name="Importe_Total" id="reserva-total-field" />
+          <input type="hidden" name="Productos_Pedido"  id="pago-productos-field" />
+          <input type="hidden" name="Importe_Total"     id="pago-total-field" />
+          <input type="hidden" name="Metodo_Pago"       id="pago-metodo-field" />
 
-          <!-- ── Sección: Datos personales ── -->
-          <p class="checkout-section-label">
-            <i class="fa-solid fa-user"></i> Datos personales
-          </p>
+          <!-- ── Datos personales ── -->
+          <p class="checkout-section-label"><i class="fa-solid fa-user"></i> Datos personales</p>
           <div class="checkout-fields">
             <div class="checkout-row">
               <div class="checkout-field">
-                <label for="cf-nombre">Nombre *</label>
-                <input type="text" id="cf-nombre" name="Nombre" placeholder="Tu nombre" required autocomplete="given-name" />
+                <label for="pf-nombre">Nombre *</label>
+                <input type="text" id="pf-nombre" name="Nombre" placeholder="Tu nombre" required autocomplete="given-name" />
               </div>
               <div class="checkout-field">
-                <label for="cf-apellidos">Apellidos *</label>
-                <input type="text" id="cf-apellidos" name="Apellidos" placeholder="Tus apellidos" required autocomplete="family-name" />
+                <label for="pf-apellidos">Apellidos *</label>
+                <input type="text" id="pf-apellidos" name="Apellidos" placeholder="Tus apellidos" required autocomplete="family-name" />
               </div>
             </div>
             <div class="checkout-field checkout-field--full">
-              <label for="cf-dni">DNI / NIE *</label>
-              <input type="text" id="cf-dni" name="DNI_NIE" placeholder="12345678A" required
+              <label for="pf-dni">DNI / NIE *</label>
+              <input type="text" id="pf-dni" name="DNI_NIE" placeholder="12345678A" required
                      pattern="[0-9XYZxyz][0-9]{6,7}[A-Za-z]"
                      title="Introduce un DNI (12345678A) o NIE válido (X1234567A)" />
             </div>
           </div>
 
-          <!-- ── Sección: Contacto ── -->
-          <p class="checkout-section-label" style="margin-top:14px;">
-            <i class="fa-solid fa-envelope"></i> Contacto
-          </p>
+          <!-- ── Contacto ── -->
+          <p class="checkout-section-label" style="margin-top:14px;"><i class="fa-solid fa-envelope"></i> Contacto</p>
           <div class="checkout-fields">
             <div class="checkout-field checkout-field--full">
-              <label for="cf-email">Correo electrónico *</label>
-              <input type="email" id="cf-email" name="Email" placeholder="tucorreo@email.com" required autocomplete="email" />
+              <label for="pf-email">Correo electrónico *</label>
+              <input type="email" id="pf-email" name="Email" placeholder="tucorreo@email.com" required autocomplete="email" />
             </div>
             <div class="checkout-field checkout-field--full">
-              <label for="cf-tel">Teléfono de contacto *</label>
-              <input type="tel" id="cf-tel" name="Telefono" placeholder="+34 600 000 000" required autocomplete="tel" />
+              <label for="pf-tel">Teléfono *</label>
+              <input type="tel" id="pf-tel" name="Telefono" placeholder="+34 600 000 000" required autocomplete="tel" />
             </div>
           </div>
 
-          <!-- ── Sección: Dirección de envío ── -->
-          <p class="checkout-section-label" style="margin-top:14px;">
-            <i class="fa-solid fa-location-dot"></i> Dirección de envío
-          </p>
+          <!-- ── Dirección ── -->
+          <p class="checkout-section-label" style="margin-top:14px;"><i class="fa-solid fa-location-dot"></i> Dirección de envío</p>
           <div class="checkout-fields">
             <div class="checkout-field checkout-field--full">
-              <label for="cf-direccion">Calle, número, piso, puerta *</label>
-              <input type="text" id="cf-direccion" name="Direccion" placeholder="Calle Ejemplo, 10, 2º B" required autocomplete="street-address" />
+              <label for="pf-direccion">Calle, número, piso, puerta *</label>
+              <input type="text" id="pf-direccion" name="Direccion" placeholder="Calle Ejemplo, 10, 2º B" required autocomplete="street-address" />
             </div>
             <div class="checkout-row">
               <div class="checkout-field checkout-field--cp">
-                <label for="cf-cp">Código Postal *</label>
-                <input type="text" id="cf-cp" name="Codigo_Postal" placeholder="28001"
-                       required maxlength="10" autocomplete="postal-code" />
+                <label for="pf-cp">Código Postal *</label>
+                <input type="text" id="pf-cp" name="Codigo_Postal" placeholder="28001" required maxlength="10" autocomplete="postal-code" />
               </div>
               <div class="checkout-field">
-                <label for="cf-ciudad">Ciudad / Provincia *</label>
-                <input type="text" id="cf-ciudad" name="Ciudad_Provincia" placeholder="Madrid" required autocomplete="address-level2" />
+                <label for="pf-ciudad">Ciudad / Provincia *</label>
+                <input type="text" id="pf-ciudad" name="Ciudad_Provincia" placeholder="Madrid" required autocomplete="address-level2" />
               </div>
             </div>
           </div>
 
-          <!-- ── Botón de envío ── -->
-          <button type="submit" id="btnConfirmarPedido"
-                  style="width:100%;margin-top:18px;padding:15px;background:linear-gradient(135deg,var(--accent) 0%,#ff8c00 100%);color:#000;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:.08em;text-transform:uppercase;border:none;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity .2s,transform .2s;">
-            <i class="fa-brands fa-paypal"></i> Confirmar y Pagar con PayPal
-          </button>
-
-          <p style="font-size:10px;color:var(--text-muted);text-align:center;margin-top:10px;line-height:1.6;">
-            <i class="fa-solid fa-lock" style="color:var(--accent)"></i>
-            Al confirmar, tus datos de envío se registran y se abre PayPal en una nueva pestaña para completar el pago.
-          </p>
-
         </form>
+
+        <!-- ── Separador ── -->
+        <div style="display:flex;align-items:center;gap:10px;margin:20px 0 14px;">
+          <div style="flex:1;height:1px;background:rgba(255,255,255,0.1);"></div>
+          <span style="font-size:10px;color:var(--text-muted);letter-spacing:.10em;text-transform:uppercase;">Elige cómo pagar</span>
+          <div style="flex:1;height:1px;background:rgba(255,255,255,0.1);"></div>
+        </div>
+
+        <!-- ── Botones de pago (deshabilitados hasta formulario válido) ── -->
+        <div id="payBtnsWrap">
+          <button id="btnPayPaypal" class="btn btn-primary full-width pay-method-btn" disabled onclick="submitAndPay('paypal')">
+            <i class="fa-brands fa-paypal"></i> Pagar con PayPal
+          </button>
+          <button id="btnPayRevolut" class="btn btn-ghost full-width pay-method-btn" disabled onclick="submitAndPay('revolut')" style="margin-top:10px;">
+            <i class="fa-solid fa-bolt"></i> Pagar con Revolut
+          </button>
+          <button id="btnPayTarjeta" class="btn btn-ghost full-width pay-method-btn" disabled onclick="submitAndPay('tarjeta')" style="margin-top:10px;">
+            <i class="fa-solid fa-credit-card"></i> Tarjeta / Apple Pay / Google Pay
+          </button>
+        </div>
+
+        <p id="payFormHint" style="font-size:10px;color:var(--text-muted);text-align:center;margin-top:10px;line-height:1.6;">
+          <i class="fa-solid fa-circle-exclamation" style="color:var(--accent);opacity:.7;"></i>
+          Completa todos los campos para activar los botones de pago.
+        </p>
+
+        <p id="payReadyNote" style="display:none;font-size:10px;color:var(--text-muted);text-align:center;margin-top:10px;line-height:1.6;">
+          <i class="fa-solid fa-lock" style="color:var(--accent)"></i>
+          Tus datos de envío se registran al confirmar. Serás redirigido a la pasarela de pago elegida.
+        </p>
+
       </div>
 
       <button class="cart-clear-btn" onclick="clearCart()">
@@ -2263,46 +2266,61 @@
   <script>
     /* ══════════════════════════════════════════════════════════
      *  CONFIGURACIÓN DE ENLACES DE PAGO
-     *  ─────────────────────────────────────────────────────────
-     *  PAYPAL_LINK : https://www.paypal.com/paypalme/TuUsuario/
-     *               (el importe se añade automáticamente al final)
-     *  REVOLUT_LINK: tu enlace de cobro de Revolut
-     *  CARD_LINK   : URL de tu pasarela de tarjeta — dejar vacío
-     *               hasta que esté integrada
+     *  Sustituye TuUsuario por tu usuario real en cada enlace.
      * ══════════════════════════════════════════════════════════ */
     var PAYPAL_LINK  = 'https://www.paypal.com/paypalme/TuUsuario/';
     var REVOLUT_LINK = 'https://revolut.me/TuUsuario/';
-    var CARD_LINK    = ''; // pendiente de integración
+    var CARD_LINK    = ''; // URL de tu pasarela de tarjeta cuando esté lista
 
-    /* Método de pago elegido antes de abrir el formulario */
-    var metodoPagoElegido = 'paypal';
-
-    /* ── Abre el formulario guardando el método elegido ── */
-    function showReservaForm(metodo) {
-      metodoPagoElegido = metodo || 'paypal';
-      document.getElementById('cartPaymentPanel').style.display = 'none';
-      document.getElementById('cartReservaForm').style.display  = 'block';
+    /* ── Abre el formulario de envío ── */
+    function showCheckoutForm() {
+      document.getElementById('cartPaymentPanel').style.display   = 'none';
+      document.getElementById('cartCheckoutForm').style.display   = 'block';
+      /* Evaluar estado inicial por si autocompletar ya rellenó algo */
+      checkFormValidity();
     }
 
-    function hideReservaForm() {
-      document.getElementById('cartReservaForm').style.display  = 'none';
-      document.getElementById('cartPaymentPanel').style.display = 'block';
+    /* ── Vuelve al panel de pago ── */
+    function hideCheckoutForm() {
+      document.getElementById('cartCheckoutForm').style.display   = 'none';
+      document.getElementById('cartPaymentPanel').style.display   = 'block';
     }
 
-    function toggleCardPanel() {
-      var p = document.getElementById('cardFieldsPanel');
-      p.style.display = p.style.display === 'none' ? 'block' : 'none';
+    /* ── Comprueba validez del formulario y activa/desactiva botones ── */
+    function checkFormValidity() {
+      var form  = document.getElementById('formPago');
+      var valid = form ? form.checkValidity() : false;
+      var btns  = document.querySelectorAll('.pay-method-btn');
+      var hint  = document.getElementById('payFormHint');
+      var note  = document.getElementById('payReadyNote');
+
+      btns.forEach(function(b) {
+        b.disabled = !valid;
+        b.style.opacity = valid ? '1' : '0.45';
+        b.style.cursor  = valid ? 'pointer' : 'not-allowed';
+      });
+
+      if (hint) hint.style.display = valid ? 'none'  : '';
+      if (note) note.style.display = valid ? ''      : 'none';
     }
+
+    /* ── Listener en tiempo real para habilitar botones ── */
+    document.addEventListener('DOMContentLoaded', function() {
+      var form = document.getElementById('formPago');
+      if (!form) return;
+      form.addEventListener('input',  checkFormValidity);
+      form.addEventListener('change', checkFormValidity);
+    });
 
     /* ── Devuelve la URL de pago según el método elegido ── */
-    function getPaymentUrl(totalNum) {
-      if (metodoPagoElegido === 'revolut') {
+    function getPaymentUrl(metodo, totalNum) {
+      if (metodo === 'revolut') {
         return REVOLUT_LINK ? REVOLUT_LINK + totalNum.toFixed(2) : 'https://www.revolut.com';
       }
-      if (metodoPagoElegido === 'tarjeta') {
+      if (metodo === 'tarjeta') {
         return CARD_LINK || null;
       }
-      /* paypal por defecto */
+      /* paypal */
       if (PAYPAL_LINK && PAYPAL_LINK.indexOf('TuUsuario') === -1) {
         return PAYPAL_LINK + totalNum.toFixed(2);
       }
@@ -2310,25 +2328,21 @@
     }
 
     /* ══════════════════════════════════════════════════════════
-     *  prepareReservaSubmit
-     *  1. Valida el formulario
-     *  2. Rellena campos ocultos (productos + total)
-     *  3. Envía datos a FormSubmit en SEGUNDO PLANO (fetch)
-     *     → el correo con la dirección te llega igualmente
-     *  4. En cuanto el fetch termina → window.location.href
-     *     salta a la URL de pago (sin redirigir a gracias.html)
+     *  submitAndPay(metodo)
+     *  1. Valida el formulario (doble comprobación)
+     *  2. Rellena campos ocultos (productos + total + método)
+     *  3. Envía datos a FormSubmit en segundo plano (fetch)
+     *  4. Redirige a la pasarela de pago elegida
+     *  5. Si el pago tiene éxito → FormSubmit redirige a gracias.html
      * ══════════════════════════════════════════════════════════ */
-    function prepareReservaSubmit(e) {
-      e.preventDefault();
-
-      /* ── PASO 1: Validar ── */
-      var form = document.getElementById('formReserva');
-      if (!form.checkValidity()) {
-        form.reportValidity();
+    function submitAndPay(metodo) {
+      var form = document.getElementById('formPago');
+      if (!form || !form.checkValidity()) {
+        if (form) form.reportValidity();
         return;
       }
 
-      /* ── PASO 2: Recoger productos del carrito ── */
+      /* ── Recoger productos del carrito ── */
       var items = [];
       document.querySelectorAll('#cartItemsList li').forEach(function(item) {
         var name  = item.querySelector('.cart-item-name')  ? item.querySelector('.cart-item-name').textContent.trim()  : '';
@@ -2337,54 +2351,50 @@
         var qty   = item.querySelector('.cart-item-qty')   ? item.querySelector('.cart-item-qty').textContent.trim()   : '';
         if (name) items.push(name + ' | ' + meta + ' | Cant: ' + qty + ' | ' + price);
       });
-      document.getElementById('reserva-productos-field').value =
+      document.getElementById('pago-productos-field').value =
         items.length ? items.join(' // ') : 'Sin detalle de productos';
 
-      /* ── PASO 3: Recoger importe total ── */
+      /* ── Recoger importe total ── */
       var totalEl   = document.getElementById('cartTotal');
       var totalText = totalEl ? totalEl.textContent.trim() : '0,00 €';
-      document.getElementById('reserva-total-field').value = totalText;
-      var totalNum  = parseFloat(totalText.replace(',', '.').replace(/[^0-9.]/g, '')) || 0;
+      document.getElementById('pago-total-field').value  = totalText;
+      document.getElementById('pago-metodo-field').value = metodo.toUpperCase();
+      var totalNum = parseFloat(totalText.replace(',', '.').replace(/[^0-9.]/g, '')) || 0;
 
-      /* ── PASO 4: URL de pago destino ── */
-      var paymentUrl = getPaymentUrl(totalNum);
+      /* ── URL de destino ── */
+      var paymentUrl = getPaymentUrl(metodo, totalNum);
 
-      /* ── PASO 5: Bloquear botón para evitar doble envío ── */
-      var btn = document.getElementById('btnConfirmarPedido');
-      if (btn) { btn.disabled = true; btn.textContent = 'Enviando…'; }
+      /* ── Bloquear todos los botones de pago ── */
+      document.querySelectorAll('.pay-method-btn').forEach(function(b) {
+        b.disabled = true;
+        b.style.opacity = '0.5';
+      });
+      var activeBtn = document.getElementById('btnPay' + metodo.charAt(0).toUpperCase() + metodo.slice(1));
+      if (activeBtn) activeBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Procesando…';
 
-      /* ── PASO 6: Envío en SEGUNDO PLANO a FormSubmit ── */
+      /* ── Envío en segundo plano a FormSubmit ── */
       fetch(form.action, {
         method : 'POST',
         body   : new FormData(form),
         headers: { 'Accept': 'application/json' }
       })
       .finally(function() {
-        /* .finally() garantiza la redirección aunque FormSubmit falle */
         if (paymentUrl) {
           window.location.href = paymentUrl;
-        } else if (metodoPagoElegido === 'tarjeta') {
-          /* Solo la tarjeta está en integración */
-          if (btn) {
-            btn.disabled = false;
-            btn.innerHTML = '<i class="fa-solid fa-credit-card"></i> Confirmar y Pagar con Tarjeta';
-          }
-          alert('La pasarela de tarjeta bancaria está en integración.\nPor favor elige PayPal o Revolut para completar tu pedido.');
+        } else if (metodo === 'tarjeta') {
+          document.querySelectorAll('.pay-method-btn').forEach(function(b) {
+            b.disabled = false; b.style.opacity = '1';
+          });
+          if (activeBtn) activeBtn.innerHTML = '<i class="fa-solid fa-credit-card"></i> Tarjeta / Apple Pay / Google Pay';
+          alert('La pasarela de tarjeta está en integración.\nPor favor elige PayPal o Revolut para completar tu pedido.');
         } else {
-          /* PayPal o Revolut sin enlace configurado: redirigir a la home de cada plataforma */
-          if (btn) {
-            btn.disabled = false;
-            btn.innerHTML = metodoPagoElegido === 'revolut'
-              ? '<i class="fa-solid fa-bolt"></i> Confirmar y Pagar con Revolut'
-              : '<i class="fa-brands fa-paypal"></i> Confirmar y Pagar con PayPal';
-          }
-          var fallback = metodoPagoElegido === 'revolut'
+          window.location.href = metodo === 'revolut'
             ? 'https://www.revolut.com'
             : 'https://www.paypal.com';
-          window.location.href = fallback;
         }
       });
     }
+
     /* ── Contador de visitantes en tiempo real (orgánico) ── */
     (function liveViewers() {
       var el = document.getElementById('live-viewers');
@@ -2392,34 +2402,32 @@
 
       function tick() {
         var current = parseInt(el.textContent, 10) || 5;
-        /* Tabla de eventos ponderada: más probable subir que bajar,
-           con saltos ocasionales grandes para parecer real */
         var roll = Math.random();
         var delta;
-        if      (roll < 0.08) delta = -7;  //  8 % — baja bastante
-        else if (roll < 0.20) delta = -5;  // 12 % — baja algo
-        else if (roll < 0.35) delta = -2;  // 15 % — baja 1
-        else if (roll < 0.50) delta =  0;  // 15 % — sin cambio
-        else if (roll < 0.68) delta =  1;  // 18 % — sube 1
-        else if (roll < 0.82) delta =  5;  // 14 % — sube 2
-        else if (roll < 0.93) delta =  7;  // 11 % — sube 3
-        else                  delta =  10;  //  7 % — pico de tráfico
+        if      (roll < 0.08) delta = -7;
+        else if (roll < 0.20) delta = -5;
+        else if (roll < 0.35) delta = -2;
+        else if (roll < 0.50) delta =  0;
+        else if (roll < 0.68) delta =  1;
+        else if (roll < 0.82) delta =  5;
+        else if (roll < 0.93) delta =  7;
+        else                  delta =  10;
 
         var next = Math.min(18, Math.max(3, current + delta));
         el.textContent = next;
-        /* Flash visual al cambiar */
         el.classList.remove('flash');
-        void el.offsetWidth; /* reflow para reiniciar la animación */
+        void el.offsetWidth;
         el.classList.add('flash');
-
-        /* Intervalo irregular: entre 3 s y 8 s */
         setTimeout(tick, 3000 + Math.random() * 5000);
       }
-
-      /* Primer tick con un pequeño retraso inicial */
       setTimeout(tick, 2000 + Math.random() * 3000);
     })();
   </script>
+  <!-- ░░ SCROLL TO TOP ░░ -->
+  <button id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Volver arriba">
+    <i class="fa-solid fa-chevron-up"></i>
+  </button>
+
   <script src="script.js"></script>
   <!-- ░░ MODAL GUÍA DE TALLAS ░░ -->
   <div class="modal-overlay" id="modal-guia-tallas" role="dialog" aria-modal="true" aria-label="Guía de tallas">

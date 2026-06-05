@@ -2078,3 +2078,15 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
 })();
+
+
+/* ─────────────────────────────────────────────────────────────
+   SCROLL TO TOP — aparece al bajar 400px
+───────────────────────────────────────────────────────────── */
+(function initScrollTop() {
+  const btn = document.getElementById('scrollTopBtn');
+  if (!btn) return;
+  window.addEventListener('scroll', () => {
+    btn.classList.toggle('visible', window.scrollY > 400);
+  }, { passive: true });
+})();
