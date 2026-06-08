@@ -6,6 +6,7 @@
   <title>RAW Republic — Entrenamiento Sin Límites</title>
   <meta name="description" content="Ropa y equipamiento de entrenamiento fabricado bajo pedido. Diseñado para atletas que no conocen los límites. Envío a toda España." />
   <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://aritziru.github.io/raw-republic/" />
   <!-- Open Graph / Redes Sociales -->
   <meta property="og:type"        content="website" />
   <meta property="og:title"       content="RAW Republic — Entrenamiento Sin Límites" />
@@ -27,6 +28,12 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
+
+  <noscript>
+    <div style="background:#ff6a00;color:#000;text-align:center;padding:12px;font-family:sans-serif;font-size:14px;font-weight:600;">
+      ⚠️ Esta web requiere JavaScript para funcionar correctamente. Por favor, actívalo en tu navegador.
+    </div>
+  </noscript>
 
   <!-- ░░ BANNER ENVÍO GRATIS ░░ -->
   <div class="shipping-banner" id="shippingBanner">
@@ -125,13 +132,13 @@
             <div class="mega-col mega-col--visual" id="megaVisualRopa" aria-hidden="true">
               <div class="mega-visual__bg" id="megaBgRopa">
                 <!-- AQUÍ SE CONFIGURA EL FONDO DE VERANO -->
-                <img src="imagenes/verano.jpg"   alt="" class="mega-visual__img is-active" id="megaImgVerano"   data-key="verano" />
+                <img src="imagenes/verano.jpg"   alt="" loading="lazy" class="mega-visual__img is-active" id="megaImgVerano"   data-key="verano" />
                 <!-- AQUÍ SE CONFIGURA EL FONDO DE INVIERNO -->
-                <img src="imagenes/invierno.jpg" alt="" class="mega-visual__img"            id="megaImgInvierno" data-key="invierno" />
+                <img src="imagenes/invierno.jpg" alt="" loading="lazy" class="mega-visual__img"            id="megaImgInvierno" data-key="invierno" />
                 <!-- AQUÍ SE CONFIGURA EL FONDO DE GIMNASIO -->
-                <img src="imagenes/gimnasio.jpg" alt="" class="mega-visual__img"            id="megaImgGimnasio" data-key="gimnasio" />
+                <img src="imagenes/gimnasio.jpg" alt="" loading="lazy" class="mega-visual__img"            id="megaImgGimnasio" data-key="gimnasio" />
                 <!-- AQUÍ SE CONFIGURA EL FONDO DE VESTIR / URBANO -->
-                <img src="imagenes/vestir.jpg"   alt="" class="mega-visual__img"            id="megaImgVestir"   data-key="vestir" />
+                <img src="imagenes/vestir.jpg"   alt="" loading="lazy" class="mega-visual__img"            id="megaImgVestir"   data-key="vestir" />
               </div>
               <div class="mega-visual__label">
                 <span class="mega-visual__tag">// Colección</span>
@@ -268,7 +275,7 @@
                onclick="openProductModal(this)">
         <!-- [5] Wrap con hover-carousel -->
         <div class="product-img-wrap" data-front="imagenes/camiseta1.jpg" data-back="imagenes/camiseta2.jpg">
-          <img src="imagenes/camiseta1.jpg" alt="RAW Training Tee" class="product-img-main" />
+          <img src="imagenes/camiseta1.jpg" alt="RAW Training Tee" loading="lazy" class="product-img-main" />
           <div class="product-badge-bop">Bajo Pedido</div>
           <div class="product-badge-top"><i class="fa-solid fa-fire"></i> Top 1</div>
           <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
@@ -303,7 +310,7 @@
                data-colors="Blanco,Negro,Rosa"
                onclick="openProductModal(this)">
         <div class="product-img-wrap" data-front="imagenes/camisetachica2.jpg" data-back="imagenes/camisetachica1.jpg" data-third="imagenes/camisetachica3.jpg">
-          <img src="imagenes/camisetachica2.png" alt="RAW Industrial Hoodie" class="product-img-placeholder" style="object-fit: cover; width: 100%; height: 100%;">
+          <img src="imagenes/camisetachica2.png" alt="RAW Industrial Hoodie" loading="lazy" class="product-img-placeholder" style="object-fit: cover; width: 100%; height: 100%;">
           <div class="product-badge-bop">Bajo Pedido</div>
           <div class="product-badge-new">Nuevo</div>
           <div class="product-badge-top"><i class="fa-solid fa-fire"></i> Top 2</div>
@@ -338,7 +345,7 @@
                data-colors="Blanco,Negro"
                onclick="openProductModal(this)">
         <div class="product-img-wrap" data-front="imagenes/calcetines1.jpg" data-back="imagenes/calcetines2.jpg">
-          <img src="imagenes/calcetines1.jpg" alt="RAW Rep Shorts" class="product-img-main" />
+          <img src="imagenes/calcetines1.jpg" alt="RAW Rep Shorts" loading="lazy" class="product-img-main" />
           <div class="product-badge-bop">Bajo Pedido</div>
           <div class="product-badge-top"><i class="fa-solid fa-fire"></i> Top 3</div>
           <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
@@ -469,7 +476,7 @@
                data-colors="Negro,Blanco,Gris Carbón,Naranja RAW"
                onclick="openProductModal(this)">
         <div class="product-img-wrap" data-front="imagenes/camiseta1.jpg" data-back="imagenes/camiseta2.jpg">
-          <img src="imagenes/camiseta1.jpg" alt="RAW Training Tee" class="product-img-main" />
+          <img src="imagenes/camiseta1.jpg" alt="RAW Training Tee" loading="lazy" class="product-img-main" />
           <div class="product-badge-bop">Bajo Pedido</div>
           <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
         </div>
@@ -525,7 +532,7 @@
                data-colors="Negro,Gris Carbón,Azul Noche"
                onclick="openProductModal(this)">
         <div class="product-img-wrap" data-front="imagenes/jersey2.jpg" data-back="imagenes/compression_espalda.jpg">
-          <img src="imagenes/jersey2.jpg" alt="RAW Sport Hoodie" class="product-img-main" />
+          <img src="imagenes/jersey2.jpg" alt="RAW Sport Hoodie" loading="lazy" class="product-img-main" />
           <div class="product-badge-bop">Bajo Pedido</div>
           <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
         </div>
@@ -580,7 +587,7 @@
                data-colors="Negro,Blanco"
                onclick="openProductModal(this)">
         <div class="product-img-wrap" data-front="imagenes/tirantes1.jpg" data-back="imagenes/tirantes2.jpg" data-third="imagenes/tirantes2.jpg">
-          <img src="imagenes/tirantes1.jpg" alt="RAW Sport Hoodie" class="product-img-main" />
+          <img src="imagenes/tirantes1.jpg" alt="RAW Sport Hoodie" loading="lazy" class="product-img-main" />
           <div class="product-badge-bop">Bajo Pedido</div>
           <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
         </div>
@@ -635,7 +642,7 @@
                data-colors="Negro,Azul"
                onclick="openProductModal(this)">
         <div class="product-img-wrap" data-front="imagenes/pantalon1.jpg" data-back="imagenes/pantalon2.jpg">
-          <img src="imagenes/pantalon1.jpg" alt="RAW Sport Hoodie" class="product-img-main" />
+          <img src="imagenes/pantalon1.jpg" alt="RAW Sport Hoodie" loading="lazy" class="product-img-main" />
           <div class="product-badge-bop">Bajo Pedido</div>
           <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
         </div>
@@ -692,7 +699,7 @@
                data-colors="Negro,Grafito,Crema"
                onclick="openProductModal(this)">
         <div class="product-img-wrap" data-front="imagenes/jersey1.jpg" data-back="imagenes/hoodie_espalda.jpg">
-          <img src="imagenes/jersey1.jpg" alt="RAW Industrial Hoodie" class="product-img-main" />
+          <img src="imagenes/jersey1.jpg" alt="RAW Industrial Hoodie" loading="lazy" class="product-img-main" />
           <div class="product-badge-bop">Bajo Pedido</div>
           <div class="product-badge-new">Nuevo</div>
           <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
@@ -748,7 +755,7 @@
                onclick="openProductModal(this)">
         <div class="product-img-wrap" data-front="" data-back="">
           <!-- Placeholder hasta tener foto real -->
-          <div class="product-img-placeholder"><i class="fa-solid fa-vest-patches"></i><span>Foto próximamente</span></div>
+          <div loading="lazy" class="product-img-placeholder"><i class="fa-solid fa-vest-patches"></i><span>Foto próximamente</span></div>
           <div class="product-badge-bop">Bajo Pedido</div>
           <div class="product-badge-new">Nuevo</div>
           <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
@@ -803,7 +810,7 @@
                data-colors="Negro,Azul"
                onclick="openProductModal(this)">
         <div class="product-img-wrap" data-front="imagenes/pantalon1.jpg" data-back="imagenes/pantalon2.jpg">
-          <img src="imagenes/pantalon1.jpg" alt="RAW Rep Shorts" class="product-img-main" />
+          <img src="imagenes/pantalon1.jpg" alt="RAW Rep Shorts" loading="lazy" class="product-img-main" />
           <div class="product-badge-bop">Bajo Pedido</div>
           <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
         </div>
@@ -857,7 +864,7 @@
                data-colors="Negro,Gris Carbón,Azul Noche"
                onclick="openProductModal(this)">
         <div class="product-img-wrap" data-front="" data-back="">
-          <div class="product-img-placeholder"><i class="fa-solid fa-shirt"></i><span>Foto próximamente</span></div>
+          <div loading="lazy" class="product-img-placeholder"><i class="fa-solid fa-shirt"></i><span>Foto próximamente</span></div>
           <div class="product-badge-bop">Bajo Pedido</div>
           <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
         </div>
@@ -912,7 +919,7 @@
                data-colors="Negro,Gris Carbón,Verde Militar"
                onclick="openProductModal(this)">
         <div class="product-img-wrap" data-front="" data-back="">
-          <div class="product-img-placeholder"><i class="fa-solid fa-vest-patches"></i><span>Foto próximamente</span></div>
+          <div loading="lazy" class="product-img-placeholder"><i class="fa-solid fa-vest-patches"></i><span>Foto próximamente</span></div>
           <div class="product-badge-bop">Bajo Pedido</div>
           <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
         </div>
@@ -969,7 +976,7 @@
                data-colors="Negro,Gris Carbón,Naranja RAW"
                onclick="openProductModal(this)">
         <div class="product-img-wrap" data-front="" data-back="">
-          <div class="product-img-placeholder"><i class="fa-solid fa-dumbbell"></i><span>Foto próximamente</span></div>
+          <div loading="lazy" class="product-img-placeholder"><i class="fa-solid fa-dumbbell"></i><span>Foto próximamente</span></div>
           <div class="product-badge-bop">Bajo Pedido</div>
           <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
         </div>
@@ -1024,7 +1031,7 @@
                data-colors="Negro,Blanco,Rosa"
                onclick="openProductModal(this)">
         <div class="product-img-wrap" data-front="imagenes/camisetachica2.jpg" data-back="imagenes/camisetachica1.jpg" data-third="imagenes/camisetachica3.jpg">
-          <img src="imagenes/camisetachica2.jpg" alt="RAW Rep Shorts" class="product-img-main" />
+          <img src="imagenes/camisetachica2.jpg" alt="RAW Rep Shorts" loading="lazy" class="product-img-main" />
           <div class="product-badge-bop">Bajo Pedido</div>
           <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
         </div>
@@ -1079,7 +1086,7 @@
                data-colors="Blanco,Negro"
                onclick="openProductModal(this)">
         <div class="product-img-wrap" data-front="imagenes/calcetines1.jpg" data-back="imagenes/calcetines2.jpg">
-          <img src="imagenes/calcetines1.jpg" alt="RAW Rep Shorts" class="product-img-main" />
+          <img src="imagenes/calcetines1.jpg" alt="RAW Rep Shorts" loading="lazy" class="product-img-main" />
           <div class="product-badge-bop">Bajo Pedido</div>
           <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
         </div>
@@ -1134,7 +1141,7 @@
                data-colors="Negro,Blanco"
                onclick="openProductModal(this)">
         <div class="product-img-wrap" data-front="imagenes/top1.jpg" data-back="imagenes/top2.jpg" data-third="imagenes/top3.jpg">
-          <img src="imagenes/top1.jpg" alt="Muñequeras de Fuerza RAW" class="product-img-main" />
+          <img src="imagenes/top1.jpg" alt="Muñequeras de Fuerza RAW" loading="lazy" class="product-img-main" />
           <div class="product-badge-bop">Bajo Pedido</div>
           <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
         </div>
@@ -1190,7 +1197,7 @@
                data-colors="Negro,Azul,Rojo"
                onclick="openProductModal(this)">
         <div class="product-img-wrap" data-front="imagenes/mallas1.jpg" data-back="imagenes/mallas2.jpg" data-third="imagenes/mallas3.jpg">
-          <img src="imagenes/mallas1.jpg" alt="Muñequeras de Fuerza RAW" class="product-img-main" />
+          <img src="imagenes/mallas1.jpg" alt="Muñequeras de Fuerza RAW" loading="lazy" class="product-img-main" />
           <div class="product-badge-bop">Bajo Pedido</div>
           <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
         </div>
@@ -1244,7 +1251,7 @@
                data-colors="Negro Guerrero,Camuflaje,Naranja RAW"
                onclick="openProductModal(this)">
         <div class="product-img-wrap" data-front="imagenes/gorra.jpg" data-back="imagenes/gorra2.jpg">
-          <img src="imagenes/gorra.jpg" alt="Muñequeras de Fuerza RAW" class="product-img-main" />
+          <img src="imagenes/gorra.jpg" alt="Muñequeras de Fuerza RAW" loading="lazy" class="product-img-main" />
           <div class="product-badge-bop">Bajo Pedido</div>
           <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
         </div>
@@ -1301,7 +1308,7 @@
                data-colors="Negro,Naranja RAW,Verde Militar"
                onclick="openProductModal(this)">
         <div class="product-img-wrap" data-front="imagenes/muñequeras1.jpg" data-back="imagenes/muñequeras2.jpg">
-          <img src="imagenes/muñequeras1.jpg" alt="RAW Rep Shorts" class="product-img-main" />
+          <img src="imagenes/muñequeras1.jpg" alt="RAW Rep Shorts" loading="lazy" class="product-img-main" />
           <div class="product-badge-bop">Bajo Pedido</div>
           <div class="product-badge-new">Nuevo</div>
           <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
@@ -1357,7 +1364,7 @@
                data-colors="Negro,Blanco,Naranja RAW"
                onclick="openProductModal(this)">
         <div class="product-img-wrap" data-front="imagenes/botella1.jpg" data-back="imagenes/botella2.jpg" data-third="imagenes/botella3.jpg">
-          <img src="imagenes/botella1.jpg" alt="Botella Térmica RAW" class="product-img-main" />
+          <img src="imagenes/botella1.jpg" alt="Botella Térmica RAW" loading="lazy" class="product-img-main" />
           <div class="product-badge-bop">Bajo Pedido</div>
           <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
         </div>
@@ -1415,7 +1422,7 @@
                data-colors="Blanco,Negro,Naranja RAW"
                onclick="openProductModal(this)">  
         <div class="product-img-wrap" data-front="imagenes/tape1.jpg" data-back="imagenes/tape2.jpg">
-          <img src="imagenes/tape1.jpg" alt="Botella Térmica RAW" class="product-img-main" />
+          <img src="imagenes/tape1.jpg" alt="Botella Térmica RAW" loading="lazy" class="product-img-main" />
           <div class="product-badge-bop">Bajo Pedido</div>
           <div class="product-badge-new">Nuevo</div>
           <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
@@ -1637,10 +1644,12 @@
         <!-- FormSubmit: configuración oculta -->
         <input type="hidden" name="_subject" value="Nueva Duda/Consulta sobre Pedido - RAW Republic" />
         <input type="hidden" name="_next" value="https://aritziru.github.io/raw-republic/gracias-contacto.html" />
+        <input type="hidden" name="_captcha" value="true" />
+        <input type="hidden" name="_honey"   value="" style="display:none" />
 
         <div class="form-row">
-          <input type="text" name="nombre" placeholder="Tu nombre" required />
-          <input type="email" name="email" placeholder="Tu email" required />
+          <input type="text"  name="nombre" placeholder="Tu nombre" required autocomplete="name" />
+          <input type="email" name="email"  placeholder="Tu email"  required autocomplete="email" />
         </div>
         <div class="form-row">
           <input type="text" name="numero_pedido" placeholder="Nº de pedido (si lo tienes)" />
@@ -1788,10 +1797,10 @@
         </a>
         <p class="footer-tagline">Entrenamiento sin concesiones.</p>
         <div class="social-links">
-          <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-          <a href="https://www.tiktok.com" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
-          <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
-          <a href="https://www.x.com" target="_blank" rel="noopener noreferrer" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="https://www.instagram.com/rawrepublic_es" target="_blank" rel="noopener noreferrer" aria-label="Instagram de RAW Republic"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://www.tiktok.com/@rawrepublic_es" target="_blank" rel="noopener noreferrer" aria-label="TikTok de RAW Republic"><i class="fa-brands fa-tiktok"></i></a>
+          <a href="https://www.youtube.com/@rawrepublic" target="_blank" rel="noopener noreferrer" aria-label="YouTube de RAW Republic"><i class="fa-brands fa-youtube"></i></a>
+          <a href="https://www.x.com/rawrepublic_es" target="_blank" rel="noopener noreferrer" aria-label="X de RAW Republic"><i class="fa-brands fa-x-twitter"></i></a>
         </div>
         <!-- Badges de pago -->
         <div class="payment-badges">
@@ -1807,13 +1816,13 @@
         <a href="#catalogo">Ropa de Gym</a>
         <a href="#accesorios">Accesorios</a>
         <a href="#nutricion">Nutrición (Pronto)</a>
-        <a href="#">Novedades</a>
+        <a href="#catalogo">Novedades</a>
       </div>
 
       <div class="footer-col">
         <p class="footer-col-title">Empresa</p>
-        <a href="#">Sobre Nosotros</a>
-        <a href="#">Blog</a>
+        <a href="#contacto">Sobre Nosotros</a>
+        <a href="#contacto">Blog</a>
         <a href="#contacto">Trabaja con nosotros</a>
         <a href="#contacto">Contacto</a>
         <a href="#faq">Preguntas Frecuentes</a>
