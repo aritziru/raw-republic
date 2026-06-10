@@ -539,6 +539,25 @@ function addToCartFromModal() {
   closeModal('modal-producto');
 }
 
+/* ── Persistencia del carrito en localStorage ── */
+const CART_STORAGE_KEY = 'rr_cart_v1';
+
+function saveCartToStorage() {
+  try {
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+  } catch (e) { /* cuota llena o modo privado: ignorar */ }
+}
+
+function loadCartFromStorage() {
+  try {
+    const stored = localStorage.getItem(CART_STORAGE_KEY);
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      if (Array.isArray(parsed)) cart = parsed;
+    }
+  } catch (e) { cart = []; }
+}
+
 /**
  * Lógica central: añade o incrementa un item en el carrito.
  */
@@ -553,6 +572,7 @@ function addItemToCart({ id, name, price, talla, color, img }) {
     cart.push({ key, id, name, price, talla, color, img, qty: 1 });
   }
 
+  saveCartToStorage();
   renderCart();
   showToast(`"${name}" añadido al carrito`);
   animateCartIcon();
@@ -561,6 +581,7 @@ function addItemToCart({ id, name, price, talla, color, img }) {
 /** Elimina un item del carrito por su key */
 function removeCartItem(key) {
   cart = cart.filter(i => i.key !== key);
+  saveCartToStorage();
   renderCart();
 }
 
@@ -569,12 +590,14 @@ function updateCartQty(key, delta) {
   const item = cart.find(i => i.key === key);
   if (!item) return;
   item.qty = Math.max(1, item.qty + delta);
+  saveCartToStorage();
   renderCart();
 }
 
 /** Vacía el carrito */
 function clearCart() {
   cart = [];
+  saveCartToStorage();
   renderCart();
 }
 
@@ -2077,6 +2100,15 @@ document.addEventListener('DOMContentLoaded', function () {
     renderPublic();
   });
 
+})();
+
+
+/* ─────────────────────────────────────────────────────────────
+   INIT — Restaurar carrito guardado al cargar la página
+───────────────────────────────────────────────────────────── */
+(function initCartPersistence() {
+  loadCartFromStorage();
+  if (cart.length > 0) renderCart();
 })();
 
 
