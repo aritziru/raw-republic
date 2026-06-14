@@ -1,0 +1,44 @@
+<!--
+  ════════════════════════════════════════════════════════════════
+  INSTRUCCIONES: Añade el siguiente bloque <script> a tu archivo
+  gracias.html, justo antes del </body>.
+  Este script recupera los datos del pedido guardados en
+  sessionStorage y los envía a FormSubmit SOLO si el usuario
+  llegó aquí tras un pago exitoso.
+  Si el usuario llegó directamente (sin pagar), no hace nada.
+  ════════════════════════════════════════════════════════════════
+-->
+
+<script>
+  (function enviarConfirmacionPedido() {
+    /* ── Recuperar datos guardados antes de ir a la pasarela ── */
+    var raw;
+    try { raw = sessionStorage.getItem('rr_pending_order'); } catch(e) { return; }
+    if (!raw) return; /* No hay pedido pendiente: acceso directo, no hacer nada */
+
+    var order;
+    try { order = JSON.parse(raw); } catch(e) { return; }
+
+    /* ── Caducidad: si tiene más de 2 horas, ignorar ── */
+    if (!order.ts || (Date.now() - order.ts) > 7200000) {
+      try { sessionStorage.removeItem('rr_pending_order'); } catch(e) {}
+      return;
+    }
+
+    /* ── Limpiar sessionStorage para evitar reenvíos ── */
+    try { sessionStorage.removeItem('rr_pending_order'); } catch(e) {}
+
+    /* ── Construir FormData y enviar a FormSubmit ── */
+    var fd = new FormData();
+    var fields = order.fields || {};
+    Object.keys(fields).forEach(function(k) { fd.append(k, fields[k]); });
+
+    fetch(order.action, {
+      method : 'POST',
+      body   : fd,
+      headers: { 'Accept': 'application/json' }
+    }).catch(function(err) {
+      console.warn('RAW Republic: error al enviar confirmación de pedido', err);
+    });
+  })();
+</script>

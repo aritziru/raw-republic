@@ -268,7 +268,7 @@
         <a href="#top-ventas" class="btn btn-primary">
           Ver Top Ventas <i class="fa-solid fa-fire"></i>
         </a>
-        <a href="#catalogo" class="btn btn-ghost" onclick="resetCatalog()">Ver toda la colección</a>
+        <a href="#catalogo" class="btn btn-ghost" onclick="mostrarCatalogo(); resetCatalog()">Ver toda la colección</a>
       </div>
     </div>
     <div class="hero-stat-bar">
@@ -299,18 +299,18 @@
       <!-- TOP 1 — RAW Training Tee -->
       <article class="product-card featured-card"
                data-product-id="RR-001"
-               data-product-name="RAW Training Tee"
+               data-product-name="Camiseta Chico Urban"
                data-product-price="24.99"
-               data-product-cat="Camiseta técnica"
-               data-product-desc="Tejido dry-fit 4-way stretch. Anti-odor. Costuras planas sin rozaduras."
-               data-img-front="imagenes/camiseta1.jpg"
-               data-img-back="imagenes/camiseta2.jpg"
+               data-product-cat="Camiseta Urban para Chico"
+               data-product-desc="Camiseta de 280g. Estilo Oversize Urban con diseño en la parte trasera."
+               data-img-front="imagenes/Camiseta hombre 1.jpg"
+               data-img-back="imagenes/Camiseta hombre 2.jpg"
                data-sizes="XS,S,M,L,XL,XXL"
                data-colors="Negro,Blanco,Gris Carbón,Naranja RAW"
                onclick="openProductModal(this)">
         <!-- [5] Wrap con hover-carousel -->
-        <div class="product-img-wrap" data-front="imagenes/camiseta1.jpg" data-back="imagenes/camiseta2.jpg">
-          <img src="imagenes/camiseta1.jpg" alt="RAW Training Tee" loading="lazy" class="product-img-main" />
+        <div class="product-img-wrap" data-front="imagenes/Camiseta hombre 1.jpg" data-back="imagenes/Camiseta hombre 2.jpg">
+          <img src="imagenes/Camiseta hombre 1.jpg" alt="RAW Training Tee" loading="lazy" class="product-img-main" />
           <div class="product-badge-bop">Bajo Pedido</div>
           <div class="product-badge-top"><i class="fa-solid fa-fire"></i> Top 1</div>
           <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
@@ -336,16 +336,16 @@
                data-product-id="RR-003"
                data-product-name="Camiseta Chica Gimnasio"
                data-product-price="34.99"
-               data-product-cat="Sudadera"
-               data-product-desc="Fleece 380g. Capucha estructurada. Logo bordado. Tiro oversize."
-               data-img-front="imagenes/camisetachica2.jpg"
+               data-product-cat="Camiseta de Gimnasio para Chica"
+               data-product-desc="Camiseta 220g. Camiseta corta de gimansio para chica. Logo en la espalda. Tiro oversize."
+               data-img-front="imagenes/camiseta chica 1.jpg"
                data-img-back="imagenes/camisetachica1.jpg"
                data-img-third="imagenes/camisetachica3.jpg"
                data-sizes="XS,S,M,L,XL"
                data-colors="Blanco,Negro,Rosa"
                onclick="openProductModal(this)">
-        <div class="product-img-wrap" data-front="imagenes/camisetachica2.jpg" data-back="imagenes/camisetachica1.jpg" data-third="imagenes/camisetachica3.jpg">
-          <img src="imagenes/camisetachica2.png" alt="RAW Industrial Hoodie" loading="lazy" class="product-img-placeholder" style="object-fit: cover; width: 100%; height: 100%;">
+        <div class="product-img-wrap" data-front="imagenes/camiseta chica 1.jpg" data-back="imagenes/camiseta chica 1.jpg" data-third="imagenes/camisetachica3.jpg">
+          <img src="imagenes/camiseta chica 1.jpg" alt="RAW Industrial Hoodie" loading="lazy" class="product-img-placeholder" style="object-fit: cover; width: 100%; height: 100%;">
           <div class="product-badge-bop">Bajo Pedido</div>
           <div class="product-badge-new">Nuevo</div>
           <div class="product-badge-top"><i class="fa-solid fa-fire"></i> Top 2</div>
@@ -491,8 +491,18 @@
       </button>
     </div>
 
+    <!-- Botón para mostrar el catálogo completo -->
+    <div id="catalogRevealWrap" style="text-align:center;padding:32px 0 8px;">
+      <button class="btn btn-primary" id="btnVerColeccion" onclick="mostrarCatalogo()" style="font-size:1rem;padding:14px 36px;letter-spacing:.08em;">
+        <i class="fa-solid fa-shirt"></i> Ver colección completa
+      </button>
+      <p style="margin-top:12px;font-size:12px;color:var(--text-muted);letter-spacing:.06em;">
+        Más de 200 productos · Fabricación exclusiva bajo pedido
+      </p>
+    </div>
+
     <!-- Grid de productos (todos) — [5] hover-carousel activado -->
-    <div class="product-grid" id="mainProductGrid">
+    <div class="product-grid" id="mainProductGrid" style="display:none;">
 
       <!-- ── SUBSECCIÓN VERANO ── -->
       <div id="seccion-verano" class="subseccion-anchor" data-theme="sun" style="display:contents"></div>
@@ -500,25 +510,25 @@
       <!-- PRODUCTO 1 camiseta -->
       <article class="product-card"
                data-product-id="RR-001"
-               data-product-name="RAW Training Tee"
+               data-product-name="Camiseta Chico Urban"
                data-product-price="24.99"
-               data-product-cat="Camiseta técnica"
+               data-product-cat="Camiseta Chico Urban"
                data-section="ropa"
-               data-product-desc="Tejido dry-fit 4-way stretch. Anti-odor. Costuras planas sin rozaduras."
-               data-img-front="imagenes/camiseta1.jpg"
-               data-img-back="imagenes/camiseta2.jpg"
+               data-product-desc="Camiseta de 280g. Estilo Oversize Urban con diseño en la parte trasera."
+               data-img-front="imagenes/Camiseta hombre 1.jpg"
+               data-img-back="imagenes/Camiseta hombre 2.jpg"
                data-sizes="XS,S,M,L,XL,XXL"
                data-colors="Negro,Blanco,Gris Carbón,Naranja RAW"
                onclick="openProductModal(this)">
-        <div class="product-img-wrap" data-front="imagenes/camiseta1.jpg" data-back="imagenes/camiseta2.jpg">
-          <img src="imagenes/camiseta1.jpg" alt="RAW Training Tee" loading="lazy" class="product-img-main" />
+        <div class="product-img-wrap" data-front="imagenes/Camiseta hombre 1.jpg" data-back="imagenes/Camiseta hombre 2.jpg">
+          <img src="imagenes/Camiseta hombre 1.jpg" alt="RAW Training Tee" loading="lazy" class="product-img-main" />
           <div class="product-badge-bop">Bajo Pedido</div>
           <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
         </div>
         <div class="product-body">
-          <p class="product-cat">Camiseta técnica</p>
-          <h3 class="product-name">RAW Training Tee</h3>
-          <p class="product-desc">Tejido dry-fit 4-way stretch. Anti-odor. Costuras planas sin rozaduras.</p>
+          <p class="product-cat">Camiseta Chico Urban</p>
+          <h3 class="product-name">Camiseta Chico Urban</h3>
+          <p class="product-desc">Camiseta de 280g. Estilo Oversize Urban con diseño en la parte trasera.</p>
           <p class="product-price">24,99 <span class="currency">€</span></p>
           <div class="product-selectors">
             <div class="selector-group">
@@ -553,28 +563,28 @@
         </div>
       </article>
 
-      <!-- PRODUCTO 2 jersey-->
+      <!-- PRODUCTO 2 Camiseta Chica-->
       <article class="product-card"
                data-product-id="RR-002"
-               data-product-name="RAW Performance Quarter-Zip"
+               data-product-name="Camiseta Chica Gimnasio"
                data-product-price="29.99"
-               data-product-cat="Sudadera Deportiva"
+               data-product-cat="Camiseta de Gimnasio para Chica"
                data-section="ropa"
-               data-product-desc="Tejido térmico ultra ligero y elástico. Ideal para calentamientos y entrenamientos al aire libre."
-               data-img-front="imagenes/jersey2.jpg"
+               data-product-desc="Camiseta 220g. Camiseta corta de gimansio para chica. Logo en la espalda. Tiro oversize."
+               data-img-front="imagenes/camiseta chica 1.jpg"
                data-img-back="imagenes/compression_espalda.jpg"
                data-sizes="XS,S,M,L,XL"
                data-colors="Negro,Gris Carbón,Azul Noche"
                onclick="openProductModal(this)">
-        <div class="product-img-wrap" data-front="imagenes/jersey2.jpg" data-back="imagenes/compression_espalda.jpg">
-          <img src="imagenes/jersey2.jpg" alt="RAW Sport Hoodie" loading="lazy" class="product-img-main" />
+        <div class="product-img-wrap" data-front="imagenes/camiseta chica 1.jpg" data-back="imagenes/compression_espalda.jpg">
+          <img src="imagenes/camiseta chica 1.jpg" alt="RAW Sport Hoodie" loading="lazy" class="product-img-main" />
           <div class="product-badge-bop">Bajo Pedido</div>
           <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
         </div>
         <div class="product-body">
-          <p class="product-cat">Sudadera Deportiva</p>
-          <h3 class="product-name">RAW Performance Quarter-Zip</h3>
-          <p class="product-desc">Tejido térmico ultra ligero y elástico. Ideal para calentamientos y entrenamientos al aire libre.</p>
+          <p class="product-cat">Camiseta Chica Gimnasio</p>
+          <h3 class="product-name">Camiseta de Gimnasio para Chica</h3>
+          <p class="product-desc">Camiseta 220g. Camiseta corta de gimansio para chica. Logo en la espalda. Tiro oversize.</p>
           <p class="product-price">29,99 <span class="currency">€</span></p>
           <div class="product-selectors">
             <div class="selector-group">
@@ -720,117 +730,6 @@
       <!-- ── SUBSECCIÓN INVIERNO ── -->
       <div id="seccion-invierno" class="subseccion-anchor" data-theme="snow" style="display:contents"></div>
 
-      <!-- PRODUCTO 3 jersey-->
-      <article class="product-card"
-               data-product-id="RR-003"
-               data-product-name="RAW Industrial Hoodie"
-               data-product-price="34.99"
-               data-product-cat="Sudadera"
-               data-section="ropa"
-               data-product-desc="Fleece 380g. Capucha estructurada. Logo bordado. Tiro oversize."
-               data-img-front="imagenes/jersey1.jpg"
-               data-img-back="imagenes/hoodie_espalda.jpg"
-               data-sizes="S,M,L,XL,XXL"
-               data-colors="Negro,Grafito,Crema"
-               onclick="openProductModal(this)">
-        <div class="product-img-wrap" data-front="imagenes/jersey1.jpg" data-back="imagenes/hoodie_espalda.jpg">
-          <img src="imagenes/jersey1.jpg" alt="RAW Industrial Hoodie" loading="lazy" class="product-img-main" />
-          <div class="product-badge-bop">Bajo Pedido</div>
-          <div class="product-badge-new">Nuevo</div>
-          <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
-        </div>
-        <div class="product-body">
-          <p class="product-cat">Sudadera</p>
-          <h3 class="product-name">RAW Industrial Hoodie</h3>
-          <p class="product-desc">Fleece 380g. Capucha estructurada. Logo bordado. Tiro oversize.</p>
-          <p class="product-price">34,99 <span class="currency">€</span></p>
-          <div class="product-selectors">
-            <div class="selector-group">
-              <label for="talla-003" class="talla-label-row">Talla<button type="button" class="guia-tallas-btn" onclick="event.stopPropagation();openModal('modal-guia-tallas')" aria-label="Consultar guía de tallas"><i class="fa-solid fa-ruler-horizontal"></i> Guía de tallas</button></label>
-              <div class="select-wrap">
-                <select id="talla-003" name="talla" class="rr-select" data-variant="size" onclick="event.stopPropagation()">
-                  <option value="">— Elige talla —</option>
-                  <option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option>
-                </select>
-                <i class="fa-solid fa-chevron-down select-arrow"></i>
-              </div>
-            </div>
-            <div class="selector-group">
-              <label for="color-003">Color</label>
-              <div class="select-wrap">
-                <select id="color-003" name="color" class="rr-select" data-variant="color" onclick="event.stopPropagation()">
-                  <option value="">— Elige color —</option>
-                  <option>Negro</option><option>Grafito</option><option>Crema</option>
-                </select>
-                <i class="fa-solid fa-chevron-down select-arrow"></i>
-              </div>
-            </div>
-          </div>
-          <p class="delivery-notice"><i class="fa-solid fa-clock"></i> Fabricación y entrega: <strong>10-15 días laborables</strong></p>
-          <button class="btn btn-primary full-width rr-add-to-cart"
-                  data-product-id="RR-003" data-product-name="RAW Industrial Hoodie" data-product-price="79.99"
-                  onclick="event.stopPropagation(); handleAddToCart(this)">
-            <i class="fa-solid fa-bag-shopping"></i> Añadir al carrito
-          </button>
-        </div>
-      </article>
-
-      <!-- PRODUCTO RR-011 — Chaqueta / Abrigo (Invierno) ★ PLANTILLA ★ -->
-      <article class="product-card"
-               data-product-id="RR-011"
-               data-product-name="RAW Shield Jacket"
-               data-product-price="59.99"
-               data-product-cat="chaqueta"
-               data-section="ropa"
-               data-product-desc="Chaqueta técnica cortavientos con forro polar interior. Resistente al agua, cremalleras YKK y bajo el pecho ajustable. Ideal para entrenos en exterior y calle."
-               data-img-front=""
-               data-img-back=""
-               data-sizes="S,M,L,XL,XXL"
-               data-colors="Negro,Gris Carbón,Verde Militar"
-               onclick="openProductModal(this)">
-        <div class="product-img-wrap" data-front="" data-back="">
-          <!-- Placeholder hasta tener foto real -->
-          <div loading="lazy" class="product-img-placeholder"><i class="fa-solid fa-vest-patches"></i><span>Foto próximamente</span></div>
-          <div class="product-badge-bop">Bajo Pedido</div>
-          <div class="product-badge-new">Nuevo</div>
-          <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
-        </div>
-        <div class="product-body">
-          <p class="product-cat">Chaquetas / Abrigo</p>
-          <h3 class="product-name">RAW Shield Jacket</h3>
-          <p class="product-desc">Chaqueta técnica cortavientos con forro polar interior. Resistente al agua, cremalleras YKK y bajo el pecho ajustable.</p>
-          <p class="product-price">59,99 <span class="currency">€</span></p>
-          <div class="product-selectors">
-            <div class="selector-group">
-              <label for="talla-011" class="talla-label-row">Talla<button type="button" class="guia-tallas-btn" onclick="event.stopPropagation();openModal('modal-guia-tallas')" aria-label="Consultar guía de tallas"><i class="fa-solid fa-ruler-horizontal"></i> Guía de tallas</button></label>
-              <div class="select-wrap">
-                <select id="talla-011" name="talla" class="rr-select" data-variant="size" onclick="event.stopPropagation()">
-                  <option value="">— Elige talla —</option>
-                  <option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option>
-                </select>
-                <i class="fa-solid fa-chevron-down select-arrow"></i>
-              </div>
-            </div>
-            <div class="selector-group">
-              <label for="color-011">Color</label>
-              <div class="select-wrap">
-                <select id="color-011" name="color" class="rr-select" data-variant="color" onclick="event.stopPropagation()">
-                  <option value="">— Elige color —</option>
-                  <option>Negro</option><option>Gris Carbón</option><option>Verde Militar</option>
-                </select>
-                <i class="fa-solid fa-chevron-down select-arrow"></i>
-              </div>
-            </div>
-          </div>
-          <p class="delivery-notice"><i class="fa-solid fa-clock"></i> Fabricación y entrega: <strong>10-15 días laborables</strong></p>
-          <button class="btn btn-primary full-width rr-add-to-cart"
-                  data-product-id="RR-011" data-product-name="RAW Shield Jacket" data-product-price="59.99"
-                  onclick="event.stopPropagation(); handleAddToCart(this)">
-            <i class="fa-solid fa-bag-shopping"></i> Añadir al carrito
-          </button>
-        </div>
-      </article>
-
       <!-- PRODUCTO 4 pantalon-->
       <article class="product-card"
                data-product-id="RR-004"
@@ -885,171 +784,10 @@
         </div>
       </article>
 
-      <!-- PRODUCTO RR-015 — Invierno Placeholder 3 -->
-      <article class="product-card"
-               data-product-id="RR-015"
-               data-product-name="RAW Thermal Base Layer"
-               data-product-price="27.99"
-               data-product-cat="Camiseta térmica"
-               data-section="ropa"
-               data-product-desc="Camiseta técnica de manga larga en tejido térmico de segunda piel. Costuras planas sin rozaduras, tecnología anti-olor y acabado reflectante en hombros."
-               data-img-front=""
-               data-img-back=""
-               data-sizes="XS,S,M,L,XL,XXL"
-               data-colors="Negro,Gris Carbón,Azul Noche"
-               onclick="openProductModal(this)">
-        <div class="product-img-wrap" data-front="" data-back="">
-          <div loading="lazy" class="product-img-placeholder"><i class="fa-solid fa-shirt"></i><span>Foto próximamente</span></div>
-          <div class="product-badge-bop">Bajo Pedido</div>
-          <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
-        </div>
-        <div class="product-body">
-          <p class="product-cat">Camiseta térmica</p>
-          <h3 class="product-name">RAW Thermal Base Layer</h3>
-          <p class="product-desc">Camiseta técnica de manga larga en tejido térmico de segunda piel. Costuras planas sin rozaduras, tecnología anti-olor y acabado reflectante en hombros.</p>
-          <p class="product-price">27,99 <span class="currency">€</span></p>
-          <div class="product-selectors">
-            <div class="selector-group">
-              <label for="talla-015" class="talla-label-row">Talla<button type="button" class="guia-tallas-btn" onclick="event.stopPropagation();openModal('modal-guia-tallas')" aria-label="Consultar guía de tallas"><i class="fa-solid fa-ruler-horizontal"></i> Guía de tallas</button></label>
-              <div class="select-wrap">
-                <select id="talla-015" name="talla" class="rr-select" data-variant="size" onclick="event.stopPropagation()">
-                  <option value="">— Elige talla —</option>
-                  <option>XS</option><option>S</option><option>M</option>
-                  <option>L</option><option>XL</option><option>XXL</option>
-                </select>
-                <i class="fa-solid fa-chevron-down select-arrow"></i>
-              </div>
-            </div>
-            <div class="selector-group">
-              <label for="color-015">Color</label>
-              <div class="select-wrap">
-                <select id="color-015" name="color" class="rr-select" data-variant="color" onclick="event.stopPropagation()">
-                  <option value="">— Elige color —</option>
-                  <option>Negro</option><option>Gris Carbón</option><option>Azul Noche</option>
-                </select>
-                <i class="fa-solid fa-chevron-down select-arrow"></i>
-              </div>
-            </div>
-          </div>
-          <p class="delivery-notice"><i class="fa-solid fa-clock"></i> Fabricación y entrega: <strong>10-15 días laborables</strong></p>
-          <button class="btn btn-primary full-width rr-add-to-cart"
-                  data-product-id="RR-015" data-product-name="RAW Thermal Base Layer" data-product-price="27.99"
-                  onclick="event.stopPropagation(); handleAddToCart(this)">
-            <i class="fa-solid fa-bag-shopping"></i> Añadir al carrito
-          </button>
-        </div>
-      </article>
-
-      <!-- PRODUCTO RR-016 — Invierno Placeholder 4 -->
-      <article class="product-card"
-               data-product-id="RR-016"
-               data-product-name="RAW Arctic Joggers"
-               data-product-price="39.99"
-               data-product-cat="Pantalón técnico de invierno"
-               data-section="ropa"
-               data-product-desc="Pantalón de entrenamiento con forro interior micropolar. Cintura elástica con cordón, bolsillos laterales con cremallera y tobillo ajustable. Tejido cortavientos exterior."
-               data-img-front=""
-               data-img-back=""
-               data-sizes="S,M,L,XL,XXL"
-               data-colors="Negro,Gris Carbón,Verde Militar"
-               onclick="openProductModal(this)">
-        <div class="product-img-wrap" data-front="" data-back="">
-          <div loading="lazy" class="product-img-placeholder"><i class="fa-solid fa-vest-patches"></i><span>Foto próximamente</span></div>
-          <div class="product-badge-bop">Bajo Pedido</div>
-          <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
-        </div>
-        <div class="product-body">
-          <p class="product-cat">Pantalón técnico de invierno</p>
-          <h3 class="product-name">RAW Arctic Joggers</h3>
-          <p class="product-desc">Pantalón de entrenamiento con forro interior micropolar. Cintura elástica con cordón, bolsillos laterales con cremallera y tobillo ajustable. Tejido cortavientos exterior.</p>
-          <p class="product-price">39,99 <span class="currency">€</span></p>
-          <div class="product-selectors">
-            <div class="selector-group">
-              <label for="talla-016" class="talla-label-row">Talla<button type="button" class="guia-tallas-btn" onclick="event.stopPropagation();openModal('modal-guia-tallas')" aria-label="Consultar guía de tallas"><i class="fa-solid fa-ruler-horizontal"></i> Guía de tallas</button></label>
-              <div class="select-wrap">
-                <select id="talla-016" name="talla" class="rr-select" data-variant="size" onclick="event.stopPropagation()">
-                  <option value="">— Elige talla —</option>
-                  <option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option>
-                </select>
-                <i class="fa-solid fa-chevron-down select-arrow"></i>
-              </div>
-            </div>
-            <div class="selector-group">
-              <label for="color-016">Color</label>
-              <div class="select-wrap">
-                <select id="color-016" name="color" class="rr-select" data-variant="color" onclick="event.stopPropagation()">
-                  <option value="">— Elige color —</option>
-                  <option>Negro</option><option>Gris Carbón</option><option>Verde Militar</option>
-                </select>
-                <i class="fa-solid fa-chevron-down select-arrow"></i>
-              </div>
-            </div>
-          </div>
-          <p class="delivery-notice"><i class="fa-solid fa-clock"></i> Fabricación y entrega: <strong>10-15 días laborables</strong></p>
-          <button class="btn btn-primary full-width rr-add-to-cart"
-                  data-product-id="RR-016" data-product-name="RAW Arctic Joggers" data-product-price="39.99"
-                  onclick="event.stopPropagation(); handleAddToCart(this)">
-            <i class="fa-solid fa-bag-shopping"></i> Añadir al carrito
-          </button>
-        </div>
-      </article>
-
+      
       <!-- ── SUBSECCIÓN GIMNASIO ── -->
       <div id="seccion-gimnasio" class="subseccion-anchor" data-theme="gym" style="display:contents"></div>
 
-      <!-- PRODUCTO RR-017 — Gimnasio Placeholder 3 -->
-      <article class="product-card"
-               data-product-id="RR-017"
-               data-product-name="RAW Flex Training Tights"
-               data-product-price="29.99"
-               data-product-cat="Mallas hombre"
-               data-section="ropa"
-               data-product-desc="Mallas de compresión masculinas en tejido técnico 4-way stretch. Cintura alta con cordón interior, bolsillo posterior y panel de malla en la pantorrilla para ventilación."
-               data-img-front=""
-               data-img-back=""
-               data-sizes="S,M,L,XL,XXL"
-               data-colors="Negro,Gris Carbón,Naranja RAW"
-               onclick="openProductModal(this)">
-        <div class="product-img-wrap" data-front="" data-back="">
-          <div loading="lazy" class="product-img-placeholder"><i class="fa-solid fa-dumbbell"></i><span>Foto próximamente</span></div>
-          <div class="product-badge-bop">Bajo Pedido</div>
-          <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
-        </div>
-        <div class="product-body">
-          <p class="product-cat">Mallas hombre</p>
-          <h3 class="product-name">RAW Flex Training Tights</h3>
-          <p class="product-desc">Mallas de compresión masculinas en tejido técnico 4-way stretch. Cintura alta con cordón interior, bolsillo posterior y panel de malla en la pantorrilla para ventilación.</p>
-          <p class="product-price">29,99 <span class="currency">€</span></p>
-          <div class="product-selectors">
-            <div class="selector-group">
-              <label for="talla-017" class="talla-label-row">Talla<button type="button" class="guia-tallas-btn" onclick="event.stopPropagation();openModal('modal-guia-tallas')" aria-label="Consultar guía de tallas"><i class="fa-solid fa-ruler-horizontal"></i> Guía de tallas</button></label>
-              <div class="select-wrap">
-                <select id="talla-017" name="talla" class="rr-select" data-variant="size" onclick="event.stopPropagation()">
-                  <option value="">— Elige talla —</option>
-                  <option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option>
-                </select>
-                <i class="fa-solid fa-chevron-down select-arrow"></i>
-              </div>
-            </div>
-            <div class="selector-group">
-              <label for="color-017">Color</label>
-              <div class="select-wrap">
-                <select id="color-017" name="color" class="rr-select" data-variant="color" onclick="event.stopPropagation()">
-                  <option value="">— Elige color —</option>
-                  <option>Negro</option><option>Gris Carbón</option><option>Naranja RAW</option>
-                </select>
-                <i class="fa-solid fa-chevron-down select-arrow"></i>
-              </div>
-            </div>
-          </div>
-          <p class="delivery-notice"><i class="fa-solid fa-clock"></i> Fabricación y entrega: <strong>10-15 días laborables</strong></p>
-          <button class="btn btn-primary full-width rr-add-to-cart"
-                  data-product-id="RR-017" data-product-name="RAW Flex Training Tights" data-product-price="29.99"
-                  onclick="event.stopPropagation(); handleAddToCart(this)">
-            <i class="fa-solid fa-bag-shopping"></i> Añadir al carrito
-          </button>
-        </div>
-      </article>
 
       <!-- PRODUCTO RR-018 — Gimnasio Placeholder 4 -->
       <article class="product-card"
@@ -1059,14 +797,14 @@
                data-product-cat="Camiseta gym mujer"
                data-section="ropa"
                data-product-desc="Stringer de corte extreme drop con laterales completamente abiertos para máxima ventilación en el gimnasio. Tejido dry-fit 100% poliéster anti-pilling. Tiro largo."
-               data-img-front="imagenes/camisetachica2.jpg"
+               data-img-front="imagenes/camiseta chica 1.jpg"
                data-img-back="imagenes/camisetachica1.jpg"
                data-img-third="imagenes/camisetachica3.jpg"
                data-sizes="XS,S,M,L,XL"
                data-colors="Negro,Blanco,Rosa"
                onclick="openProductModal(this)">
-        <div class="product-img-wrap" data-front="imagenes/camisetachica2.jpg" data-back="imagenes/camisetachica1.jpg" data-third="imagenes/camisetachica3.jpg">
-          <img src="imagenes/camisetachica2.jpg" alt="RAW Rep Shorts" loading="lazy" class="product-img-main" />
+        <div class="product-img-wrap" data-front="imagenes/camiseta chica 1.jpg" data-back="imagenes/camisetachica1.jpg" data-third="imagenes/camisetachica3.jpg">
+          <img src="imagenes/camiseta chica 1.jpg" alt="RAW Rep Shorts" loading="lazy" class="product-img-main" />
           <div class="product-badge-bop">Bajo Pedido</div>
           <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
         </div>
@@ -1272,62 +1010,6 @@
         </div>
       </article>
 
-      <!-- PRODUCTO 10 — Gorra -->
-      <article class="product-card"
-               data-product-id="RR-010"
-               data-product-name="RAW Stealth Cap"
-               data-product-price="19.99"
-               data-product-cat="Accesorios / Gorras"
-               data-section="accesorios"
-               data-product-desc="Estructura de 6 paneles con visera semicurva. Cierre trasero ajustable de alta resistencia. Tejido transpirable con banda interna para el sudor."
-               data-img-front="imagenes/gorra.jpg"
-               data-img-back="imagenes/gorra2.jpg"
-               data-sizes="Única (Ajustable)"
-               data-colors="Negro Guerrero,Camuflaje,Naranja RAW"
-               onclick="openProductModal(this)">
-        <div class="product-img-wrap" data-front="imagenes/gorra.jpg" data-back="imagenes/gorra2.jpg">
-          <img src="imagenes/gorra.jpg" alt="Muñequeras de Fuerza RAW" loading="lazy" class="product-img-main" />
-          <div class="product-badge-bop">Bajo Pedido</div>
-          <div class="img-hover-hint"><i class="fa-solid fa-eye"></i> Ver detalle</div>
-        </div>
-        <div class="product-body">
-          <p class="product-cat">Accesorios / Gorras</p>
-          <h3 class="product-name">RAW Stealth Cap</h3>
-          <p class="product-desc">Estructura de 6 paneles con visera semicurva. Cierre trasero ajustable de alta resistencia. Tejido transpirable con banda interna para el sudor.</p>
-          <p class="product-price">19,99 <span class="currency">€</span></p>
-          <div class="product-selectors">
-            <!-- Selector de Talla Ajustable -->
-            <div class="selector-group">
-              <label for="talla-008">Tamaño</label>
-              <div class="select-wrap">
-                <select id="talla-008" name="talla" class="rr-select" data-variant="size" onclick="event.stopPropagation()">
-                  <option value="Única (Ajustable)">Ajustable</option>
-                </select>
-                <i class="fa-solid fa-chevron-down select-arrow"></i>
-              </div>
-            </div>
-            <!-- Selector de Color -->
-            <div class="selector-group">
-              <label for="color-008">Color</label>
-              <div class="select-wrap">
-                <select id="color-008" name="color" class="rr-select" data-variant="color" onclick="event.stopPropagation()">
-                  <option value="">— Elige color —</option>
-                  <option>Negro Guerrero</option>
-                  <option>Camuflaje</option>
-                  <option>Naranja RAW</option>
-                </select>
-                <i class="fa-solid fa-chevron-down select-arrow"></i>
-              </div>
-            </div>
-          </div>
-          <p class="delivery-notice"><i class="fa-solid fa-clock"></i> Fabricación y entrega: <strong>10-15 días laborables</strong></p>
-          <button class="btn btn-primary full-width rr-add-to-cart"
-                  data-product-id="RR-008" data-product-name="Muñequeras de Fuerza RAW" data-product-price="14.99"
-                  onclick="event.stopPropagation(); handleAddToCart(this)">
-            <i class="fa-solid fa-bag-shopping"></i> Añadir al carrito
-          </button>
-        </div>
-      </article>
 
       <!-- PRODUCTO 6 Muñequeras-->
       <article class="product-card"
@@ -1945,7 +1627,7 @@
       <div class="cart-empty" id="cartEmpty">
         <i class="fa-solid fa-bag-shopping"></i>
         <p>Tu carrito está vacío</p>
-        <a href="#catalogo" class="btn btn-outline" onclick="closeCartDrawer()">Ver colección</a>
+        <a href="#catalogo" class="btn btn-outline" onclick="mostrarCatalogo(); closeCartDrawer()">Ver colección</a>
       </div>
       <ul class="cart-items-list" id="cartItemsList"></ul>
     </div>
@@ -2388,12 +2070,24 @@
     }
 
     /* ══════════════════════════════════════════════════════════
+     *  mostrarCatalogo()
+     *  Muestra el grid de productos y oculta el botón revelador.
+     * ══════════════════════════════════════════════════════════ */
+    function mostrarCatalogo() {
+      var grid = document.getElementById('mainProductGrid');
+      var wrap = document.getElementById('catalogRevealWrap');
+      if (grid)  { grid.style.display = ''; }
+      if (wrap)  { wrap.style.display = 'none'; }
+    }
+
+    /* ══════════════════════════════════════════════════════════
      *  submitAndPay(metodo)
      *  1. Valida el formulario (doble comprobación)
      *  2. Rellena campos ocultos (productos + total + método)
-     *  3. Envía datos a FormSubmit en segundo plano (fetch)
+     *  3. Guarda los datos del pedido en sessionStorage (NO envía email aún)
      *  4. Redirige a la pasarela de pago elegida
-     *  5. Si el pago tiene éxito → FormSubmit redirige a gracias.html
+     *  5. Si el pago tiene éxito → gracias.html recupera los datos
+     *     de sessionStorage y dispara el envío a FormSubmit
      * ══════════════════════════════════════════════════════════ */
     function submitAndPay(metodo) {
       var form = document.getElementById('formPago');
@@ -2432,27 +2126,33 @@
       var activeBtn = document.getElementById('btnPay' + metodo.charAt(0).toUpperCase() + metodo.slice(1));
       if (activeBtn) activeBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Procesando…';
 
-      /* ── Envío en segundo plano a FormSubmit ── */
-      fetch(form.action, {
-        method : 'POST',
-        body   : new FormData(form),
-        headers: { 'Accept': 'application/json' }
-      })
-      .finally(function() {
-        if (paymentUrl) {
-          window.location.href = paymentUrl;
-        } else if (metodo === 'tarjeta') {
-          document.querySelectorAll('.pay-method-btn').forEach(function(b) {
-            b.disabled = false; b.style.opacity = '1';
-          });
-          if (activeBtn) activeBtn.innerHTML = '<i class="fa-solid fa-credit-card"></i> Tarjeta / Apple Pay / Google Pay';
-          alert('La pasarela de tarjeta está en integración.\nPor favor elige PayPal o Revolut para completar tu pedido.');
-        } else {
-          window.location.href = metodo === 'revolut'
-            ? 'https://www.revolut.com'
-            : 'https://www.paypal.com';
-        }
-      });
+      /* ── Guardar datos del formulario en sessionStorage (sin enviar aún) ── */
+      /* El email solo se envía desde gracias.html tras confirmar el pago     */
+      var formData = {};
+      new FormData(form).forEach(function(val, key) { formData[key] = val; });
+      try {
+        sessionStorage.setItem('rr_pending_order', JSON.stringify({
+          action  : form.action,
+          fields  : formData,
+          metodo  : metodo.toUpperCase(),
+          ts      : Date.now()
+        }));
+      } catch(e) { /* sessionStorage no disponible: no bloqueamos el flujo */ }
+
+      /* ── Redirigir a la pasarela (sin haber enviado el email) ── */
+      if (paymentUrl) {
+        window.location.href = paymentUrl;
+      } else if (metodo === 'tarjeta') {
+        document.querySelectorAll('.pay-method-btn').forEach(function(b) {
+          b.disabled = false; b.style.opacity = '1';
+        });
+        if (activeBtn) activeBtn.innerHTML = '<i class="fa-solid fa-credit-card"></i> Tarjeta / Apple Pay / Google Pay';
+        alert('La pasarela de tarjeta está en integración.\nPor favor elige PayPal o Revolut para completar tu pedido.');
+      } else {
+        window.location.href = metodo === 'revolut'
+          ? 'https://www.revolut.com'
+          : 'https://www.paypal.com';
+      }
     }
 
     /* ── Contador de visitantes eliminado (dark pattern) ── */
