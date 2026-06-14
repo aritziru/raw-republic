@@ -2244,38 +2244,33 @@
         };
         try { sessionStorage.setItem('rr_bizum_order', JSON.stringify(bizumOrder)); } catch(e) {}
 
-        /* Enviar email de aviso a RAW Republic via FormSubmit */
+        /* Enviar email en segundo plano con fetch y redirigir nosotros directamente */
         var itemsTexto = itemsDetalle.map(function(it) {
           return it.name + ' | ' + it.meta + ' | x' + it.qty + ' | ' + it.price;
-        }).join('\n');
+        }).join(' // ');
 
-        var emailForm = document.createElement('form');
-        emailForm.method = 'POST';
-        emailForm.action = 'https://formsubmit.co/rawrepublic.reservas@gmail.com';
-        emailForm.style.display = 'none';
-        var campos = {
-          '_subject'       : '⚠️ BIZUM PENDIENTE — Pedido ' + orderNum,
-          '_captcha'       : 'false',
-          '_next'          : window.location.origin + window.location.pathname.replace('index.html','') + 'bizum-pedido.html',
-          '_template'      : 'table',
-          'Numero_Pedido'  : orderNum,
-          'Cliente'        : fNombre + ' ' + fApellidos,
-          'Email'          : fEmail,
-          'Telefono'       : fTel,
-          'Direccion'      : fDir + ', ' + fCP + ' ' + fCiudad,
-          'Articulos'      : itemsTexto,
-          'Total_a_cobrar' : totalNum.toFixed(2).replace('.', ',') + ' €',
-          'Metodo_Pago'    : 'BIZUM — PENDIENTE DE RECIBIR',
-          'Nota'           : 'El cliente ha visto las instrucciones de Bizum. Espera recibir el pago en el número ' + BIZUM_PHONE + '. Concepto: ' + orderNum
-        };
-        Object.keys(campos).forEach(function(k) {
-          var inp = document.createElement('input');
-          inp.type = 'hidden'; inp.name = k; inp.value = campos[k];
-          emailForm.appendChild(inp);
-        });
-        document.body.appendChild(emailForm);
-        emailForm.submit();
-        /* FormSubmit redirige a bizum-pedido.html tras enviar el email */
+        var formData = new FormData();
+        formData.append('_subject',       '⚠️ BIZUM PENDIENTE — Pedido ' + orderNum);
+        formData.append('_captcha',       'false');
+        formData.append('_template',      'table');
+        formData.append('Numero_Pedido',  orderNum);
+        formData.append('Cliente',        fNombre + ' ' + fApellidos);
+        formData.append('Email',          fEmail);
+        formData.append('Telefono',       fTel);
+        formData.append('Direccion',      fDir + ', ' + fCP + ' ' + fCiudad);
+        formData.append('Articulos',      itemsTexto);
+        formData.append('Total_a_cobrar', totalNum.toFixed(2).replace('.', ',') + ' €');
+        formData.append('Metodo_Pago',    'BIZUM — PENDIENTE DE RECIBIR');
+        formData.append('Nota',           'El cliente debe hacer Bizum de ' + totalNum.toFixed(2).replace('.', ',') + ' € al ' + BIZUM_PHONE + '. Concepto: ' + orderNum);
+
+        /* Enviamos el email en background — no esperamos respuesta para no bloquear */
+        fetch('https://formsubmit.co/ajax/rawrepublic.reservas@gmail.com', {
+          method: 'POST',
+          body: formData
+        }).catch(function() { /* Si falla el email, el pedido sigue adelante */ });
+
+        /* Redirigir inmediatamente — sessionStorage sigue intacto */
+        window.location.href = 'bizum-pedido.html';
         return;
       }
 
