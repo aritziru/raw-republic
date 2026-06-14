@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Transferencia bancaria — RAW Republic</title>
+  <link rel="icon" type="image/png" href="imagenes/logo bueno.png" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg-primary, #0a0a0a);
+      color: var(--text-primary, #fff);
+      font-family: 'Barlow', sans-serif;
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center;
+      padding: 36px 16px 80px;
+    }
+    .logo-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 32px; text-decoration: none; }
+    .logo-bar img { height: 34px; }
+    .logo-raw { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.5rem; color: var(--accent, #ff6a00); letter-spacing: .05em; }
+    .logo-rep { font-family: 'Barlow Condensed', sans-serif; font-weight: 400; font-size: 1.5rem; color: var(--text-primary, #fff); letter-spacing: .05em; }
+
+    .card { background: var(--bg-card, #141414); border: 1px solid rgba(255,255,255,.08); border-radius: 18px; padding: 32px 26px; max-width: 500px; width: 100%; }
+
+    .header { text-align: center; margin-bottom: 28px; }
+    .icon-circle { width: 68px; height: 68px; background: rgba(255,106,0,.1); border: 2px solid rgba(255,106,0,.35); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 1.9rem; color: var(--accent, #ff6a00); }
+    .header h1 { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.7rem; margin-bottom: 6px; }
+    .header p { color: var(--text-muted, #888); font-size: .9rem; line-height: 1.5; }
+
+    .order-badge { background: rgba(255,106,0,.08); border: 1px solid rgba(255,106,0,.3); border-radius: 10px; padding: 12px 16px; text-align: center; margin-bottom: 24px; }
+    .order-badge .label { font-size: .7rem; text-transform: uppercase; letter-spacing: .12em; color: var(--text-muted, #888); margin-bottom: 4px; }
+    .order-badge .num { font-family: 'Barlow Condensed', sans-serif; font-size: 1.6rem; font-weight: 700; color: var(--accent, #ff6a00); letter-spacing: .12em; }
+
+    .section-title { font-size: .68rem; text-transform: uppercase; letter-spacing: .12em; color: var(--text-muted, #888); margin-bottom: 10px; }
+    .items { list-style: none; margin-bottom: 16px; }
+    .items li { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,.06); font-size: .88rem; }
+    .items li:last-child { border-bottom: none; }
+    .item-name { font-weight: 600; margin-bottom: 2px; }
+    .item-meta { font-size: .76rem; color: var(--text-muted, #888); }
+    .item-price { font-weight: 700; color: var(--accent, #ff6a00); white-space: nowrap; }
+
+    .totals { border-top: 1px solid rgba(255,255,255,.08); padding-top: 12px; margin-bottom: 24px; }
+    .total-row { display: flex; justify-content: space-between; font-size: .85rem; color: var(--text-muted, #888); margin-bottom: 6px; }
+    .total-row.grand { font-size: 1.05rem; font-weight: 700; color: var(--text-primary, #fff); margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,.1); }
+    .total-row.grand .val { color: var(--accent, #ff6a00); font-size: 1.25rem; }
+
+    .trans-block { background: rgba(255,106,0,.06); border: 1.5px solid rgba(255,106,0,.25); border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+    .trans-block .t-head { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.05rem; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+    .trans-block .t-head i { color: var(--accent, #ff6a00); }
+
+    .step { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 13px; font-size: .87rem; }
+    .step:last-child { margin-bottom: 0; }
+    .step-num { min-width: 26px; height: 26px; background: rgba(255,106,0,.18); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .75rem; color: var(--accent, #ff6a00); }
+    .step-text { color: var(--text-muted, #888); line-height: 1.55; }
+    .step-text strong { color: var(--text-primary, #fff); }
+
+    .dato-box { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1); border-radius: 8px; padding: 10px 14px; margin: 6px 0; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    .dato-box .dato-label { font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; color: var(--text-muted, #888); margin-bottom: 2px; }
+    .dato-box .dato-val { font-family: 'Barlow Condensed', sans-serif; font-size: 1.05rem; font-weight: 700; letter-spacing: .04em; }
+    .dato-box .dato-val.accent { color: var(--accent, #ff6a00); }
+    .btn-copy { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); color: var(--text-muted, #888); border-radius: 6px; padding: 5px 10px; font-size: .75rem; cursor: pointer; white-space: nowrap; transition: background .2s; }
+    .btn-copy:hover { background: rgba(255,255,255,.12); color: #fff; }
+    .btn-copy.copied { background: rgba(0,180,100,.15); border-color: rgba(0,180,100,.3); color: #00b464; }
+
+    .warning-box { background: rgba(255,150,0,.07); border: 1px solid rgba(255,150,0,.25); border-radius: 10px; padding: 14px 16px; font-size: .8rem; color: var(--text-muted, #888); line-height: 1.65; margin-bottom: 20px; }
+    .warning-box strong { color: #e07b00; }
+
+    .note { background: rgba(255,255,255,.03); border-radius: 8px; padding: 12px 14px; font-size: .78rem; color: var(--text-muted, #888); line-height: 1.6; margin-bottom: 22px; }
+    .note i { color: var(--accent, #ff6a00); margin-right: 5px; }
+
+    .btn-back { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,.15); background: transparent; color: var(--text-muted, #888); border-radius: 8px; padding: 10px 20px; font-size: .88rem; cursor: pointer; text-decoration: none; transition: border-color .2s, color .2s; }
+    .btn-back:hover { border-color: var(--accent, #ff6a00); color: #fff; }
+    .error-state { text-align: center; padding: 50px 0; }
+    .error-state i { font-size: 2.2rem; color: var(--accent, #ff6a00); display: block; margin-bottom: 16px; }
+    .error-state p { color: var(--text-muted, #888); line-height: 1.6; margin-bottom: 20px; }
+  </style>
+</head>
+<body>
+
+  <a href="index.html" class="logo-bar">
+    <img src="imagenes/logo bueno.png" alt="RAW Republic" />
+    <span class="logo-raw">RAW</span>
+    <span class="logo-rep">Republic</span>
+  </a>
+
+  <div class="card" id="card">
+    <div class="error-state" id="loading">
+      <i class="fa-solid fa-spinner fa-spin"></i>
+      <p>Cargando tu pedido…</p>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    var card = document.getElementById('card');
+    var raw;
+    try { raw = sessionStorage.getItem('rr_trans_order'); } catch (e) {}
+
+    if (!raw) {
+      card.innerHTML = '<div class="error-state">'
+        + '<i class="fa-solid fa-triangle-exclamation"></i>'
+        + '<p>No se encontró ningún pedido pendiente.<br>Vuelve a la tienda y completa el proceso de nuevo.</p>'
+        + '<a href="index.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Volver a la tienda</a>'
+        + '</div>';
+      return;
+    }
+
+    var o;
+    try { o = JSON.parse(raw); } catch (e) {
+      card.innerHTML = '<div class="error-state"><i class="fa-solid fa-triangle-exclamation"></i><p>Error al leer el pedido.</p><a href="index.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Volver</a></div>';
+      return;
+    }
+
+    var itemsHtml = (o.items || []).map(function (it) {
+      return '<li>'
+        + '<div><div class="item-name">' + x(it.name) + '</div>'
+        + '<div class="item-meta">' + x(it.meta) + ' · ' + x(it.qty) + ' ud.</div></div>'
+        + '<div class="item-price">' + x(it.price) + '</div>'
+        + '</li>';
+    }).join('');
+
+    var envio = (parseFloat((o.shipping || '').replace(',', '.')) === 0 || o.shipping === '0,00')
+      ? '<span style="color:#00b464;">GRATIS</span>'
+      : x(o.shipping) + ' €';
+
+    card.innerHTML = ''
+      + '<div class="header">'
+      + '<div class="icon-circle"><i class="fa-solid fa-building-columns"></i></div>'
+      + '<h1>¡Pedido recibido!</h1>'
+      + '<p>Tu pedido está <strong style="color:#fff;">pendiente de pago</strong>.<br>Realiza la transferencia para confirmar tu reserva.</p>'
+      + '</div>'
+
+      + '<div class="order-badge">'
+      + '<div class="label">Número de pedido</div>'
+      + '<div class="num" id="orderNumVal">' + x(o.orderNum) + '</div>'
+      + '</div>'
+
+      + '<p class="section-title">Artículos del pedido</p>'
+      + '<ul class="items">' + itemsHtml + '</ul>'
+
+      + '<div class="totals">'
+      + '<div class="total-row"><span>Subtotal</span><span>' + x(o.subtotal) + ' €</span></div>'
+      + '<div class="total-row"><span>Envío</span><span>' + envio + '</span></div>'
+      + '<div class="total-row grand"><span>TOTAL A TRANSFERIR</span><span class="val">' + x(o.total) + ' €</span></div>'
+      + '</div>'
+
+      + '<div class="trans-block">'
+      + '<div class="t-head"><i class="fa-solid fa-building-columns"></i> Datos para la transferencia</div>'
+
+      + '<div class="step"><div class="step-num">1</div><div class="step-text">Accede a tu banco (app o web) y realiza una <strong>transferencia bancaria</strong>.</div></div>'
+
+      + '<div class="step"><div class="step-num">2</div><div class="step-text">Introduce estos datos:</div></div>'
+
+      + '<div class="dato-box"><div><div class="dato-label">Beneficiario</div><div class="dato-val">RAW Republic</div></div></div>'
+
+      + '<div class="dato-box"><div><div class="dato-label">IBAN</div><div class="dato-val" id="ibanVal">' + x(o.iban) + '</div></div>'
+      + '<button class="btn-copy" onclick="copiar(\'ibanVal\', this)"><i class="fa-regular fa-copy"></i> Copiar</button></div>'
+
+      + '<div class="dato-box"><div><div class="dato-label">Importe exacto</div><div class="dato-val accent">' + x(o.total) + ' €</div></div>'
+      + '<button class="btn-copy" onclick="copiarTexto(\'' + x(o.total) + '\', this)"><i class="fa-regular fa-copy"></i> Copiar</button></div>'
+
+      + '<div class="dato-box"><div><div class="dato-label">Concepto (obligatorio)</div><div class="dato-val accent" id="conceptoVal">' + x(o.orderNum) + '</div></div>'
+      + '<button class="btn-copy" onclick="copiar(\'conceptoVal\', this)"><i class="fa-regular fa-copy"></i> Copiar</button></div>'
+
+      + '<div class="step" style="margin-top:14px;"><div class="step-num">3</div><div class="step-text">Guarda el <strong>justificante de la transferencia</strong> como comprobante.</div></div>'
+
+      + '<div class="step"><div class="step-num">4</div><div class="step-text">Recibirás la <strong>confirmación de tu reserva</strong> en <strong>' + x(o.email) + '</strong> en menos de 24 h tras recibir el pago.</div></div>'
+      + '</div>'
+
+      + '<div class="warning-box">'
+      + '<strong>⚠️ Importante:</strong> El pedido no quedará confirmado ni se enviará la prenda hasta recibir la transferencia completa de <strong style="color:#e07b00;">' + x(o.total) + ' €</strong>. '
+      + 'Asegúrate de indicar el número de pedido <strong style="color:#e07b00;">' + x(o.orderNum) + '</strong> en el concepto para que podamos identificar tu pago.'
+      + '</div>'
+
+      + '<div class="note">'
+      + '<i class="fa-solid fa-circle-info"></i>'
+      + '¿Algún problema? Escríbenos a <strong>rawrepublic.reservas@gmail.com</strong> indicando tu número de pedido <strong>' + x(o.orderNum) + '</strong>.'
+      + '</div>'
+
+      + '<div style="text-align:center;">'
+      + '<a href="index.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Volver a la tienda</a>'
+      + '</div>';
+  })();
+
+  function x(s) {
+    return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+  function copiar(id, btn) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    copiarTexto(el.textContent.trim(), btn);
+  }
+  function copiarTexto(texto, btn) {
+    navigator.clipboard.writeText(texto).then(function() {
+      var orig = btn.innerHTML;
+      btn.innerHTML = '<i class="fa-solid fa-check"></i> Copiado';
+      btn.classList.add('copied');
+      setTimeout(function() { btn.innerHTML = orig; btn.classList.remove('copied'); }, 2000);
+    }).catch(function() {});
+  }
+  </script>
+
+</body>
+</html>

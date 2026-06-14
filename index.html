@@ -2290,14 +2290,71 @@
         return;
       }
 
-      /* ── Transferencia: mostrar IBAN e importe ── */
+      /* ── Transferencia: misma lógica que Bizum — página de resumen ── */
       if (metodo === 'transferencia') {
-        var aviso = document.getElementById('transferenciaAviso');
-        document.querySelectorAll('.trans-importe').forEach(function(el) { el.textContent = totalNum.toFixed(2).replace('.', ',') + ' €'; });
-        document.querySelectorAll('.trans-iban').forEach(function(el)    { el.textContent = IBAN; });
-        if (aviso) aviso.style.display = '';
-        reactivarBotones();
-        if (activeBtn) activeBtn.innerHTML = '<i class="fa-solid fa-building-columns"></i> Transferencia bancaria';
+        var orderNum = 'RR-' + Date.now().toString(36).toUpperCase().slice(-6);
+
+        var subtotalEl  = document.getElementById('cartSubtotal');
+        var shipEl      = document.getElementById('cartShipping');
+        var subtotalTxt = subtotalEl ? subtotalEl.textContent.trim().replace(' €','').trim() : totalNum.toFixed(2).replace('.',',');
+        var shipTxt     = shipEl     ? shipEl.textContent.trim().replace(' €','').trim()     : '4,95';
+
+        var itemsDetalle = [];
+        document.querySelectorAll('#cartItemsList li').forEach(function(li) {
+          var name  = li.querySelector('.cart-item-name')  ? li.querySelector('.cart-item-name').textContent.trim()  : '';
+          var meta  = li.querySelector('.cart-item-meta')  ? li.querySelector('.cart-item-meta').textContent.trim()  : '';
+          var price = li.querySelector('.cart-item-price') ? li.querySelector('.cart-item-price').textContent.trim() : '';
+          var qty   = li.querySelector('.cart-item-qty')   ? li.querySelector('.cart-item-qty').textContent.trim()   : '1';
+          if (name) itemsDetalle.push({ name: name, meta: meta, price: price, qty: qty });
+        });
+
+        var fNombre    = document.getElementById('pf-nombre')    ? document.getElementById('pf-nombre').value.trim()    : '';
+        var fApellidos = document.getElementById('pf-apellidos') ? document.getElementById('pf-apellidos').value.trim() : '';
+        var fEmail     = document.getElementById('pf-email')     ? document.getElementById('pf-email').value.trim()     : '';
+        var fTel       = document.getElementById('pf-tel')       ? document.getElementById('pf-tel').value.trim()       : '';
+        var fDir       = document.getElementById('pf-direccion') ? document.getElementById('pf-direccion').value.trim() : '';
+        var fCP        = document.getElementById('pf-cp')        ? document.getElementById('pf-cp').value.trim()        : '';
+        var fCiudad    = document.getElementById('pf-ciudad')    ? document.getElementById('pf-ciudad').value.trim()    : '';
+
+        var transOrder = {
+          orderNum : orderNum,
+          items    : itemsDetalle,
+          subtotal : subtotalTxt,
+          shipping : shipTxt,
+          total    : totalNum.toFixed(2).replace('.', ','),
+          iban     : IBAN,
+          email    : fEmail,
+          nombre   : fNombre + ' ' + fApellidos,
+          telefono : fTel,
+          direccion: fDir + ', ' + fCP + ' ' + fCiudad,
+          ts       : Date.now()
+        };
+        try { sessionStorage.setItem('rr_trans_order', JSON.stringify(transOrder)); } catch(e) {}
+
+        var itemsTexto = itemsDetalle.map(function(it) {
+          return it.name + ' | ' + it.meta + ' | x' + it.qty + ' | ' + it.price;
+        }).join(' // ');
+
+        var formData = new FormData();
+        formData.append('_subject',       '🏦 TRANSFERENCIA PENDIENTE — Pedido ' + orderNum);
+        formData.append('_captcha',       'false');
+        formData.append('_template',      'table');
+        formData.append('Numero_Pedido',  orderNum);
+        formData.append('Cliente',        fNombre + ' ' + fApellidos);
+        formData.append('Email',          fEmail);
+        formData.append('Telefono',       fTel);
+        formData.append('Direccion',      fDir + ', ' + fCP + ' ' + fCiudad);
+        formData.append('Articulos',      itemsTexto);
+        formData.append('Total_a_cobrar', totalNum.toFixed(2).replace('.', ',') + ' €');
+        formData.append('Metodo_Pago',    'TRANSFERENCIA BANCARIA — PENDIENTE DE RECIBIR');
+        formData.append('Nota',           'El cliente debe transferir ' + totalNum.toFixed(2).replace('.', ',') + ' € al IBAN ' + IBAN + '. Concepto: ' + orderNum);
+
+        fetch('https://formsubmit.co/ajax/rawrepublic.reservas@gmail.com', {
+          method: 'POST',
+          body: formData
+        }).catch(function() {});
+
+        window.location.href = 'transferencia-pedido.html';
         return;
       }
 
@@ -2369,7 +2426,7 @@
         icon.style.border     = '2px solid rgba(0,112,204,.4)';
         icon.innerHTML        = '<i class="fa-brands fa-paypal" style="color:#009cde;"></i>';
         title.textContent     = 'Vas a PayPal';
-        sub.textContent       = 'Debido al proceso de desarrollo de nuestra tienda, el pago a través de PayPal requiere introducir el importe manualmente. Encontrarás el total exacto a escribir de tu pedido, envío incluido, justo aquí abajo.';
+        sub.textContent       = 'Cuando llegues a PayPal, introduce manualmente el importe que ves aquí abajo. Es el total de tu pedido con envío incluido.';
         btn.style.background  = '#009cde';
         btn.style.color       = '#fff';
         btn.innerHTML         = '<i class="fa-brands fa-paypal"></i> Entendido — ir a PayPal';
@@ -2378,7 +2435,7 @@
         icon.style.border     = '2px solid rgba(100,50,200,.4)';
         icon.innerHTML        = '<i class="fa-solid fa-bolt" style="color:#7c3aed;"></i>';
         title.textContent     = 'Vas a Revolut';
-        sub.textContent       = 'Debido al proceso de desarrollo de nuestra tienda, el pago a través de Revolut requiere introducir el importe manualmente. Encontrarás el total exacto a escribir de tu pedido, envío incluido, justo aquí abajo.';
+        sub.textContent       = 'Cuando llegues a Revolut, introduce manualmente el importe que ves aquí abajo. Es el total de tu pedido con envío incluido.';
         btn.style.background  = '#7c3aed';
         btn.style.color       = '#fff';
         btn.innerHTML         = '<i class="fa-solid fa-bolt"></i> Entendido — ir a Revolut';
