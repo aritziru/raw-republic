@@ -319,7 +319,7 @@
           <p class="product-cat">Camiseta técnica</p>
           <h3 class="product-name">RAW Training Tee</h3>
           <p class="product-desc">Tejido dry-fit 4-way stretch. Anti-odor. Costuras planas sin rozaduras.</p>
-          <p class="product-price">0.50 <span class="currency">€</span></p>
+          <p class="product-price">0,50 <span class="currency">€</span></p>
           <p class="delivery-notice"><i class="fa-solid fa-clock"></i> Entrega: <strong>10-15 días lab.</strong></p>
           <button class="btn btn-primary full-width rr-add-to-cart"
                   data-product-id="RR-001"
@@ -529,7 +529,7 @@
           <p class="product-cat">Camiseta Chico Urban</p>
           <h3 class="product-name">Camiseta Chico Urban</h3>
           <p class="product-desc">Camiseta de 280g. Estilo Oversize Urban con diseño en la parte trasera.</p>
-          <p class="product-price">0.50 <span class="currency">€</span></p>
+          <p class="product-price">0,50 <span class="currency">€</span></p>
           <div class="product-selectors">
             <div class="selector-group">
               <label for="talla-001" class="talla-label-row">Talla<button type="button" class="guia-tallas-btn" onclick="event.stopPropagation();openModal('modal-guia-tallas')" aria-label="Consultar guía de tallas"><i class="fa-solid fa-ruler-horizontal"></i> Guía de tallas</button></label>
@@ -1784,11 +1784,7 @@
           <button id="btnPayBizum" class="btn btn-ghost full-width pay-method-btn" disabled onclick="submitAndPay('bizum')" style="margin-top:10px;">
             <i class="fa-solid fa-mobile-screen-button"></i> Pagar con Bizum
           </button>
-          <div id="bizumAviso" style="display:none;margin:8px 0 4px;padding:10px 12px;background:rgba(0,180,100,0.10);border:1px solid rgba(0,180,100,0.3);border-radius:8px;font-size:11px;color:var(--text-muted);line-height:1.6;">
-            <i class="fa-solid fa-mobile-screen-button" style="color:#00b464;margin-right:4px;"></i>
-            Envía <strong style="color:var(--accent);"><span class="bizum-importe"></span></strong> por Bizum al número <strong style="color:var(--text-primary);"><span class="bizum-phone"></span></strong>.<br>
-            Indica tu nombre y número de pedido en el concepto. Te confirmaremos el pedido por email cuando recibamos el pago.
-          </div>
+
 
           <!-- Transferencia bancaria -->
           <button id="btnPayTransferencia" class="btn btn-ghost full-width pay-method-btn" disabled onclick="submitAndPay('transferencia')" style="margin-top:10px;">
@@ -2202,14 +2198,84 @@
         return;
       }
 
-      /* ── Bizum: mostrar aviso con número y importe ── */
+      /* ── Bizum: generar nº pedido, guardar en sessionStorage, enviar email y redirigir ── */
       if (metodo === 'bizum') {
-        var aviso = document.getElementById('bizumAviso');
-        document.querySelectorAll('.bizum-importe').forEach(function(el) { el.textContent = totalNum.toFixed(2).replace('.', ',') + ' €'; });
-        document.querySelectorAll('.bizum-phone').forEach(function(el)   { el.textContent = BIZUM_PHONE; });
-        if (aviso) aviso.style.display = '';
-        reactivarBotones();
-        if (activeBtn) activeBtn.innerHTML = '<i class="fa-solid fa-mobile-screen-button"></i> Pagar con Bizum';
+        /* Generar número de pedido único */
+        var orderNum = 'RR-' + Date.now().toString(36).toUpperCase().slice(-6);
+
+        /* Recoger subtotal y envío del DOM */
+        var subtotalEl = document.getElementById('cartSubtotal');
+        var shipEl     = document.getElementById('cartShipping');
+        var subtotalTxt = subtotalEl ? subtotalEl.textContent.trim().replace(' €','').trim() : totalNum.toFixed(2).replace('.',',');
+        var shipTxt     = shipEl    ? shipEl.textContent.trim().replace(' €','').trim()      : '4,95';
+
+        /* Recoger artículos con detalle completo */
+        var itemsDetalle = [];
+        document.querySelectorAll('#cartItemsList li').forEach(function(li) {
+          var name  = li.querySelector('.cart-item-name')  ? li.querySelector('.cart-item-name').textContent.trim()  : '';
+          var meta  = li.querySelector('.cart-item-meta')  ? li.querySelector('.cart-item-meta').textContent.trim()  : '';
+          var price = li.querySelector('.cart-item-price') ? li.querySelector('.cart-item-price').textContent.trim() : '';
+          var qty   = li.querySelector('.cart-item-qty')   ? li.querySelector('.cart-item-qty').textContent.trim()   : '1';
+          if (name) itemsDetalle.push({ name: name, meta: meta, price: price, qty: qty });
+        });
+
+        /* Datos del formulario */
+        var fNombre   = document.getElementById('pf-nombre')    ? document.getElementById('pf-nombre').value.trim()    : '';
+        var fApellidos= document.getElementById('pf-apellidos') ? document.getElementById('pf-apellidos').value.trim() : '';
+        var fEmail    = document.getElementById('pf-email')     ? document.getElementById('pf-email').value.trim()     : '';
+        var fTel      = document.getElementById('pf-tel')       ? document.getElementById('pf-tel').value.trim()       : '';
+        var fDir      = document.getElementById('pf-direccion') ? document.getElementById('pf-direccion').value.trim() : '';
+        var fCP       = document.getElementById('pf-cp')        ? document.getElementById('pf-cp').value.trim()        : '';
+        var fCiudad   = document.getElementById('pf-ciudad')    ? document.getElementById('pf-ciudad').value.trim()    : '';
+
+        /* Guardar todo en sessionStorage para la página de resumen */
+        var bizumOrder = {
+          orderNum   : orderNum,
+          items      : itemsDetalle,
+          subtotal   : subtotalTxt,
+          shipping   : shipTxt,
+          total      : totalNum.toFixed(2).replace('.', ','),
+          bizumPhone : BIZUM_PHONE,
+          email      : fEmail,
+          nombre     : fNombre + ' ' + fApellidos,
+          telefono   : fTel,
+          direccion  : fDir + ', ' + fCP + ' ' + fCiudad,
+          ts         : Date.now()
+        };
+        try { sessionStorage.setItem('rr_bizum_order', JSON.stringify(bizumOrder)); } catch(e) {}
+
+        /* Enviar email de aviso a RAW Republic via FormSubmit */
+        var itemsTexto = itemsDetalle.map(function(it) {
+          return it.name + ' | ' + it.meta + ' | x' + it.qty + ' | ' + it.price;
+        }).join('\n');
+
+        var emailForm = document.createElement('form');
+        emailForm.method = 'POST';
+        emailForm.action = 'https://formsubmit.co/rawrepublic.reservas@gmail.com';
+        emailForm.style.display = 'none';
+        var campos = {
+          '_subject'       : '⚠️ BIZUM PENDIENTE — Pedido ' + orderNum,
+          '_captcha'       : 'false',
+          '_next'          : window.location.origin + window.location.pathname.replace('index.html','') + 'bizum-pedido.html',
+          '_template'      : 'table',
+          'Numero_Pedido'  : orderNum,
+          'Cliente'        : fNombre + ' ' + fApellidos,
+          'Email'          : fEmail,
+          'Telefono'       : fTel,
+          'Direccion'      : fDir + ', ' + fCP + ' ' + fCiudad,
+          'Articulos'      : itemsTexto,
+          'Total_a_cobrar' : totalNum.toFixed(2).replace('.', ',') + ' €',
+          'Metodo_Pago'    : 'BIZUM — PENDIENTE DE RECIBIR',
+          'Nota'           : 'El cliente ha visto las instrucciones de Bizum. Espera recibir el pago en el número ' + BIZUM_PHONE + '. Concepto: ' + orderNum
+        };
+        Object.keys(campos).forEach(function(k) {
+          var inp = document.createElement('input');
+          inp.type = 'hidden'; inp.name = k; inp.value = campos[k];
+          emailForm.appendChild(inp);
+        });
+        document.body.appendChild(emailForm);
+        emailForm.submit();
+        /* FormSubmit redirige a bizum-pedido.html tras enviar el email */
         return;
       }
 
