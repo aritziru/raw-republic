@@ -2071,40 +2071,10 @@
       if (metodo === 'tarjeta') {
         return CARD_LINK || null;
       }
-      /* paypal — checkout moderno con importe fijo automático */
-      if (PAYPAL_EMAIL) {
-        var desc = encodeURIComponent('Pedido RAW Republic');
-        /* Construir lista de productos para la descripción */
-        var itemDesc = '';
-        if (typeof cart !== 'undefined' && cart.length) {
-          itemDesc = encodeURIComponent(
-            cart.map(function(i) { return i.name + ' x' + i.qty; }).join(', ')
-          );
-        }
-        return 'https://www.paypal.com/cgi-bin/webscr'
-          + '?cmd=_cart'
-          + '&upload=1'
-          + '&business=' + encodeURIComponent(PAYPAL_EMAIL)
-          + '&currency_code=EUR'
-          + '&lc=ES'
-          + (function() {
-              /* Añadir cada producto del carrito como línea de PayPal */
-              if (typeof cart === 'undefined' || !cart.length) {
-                return '&item_name_1=' + desc
-                     + '&amount_1=' + totalNum.toFixed(2)
-                     + '&quantity_1=1';
-              }
-              return cart.map(function(item, idx) {
-                var n = idx + 1;
-                return '&item_name_' + n + '=' + encodeURIComponent(item.name)
-                     + '&amount_' + n + '=' + item.price.toFixed(2)
-                     + '&quantity_' + n + '=' + item.qty;
-              }).join('');
-            })()
-          + '&return=' + encodeURIComponent(window.location.origin + '/gracias.html')
-          + '&cancel_return=' + encodeURIComponent(window.location.href);
-      }
-      return null;
+      /* paypal — enlace paypal.me personal con importe automático */
+      return 'https://www.paypal.me/RawRepublicES/' + totalNum.toFixed(2) + 'EUR'
+           + '?country.x=ES&locale.x=es_ES';
+
     }
 
     /* ══════════════════════════════════════════════════════════
