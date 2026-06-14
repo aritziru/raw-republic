@@ -3,62 +3,196 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Resumen de pedido — RAW Republic</title>
+  <title>Reserva confirmada — RAW Republic</title>
   <link rel="icon" type="image/png" href="imagenes/logo bueno.png" />
   <link rel="stylesheet" href="style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <meta name="theme-color" content="#ff6a00" />
   <style>
-    body { background: var(--bg-primary, #0a0a0a); color: var(--text-primary, #fff); font-family: 'Barlow', sans-serif; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 40px 16px 60px; }
-    .logo-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 36px; text-decoration: none; }
-    .logo-bar img { height: 36px; }
-    .logo-bar .logo-raw { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.6rem; color: var(--accent, #ff6a00); letter-spacing: .05em; }
-    .logo-bar .logo-republic { font-family: 'Barlow Condensed', sans-serif; font-weight: 400; font-size: 1.6rem; color: var(--text-primary, #fff); letter-spacing: .05em; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg-primary, #0a0a0a);
+      color: var(--text-primary, #fff);
+      font-family: 'Barlow', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 36px 16px 80px;
+    }
 
-    .card { background: var(--bg-card, #141414); border: 1px solid rgba(255,255,255,.08); border-radius: 16px; padding: 32px 28px; max-width: 520px; width: 100%; }
+    .logo-bar {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 32px; text-decoration: none;
+    }
+    .logo-bar img { height: 34px; }
+    .logo-raw { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.5rem; color: var(--accent, #ff6a00); letter-spacing: .05em; }
+    .logo-rep { font-family: 'Barlow Condensed', sans-serif; font-weight: 400; font-size: 1.5rem; color: var(--text-primary, #fff); letter-spacing: .05em; }
 
-    .status-icon { width: 64px; height: 64px; background: rgba(0,180,100,.15); border: 2px solid rgba(0,180,100,.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 1.8rem; color: #00b464; }
-    h1 { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.6rem; text-align: center; margin: 0 0 6px; }
-    .subtitle { color: var(--text-muted, #888); font-size: .9rem; text-align: center; margin: 0 0 28px; }
+    .card {
+      background: var(--bg-card, #141414);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 18px;
+      padding: 32px 26px;
+      max-width: 500px;
+      width: 100%;
+    }
 
-    .order-num { background: rgba(255,106,0,.1); border: 1px solid rgba(255,106,0,.3); border-radius: 8px; padding: 10px 16px; text-align: center; margin-bottom: 24px; }
-    .order-num span { font-size: .75rem; color: var(--text-muted, #888); display: block; margin-bottom: 2px; text-transform: uppercase; letter-spacing: .08em; }
-    .order-num strong { font-family: 'Barlow Condensed', sans-serif; font-size: 1.4rem; color: var(--accent, #ff6a00); letter-spacing: .1em; }
+    /* Header */
+    .header { text-align: center; margin-bottom: 28px; }
+    .check-circle {
+      width: 68px; height: 68px;
+      background: rgba(0,180,100,.12);
+      border: 2px solid rgba(0,180,100,.4);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 16px;
+      font-size: 1.9rem; color: #00b464;
+    }
+    .header h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700; font-size: 1.7rem; margin-bottom: 6px;
+    }
+    .header p { color: var(--text-muted, #888); font-size: .9rem; line-height: 1.5; }
 
-    .section-label { font-size: .7rem; text-transform: uppercase; letter-spacing: .12em; color: var(--text-muted, #888); margin: 0 0 8px; }
-    .items-list { list-style: none; padding: 0; margin: 0 0 20px; }
-    .items-list li { display: flex; justify-content: space-between; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,.06); font-size: .9rem; gap: 12px; }
-    .items-list li:last-child { border-bottom: none; }
-    .item-info { flex: 1; }
+    /* Número de pedido */
+    .order-badge {
+      background: rgba(255,106,0,.08);
+      border: 1px solid rgba(255,106,0,.3);
+      border-radius: 10px;
+      padding: 12px 16px;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .order-badge .label {
+      font-size: .7rem; text-transform: uppercase;
+      letter-spacing: .12em; color: var(--text-muted, #888);
+      margin-bottom: 4px;
+    }
+    .order-badge .num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.6rem; font-weight: 700;
+      color: var(--accent, #ff6a00); letter-spacing: .12em;
+    }
+
+    /* Artículos */
+    .section-title {
+      font-size: .68rem; text-transform: uppercase;
+      letter-spacing: .12em; color: var(--text-muted, #888);
+      margin-bottom: 10px;
+    }
+    .items { list-style: none; margin-bottom: 16px; }
+    .items li {
+      display: flex; justify-content: space-between;
+      align-items: flex-start; gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      font-size: .88rem;
+    }
+    .items li:last-child { border-bottom: none; }
     .item-name { font-weight: 600; margin-bottom: 2px; }
-    .item-meta { font-size: .78rem; color: var(--text-muted, #888); }
+    .item-meta { font-size: .76rem; color: var(--text-muted, #888); }
     .item-price { font-weight: 700; color: var(--accent, #ff6a00); white-space: nowrap; }
 
-    .totals { border-top: 1px solid rgba(255,255,255,.1); padding-top: 14px; margin-bottom: 24px; }
-    .total-row { display: flex; justify-content: space-between; font-size: .88rem; color: var(--text-muted, #888); margin-bottom: 6px; }
-    .total-row.grand { font-size: 1.05rem; font-weight: 700; color: var(--text-primary, #fff); margin-top: 8px; }
-    .total-row.grand .val { color: var(--accent, #ff6a00); font-size: 1.2rem; }
+    /* Totales */
+    .totals {
+      border-top: 1px solid rgba(255,255,255,.08);
+      padding-top: 12px; margin-bottom: 24px;
+    }
+    .total-row {
+      display: flex; justify-content: space-between;
+      font-size: .85rem; color: var(--text-muted, #888);
+      margin-bottom: 6px;
+    }
+    .total-row.grand {
+      font-size: 1.05rem; font-weight: 700;
+      color: var(--text-primary, #fff); margin-top: 8px;
+      padding-top: 8px; border-top: 1px solid rgba(255,255,255,.1);
+    }
+    .total-row.grand .val { color: var(--accent, #ff6a00); font-size: 1.25rem; }
 
-    .bizum-box { background: rgba(0,180,100,.08); border: 1.5px solid rgba(0,180,100,.35); border-radius: 12px; padding: 20px; margin-bottom: 24px; }
-    .bizum-box .biz-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.1rem; margin: 0 0 14px; display: flex; align-items: center; gap: 8px; }
-    .bizum-box .biz-title i { color: #00b464; }
-    .bizum-step { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 12px; font-size: .88rem; }
-    .bizum-step:last-child { margin-bottom: 0; }
-    .biz-num { width: 24px; height: 24px; min-width: 24px; background: rgba(0,180,100,.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .75rem; color: #00b464; }
-    .biz-text { color: var(--text-muted, #888); line-height: 1.5; }
-    .biz-text strong { color: var(--text-primary, #fff); }
-    .biz-highlight { background: rgba(0,180,100,.15); border-radius: 6px; padding: 2px 8px; font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; font-weight: 700; color: #00b464; }
+    /* Pasos Bizum */
+    .bizum-block {
+      background: rgba(0,180,100,.07);
+      border: 1.5px solid rgba(0,180,100,.3);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .bizum-block .biz-head {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700; font-size: 1.05rem;
+      margin-bottom: 16px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .bizum-block .biz-head i { color: #00b464; }
+    .step {
+      display: flex; gap: 12px; align-items: flex-start;
+      margin-bottom: 13px; font-size: .87rem;
+    }
+    .step:last-child { margin-bottom: 0; }
+    .step-num {
+      min-width: 26px; height: 26px;
+      background: rgba(0,180,100,.18);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: .75rem; color: #00b464;
+    }
+    .step-text { color: var(--text-muted, #888); line-height: 1.55; }
+    .step-text strong { color: var(--text-primary, #fff); }
+    .importe-pill {
+      display: inline-block;
+      background: rgba(0,180,100,.18);
+      border-radius: 6px; padding: 1px 9px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.1rem; font-weight: 700; color: #00b464;
+    }
+    .concepto-pill {
+      display: inline-block;
+      background: rgba(255,106,0,.15);
+      border-radius: 6px; padding: 1px 9px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1rem; font-weight: 700;
+      color: var(--accent, #ff6a00); letter-spacing: .05em;
+    }
 
-    .note-box { background: rgba(255,255,255,.04); border-radius: 8px; padding: 12px 14px; font-size: .8rem; color: var(--text-muted, #888); line-height: 1.6; margin-bottom: 20px; }
-    .note-box i { color: var(--accent, #ff6a00); margin-right: 6px; }
+    /* Aviso importante */
+    .warning-box {
+      background: rgba(255,150,0,.08);
+      border: 1px solid rgba(255,150,0,.3);
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-size: .82rem;
+      color: var(--text-muted, #888);
+      line-height: 1.65;
+      margin-bottom: 20px;
+    }
+    .warning-box strong { color: #e07b00; }
 
-    .btn-back { display: inline-flex; align-items: center; gap: 8px; background: transparent; border: 1px solid rgba(255,255,255,.15); color: var(--text-muted, #888); border-radius: 8px; padding: 10px 18px; font-size: .88rem; cursor: pointer; text-decoration: none; transition: border-color .2s, color .2s; }
-    .btn-back:hover { border-color: var(--accent, #ff6a00); color: var(--text-primary, #fff); }
+    /* Nota pie */
+    .note {
+      background: rgba(255,255,255,.03);
+      border-radius: 8px; padding: 12px 14px;
+      font-size: .78rem; color: var(--text-muted, #888);
+      line-height: 1.6; margin-bottom: 22px;
+    }
+    .note i { color: var(--accent, #ff6a00); margin-right: 5px; }
 
-    .loading { text-align: center; color: var(--text-muted, #888); padding: 60px 0; }
-    .loading i { font-size: 2rem; color: var(--accent, #ff6a00); margin-bottom: 16px; display: block; }
+    .btn-back {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 1px solid rgba(255,255,255,.15);
+      background: transparent; color: var(--text-muted, #888);
+      border-radius: 8px; padding: 10px 20px;
+      font-size: .88rem; cursor: pointer;
+      text-decoration: none;
+      transition: border-color .2s, color .2s;
+    }
+    .btn-back:hover { border-color: var(--accent, #ff6a00); color: #fff; }
+
+    .error-state { text-align: center; padding: 50px 0; }
+    .error-state i { font-size: 2.2rem; color: var(--accent, #ff6a00); display: block; margin-bottom: 16px; }
+    .error-state p { color: var(--text-muted, #888); line-height: 1.6; margin-bottom: 20px; }
   </style>
 </head>
 <body>
@@ -66,81 +200,101 @@
   <a href="index.html" class="logo-bar">
     <img src="imagenes/logo bueno.png" alt="RAW Republic" />
     <span class="logo-raw">RAW</span>
-    <span class="logo-republic">Republic</span>
+    <span class="logo-rep">Republic</span>
   </a>
 
-  <div class="card" id="mainCard">
-    <div class="loading" id="loadingState">
+  <div class="card" id="card">
+    <div class="error-state" id="loading">
       <i class="fa-solid fa-spinner fa-spin"></i>
-      Cargando tu pedido…
+      <p>Cargando tu pedido…</p>
     </div>
   </div>
 
   <script>
-  (function() {
-    var card = document.getElementById('mainCard');
+  (function () {
+    var card = document.getElementById('card');
 
-    /* ── Leer datos del pedido guardados en sessionStorage ── */
     var raw;
-    try { raw = sessionStorage.getItem('rr_bizum_order'); } catch(e) {}
+    try { raw = sessionStorage.getItem('rr_bizum_order'); } catch (e) {}
 
     if (!raw) {
-      card.innerHTML = '<div style="text-align:center;padding:40px 0;">'
-        + '<i class="fa-solid fa-triangle-exclamation" style="font-size:2rem;color:#ff6a00;display:block;margin-bottom:16px;"></i>'
-        + '<p style="color:#888;">No se encontró ningún pedido pendiente.<br>Vuelve a la tienda y completa el proceso.</p>'
-        + '<a href="index.html" class="btn-back" style="margin:20px auto 0;display:inline-flex;"><i class="fa-solid fa-arrow-left"></i> Volver a la tienda</a>'
+      card.innerHTML = '<div class="error-state">'
+        + '<i class="fa-solid fa-triangle-exclamation"></i>'
+        + '<p>No se encontró ningún pedido pendiente.<br>Vuelve a la tienda y completa el proceso de nuevo.</p>'
+        + '<a href="index.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Volver a la tienda</a>'
         + '</div>';
       return;
     }
 
-    var order;
-    try { order = JSON.parse(raw); } catch(e) {
-      card.innerHTML = '<p style="color:#888;text-align:center;padding:40px;">Error al leer el pedido. Vuelve a la tienda.</p>';
+    var o;
+    try { o = JSON.parse(raw); } catch (e) {
+      card.innerHTML = '<div class="error-state"><i class="fa-solid fa-triangle-exclamation"></i><p>Error al leer el pedido.</p><a href="index.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Volver</a></div>';
       return;
     }
 
-    /* ── Renderizar página de resumen ── */
-    var itemsHtml = '';
-    (order.items || []).forEach(function(it) {
-      itemsHtml += '<li>'
-        + '<div class="item-info"><div class="item-name">' + esc(it.name) + '</div>'
-        + '<div class="item-meta">' + esc(it.meta) + ' · Cant: ' + esc(it.qty) + '</div></div>'
-        + '<div class="item-price">' + esc(it.price) + '</div>'
+    var itemsHtml = (o.items || []).map(function (it) {
+      return '<li>'
+        + '<div><div class="item-name">' + x(it.name) + '</div>'
+        + '<div class="item-meta">' + x(it.meta) + ' · ' + x(it.qty) + ' ud.</div></div>'
+        + '<div class="item-price">' + x(it.price) + '</div>'
         + '</li>';
-    });
+    }).join('');
 
-    var envioTexto = order.shipping === '0,00' || parseFloat((order.shipping||'').replace(',','.')) === 0
-      ? 'GRATIS' : order.shipping + ' €';
+    var envio = (parseFloat((o.shipping || '').replace(',', '.')) === 0 || o.shipping === '0,00')
+      ? '<span style="color:#00b464;">GRATIS</span>'
+      : x(o.shipping) + ' €';
 
     card.innerHTML = ''
-      + '<div class="status-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>'
-      + '<h1>Pedido recibido</h1>'
-      + '<p class="subtitle">Completa el pago por Bizum para confirmar tu pedido</p>'
-
-      + '<div class="order-num">'
-      + '<span>Nº de pedido</span>'
-      + '<strong>' + esc(order.orderNum) + '</strong>'
+      + '<div class="header">'
+      + '<div class="check-circle"><i class="fa-solid fa-mobile-screen-button"></i></div>'
+      + '<h1>¡Pedido recibido!</h1>'
+      + '<p>Tu pedido está <strong style="color:#fff;">pendiente de pago</strong>.<br>Completa el Bizum para que confirmemos tu reserva.</p>'
       + '</div>'
 
-      + '<p class="section-label">Artículos</p>'
-      + '<ul class="items-list">' + itemsHtml + '</ul>'
+      + '<div class="order-badge">'
+      + '<div class="label">Número de pedido</div>'
+      + '<div class="num">' + x(o.orderNum) + '</div>'
+      + '</div>'
+
+      + '<p class="section-title">Artículos del pedido</p>'
+      + '<ul class="items">' + itemsHtml + '</ul>'
 
       + '<div class="totals">'
-      + '<div class="total-row"><span>Subtotal</span><span class="val">' + esc(order.subtotal) + ' €</span></div>'
-      + '<div class="total-row"><span>Envío</span><span class="val">' + envioTexto + '</span></div>'
-      + '<div class="total-row grand"><span>TOTAL A PAGAR</span><span class="val">' + esc(order.total) + ' €</span></div>'
+      + '<div class="total-row"><span>Subtotal</span><span>' + x(o.subtotal) + ' €</span></div>'
+      + '<div class="total-row"><span>Envío</span><span>' + envio + '</span></div>'
+      + '<div class="total-row grand"><span>TOTAL A PAGAR</span><span class="val">' + x(o.total) + ' €</span></div>'
       + '</div>'
 
-      + '<div class="bizum-box">'
-      + '<p class="biz-title"><i class="fa-solid fa-mobile-screen-button"></i> Cómo pagar con Bizum</p>'
-      + '<div class="bizum-step"><div class="biz-num">1</div><div class="biz-text">Abre la app de tu banco y accede a <strong>Bizum</strong>.</div></div>'
-      + '<div class="bizum-step"><div class="biz-num">2</div><div class="biz-text">Envía <span class="biz-highlight">' + esc(order.total) + ' €</span> al número <strong>' + esc(order.bizumPhone) + '</strong>.</div></div>'
-      + '<div class="bizum-step"><div class="biz-num">3</div><div class="biz-text">En el <strong>concepto</strong> escribe: <strong>' + esc(order.orderNum) + '</strong></div></div>'
-      + '<div class="bizum-step"><div class="biz-num">4</div><div class="biz-text">Cuando recibamos el pago te enviaremos la confirmación del pedido por email a <strong>' + esc(order.email) + '</strong>.</div></div>'
+      + '<div class="bizum-block">'
+      + '<div class="biz-head"><i class="fa-solid fa-mobile-screen-button"></i> Cómo completar el pago</div>'
+
+      + '<div class="step"><div class="step-num">1</div><div class="step-text">Abre tu <strong>app del banco</strong> y entra en la sección <strong>Bizum</strong>.</div></div>'
+
+      + '<div class="step"><div class="step-num">2</div><div class="step-text">'
+      + 'Envía <span class="importe-pill">' + x(o.total) + ' €</span> al número <strong>' + x(o.bizumPhone) + '</strong>.'
+      + '</div></div>'
+
+      + '<div class="step"><div class="step-num">3</div><div class="step-text">'
+      + 'En el <strong>concepto</strong> escribe exactamente: <span class="concepto-pill">' + x(o.orderNum) + '</span>'
+      + '</div></div>'
+
+      + '<div class="step"><div class="step-num">4</div><div class="step-text">'
+      + 'Guarda el <strong>justificante de Bizum</strong> como comprobante del pago.'
+      + '</div></div>'
+
+      + '<div class="step"><div class="step-num">5</div><div class="step-text">'
+      + 'Recibirás la <strong>confirmación de tu reserva</strong> en <strong>' + x(o.email) + '</strong> en menos de 24 h.'
+      + '</div></div>'
       + '</div>'
 
-      + '<div class="note-box"><i class="fa-solid fa-circle-info"></i>'
-      + 'Guarda el justificante de Bizum como comprobante. Si tienes cualquier problema escríbenos a <strong>rawrepublic.reservas@gmail.com</strong>.'
+      + '<div class="warning-box">'
+      + '<strong>⚠️ Importante:</strong> El pedido no quedará confirmado ni se enviará la prenda hasta recibir el importe completo de <strong style="color:#e07b00;">' + x(o.total) + ' €</strong>. '
+      + 'Si el Bizum recibido no coincide con este importe, nos pondremos en contacto contigo antes de procesar el pedido.'
+      + '</div>'
+
+      + '<div class="note">'
+      + '<i class="fa-solid fa-circle-info"></i>'
+      + '¿Algún problema? Escríbenos a <strong>rawrepublic.reservas@gmail.com</strong> indicando tu número de pedido <strong>' + x(o.orderNum) + '</strong>.'
       + '</div>'
 
       + '<div style="text-align:center;">'
@@ -149,9 +303,12 @@
 
   })();
 
-  function esc(str) {
-    return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  function x(s) {
+    return String(s || '')
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
   </script>
+
 </body>
 </html>
