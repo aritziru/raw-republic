@@ -2049,9 +2049,17 @@
     /* ── Listener en tiempo real para habilitar botones ── */
     document.addEventListener('DOMContentLoaded', function() {
       var form = document.getElementById('formPago');
-      if (!form) return;
-      form.addEventListener('input',  checkFormValidity);
-      form.addEventListener('change', checkFormValidity);
+      if (form) {
+        form.addEventListener('input',  checkFormValidity);
+        form.addEventListener('change', checkFormValidity);
+      }
+
+      /* ── Mostrar catálogo al navegar desde el mega-menú ── */
+      document.querySelectorAll('.dropdown-item').forEach(function(link) {
+        link.addEventListener('click', function() {
+          mostrarCatalogo();
+        });
+      });
     });
 
     /* ── Devuelve la URL de pago según el método elegido ── */
