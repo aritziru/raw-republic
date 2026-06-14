@@ -1764,15 +1764,44 @@
 
         <!-- ── Botones de pago (deshabilitados hasta formulario válido) ── -->
         <div id="payBtnsWrap">
+
+          <!-- PayPal -->
           <button id="btnPayPaypal" class="btn btn-primary full-width pay-method-btn" disabled onclick="submitAndPay('paypal')">
             <i class="fa-brands fa-paypal"></i> Pagar con PayPal
           </button>
+          <!-- Aviso importe PayPal — visible tras pulsar el botón -->
+          <div id="paypalImporteAviso" style="display:none;margin:8px 0 4px;padding:10px 12px;background:rgba(0,112,204,0.12);border:1px solid rgba(0,112,204,0.35);border-radius:8px;font-size:11px;color:var(--text-muted);line-height:1.6;">
+            <i class="fa-brands fa-paypal" style="color:#009cde;margin-right:4px;"></i>
+            Serás redirigido a PayPal.me. <strong style="color:var(--text-primary);">Introduce manualmente el importe <span id="paypalImporteValor" style="color:var(--accent);"></span></strong> que aparece en tu resumen de pedido. Es el importe exacto que debes pagar.
+          </div>
+
+          <!-- Revolut -->
           <button id="btnPayRevolut" class="btn btn-ghost full-width pay-method-btn" disabled onclick="submitAndPay('revolut')" style="margin-top:10px;">
             <i class="fa-solid fa-bolt"></i> Pagar con Revolut
           </button>
-          <button id="btnPayTarjeta" class="btn btn-ghost full-width pay-method-btn" disabled onclick="submitAndPay('tarjeta')" style="margin-top:10px;">
-            <i class="fa-solid fa-credit-card"></i> Tarjeta / Apple Pay / Google Pay
+
+          <!-- Bizum -->
+          <button id="btnPayBizum" class="btn btn-ghost full-width pay-method-btn" disabled onclick="submitAndPay('bizum')" style="margin-top:10px;">
+            <i class="fa-solid fa-mobile-screen-button"></i> Pagar con Bizum
           </button>
+          <div id="bizumAviso" style="display:none;margin:8px 0 4px;padding:10px 12px;background:rgba(0,180,100,0.10);border:1px solid rgba(0,180,100,0.3);border-radius:8px;font-size:11px;color:var(--text-muted);line-height:1.6;">
+            <i class="fa-solid fa-mobile-screen-button" style="color:#00b464;margin-right:4px;"></i>
+            Envía <strong style="color:var(--accent);"><span class="bizum-importe"></span></strong> por Bizum al número <strong style="color:var(--text-primary);"><span class="bizum-phone"></span></strong>.<br>
+            Indica tu nombre y número de pedido en el concepto. Te confirmaremos el pedido por email cuando recibamos el pago.
+          </div>
+
+          <!-- Transferencia bancaria -->
+          <button id="btnPayTransferencia" class="btn btn-ghost full-width pay-method-btn" disabled onclick="submitAndPay('transferencia')" style="margin-top:10px;">
+            <i class="fa-solid fa-building-columns"></i> Transferencia bancaria
+          </button>
+          <div id="transferenciaAviso" style="display:none;margin:8px 0 4px;padding:10px 12px;background:rgba(255,106,0,0.10);border:1px solid rgba(255,106,0,0.3);border-radius:8px;font-size:11px;color:var(--text-muted);line-height:1.6;">
+            <i class="fa-solid fa-building-columns" style="color:var(--accent);margin-right:4px;"></i>
+            Realiza una transferencia de <strong style="color:var(--accent);"><span class="trans-importe"></span></strong> a:<br>
+            <strong style="color:var(--text-primary);">Titular:</strong> RAW Republic &nbsp;·&nbsp;
+            <strong style="color:var(--text-primary);">IBAN:</strong> <span class="trans-iban"></span><br>
+            Indica tu nombre en el concepto. Tu pedido se confirmará al recibir el pago.
+          </div>
+
         </div>
 
         <p id="payFormHint" style="font-size:10px;color:var(--text-muted);text-align:center;margin-top:10px;line-height:1.6;">
@@ -2010,10 +2039,14 @@
      *  CONFIGURACIÓN DE ENLACES DE PAGO
      *  Sustituye TuUsuario por tu usuario real en cada enlace.
      * ══════════════════════════════════════════════════════════ */
-    /* ── Email de tu cuenta PayPal Business (el que recibes los pagos) ── */
-    var PAYPAL_EMAIL = 'rawrepublic.reservas@gmail.com';
-    var REVOLUT_LINK = 'https://revolut.me/TuUsuario/';
-    var CARD_LINK    = ''; // URL de tu pasarela de tarjeta cuando esté lista
+    /* ══════════════════════════════════════════════════════════
+     *  CONFIGURA AQUÍ TUS DATOS DE PAGO
+     * ══════════════════════════════════════════════════════════ */
+    var PAYPAL_EMAIL  = 'rawrepublic.reservas@gmail.com'; // Tu email de PayPal personal
+    var REVOLUT_LINK  = 'https://revolut.me/TuUsuario/';  // ⚠️ Cambia TuUsuario por tu usuario de Revolut
+    var BIZUM_PHONE   = '+34 638 61 14 96';                 // ⚠️ Cambia por tu número de Bizum
+    var IBAN          = 'ES00 0000 0000 0000 0000 0000';  // ⚠️ Cambia por tu IBAN real
+    var CARD_LINK     = '';
 
     /* ── Abre el formulario de envío ── */
     function showCheckoutForm() {
@@ -2066,15 +2099,16 @@
     /* ── Devuelve la URL de pago según el método elegido ── */
     function getPaymentUrl(metodo, totalNum) {
       if (metodo === 'revolut') {
-        return REVOLUT_LINK ? REVOLUT_LINK + totalNum.toFixed(2) : 'https://www.revolut.com';
+        return REVOLUT_LINK ? REVOLUT_LINK + totalNum.toFixed(2) : 'https://revolut.me';
       }
       if (metodo === 'tarjeta') {
         return CARD_LINK || null;
       }
-      /* paypal — enlace paypal.me personal con importe automático */
-      return 'https://www.paypal.me/RawRepublicES/' + totalNum.toFixed(2) + 'EUR'
-           + '?country.x=ES&locale.x=es_ES';
-
+      if (metodo === 'paypal') {
+        return 'https://www.paypal.me/RawRepublicES/' + totalNum.toFixed(2) + 'EUR?country.x=ES&locale.x=es_ES';
+      }
+      /* bizum y transferencia — se gestionan localmente con aviso */
+      return null;
     }
 
     /* ══════════════════════════════════════════════════════════
@@ -2147,19 +2181,58 @@
         }));
       } catch(e) { /* sessionStorage no disponible: no bloqueamos el flujo */ }
 
-      /* ── Redirigir a la pasarela (sin haber enviado el email) ── */
+      /* ── Reactivar botones ── */
+      function reactivarBotones() {
+        document.querySelectorAll('.pay-method-btn').forEach(function(b) {
+          b.disabled = false; b.style.opacity = '1'; b.style.cursor = 'pointer';
+        });
+      }
+
+      /* ── Mostrar importe en el aviso de PayPal ── */
+      if (metodo === 'paypal') {
+        var aviso = document.getElementById('paypalImporteAviso');
+        var span  = document.getElementById('paypalImporteValor');
+        if (span)  span.textContent  = totalNum.toFixed(2).replace('.', ',') + ' €';
+        if (aviso) aviso.style.display = '';
+        setTimeout(function() {
+          window.location.href = paymentUrl;
+        }, 2000); // 2 seg para que el usuario lea el aviso antes de saltar
+        reactivarBotones();
+        if (activeBtn) activeBtn.innerHTML = '<i class="fa-brands fa-paypal"></i> Ir a PayPal…';
+        return;
+      }
+
+      /* ── Bizum: mostrar aviso con número y importe ── */
+      if (metodo === 'bizum') {
+        var aviso = document.getElementById('bizumAviso');
+        document.querySelectorAll('.bizum-importe').forEach(function(el) { el.textContent = totalNum.toFixed(2).replace('.', ',') + ' €'; });
+        document.querySelectorAll('.bizum-phone').forEach(function(el)   { el.textContent = BIZUM_PHONE; });
+        if (aviso) aviso.style.display = '';
+        reactivarBotones();
+        if (activeBtn) activeBtn.innerHTML = '<i class="fa-solid fa-mobile-screen-button"></i> Pagar con Bizum';
+        return;
+      }
+
+      /* ── Transferencia: mostrar IBAN e importe ── */
+      if (metodo === 'transferencia') {
+        var aviso = document.getElementById('transferenciaAviso');
+        document.querySelectorAll('.trans-importe').forEach(function(el) { el.textContent = totalNum.toFixed(2).replace('.', ',') + ' €'; });
+        document.querySelectorAll('.trans-iban').forEach(function(el)    { el.textContent = IBAN; });
+        if (aviso) aviso.style.display = '';
+        reactivarBotones();
+        if (activeBtn) activeBtn.innerHTML = '<i class="fa-solid fa-building-columns"></i> Transferencia bancaria';
+        return;
+      }
+
+      /* ── Revolut y otros: redirigir ── */
       if (paymentUrl) {
         window.location.href = paymentUrl;
       } else if (metodo === 'tarjeta') {
-        document.querySelectorAll('.pay-method-btn').forEach(function(b) {
-          b.disabled = false; b.style.opacity = '1';
-        });
+        reactivarBotones();
         if (activeBtn) activeBtn.innerHTML = '<i class="fa-solid fa-credit-card"></i> Tarjeta / Apple Pay / Google Pay';
-        alert('La pasarela de tarjeta está en integración.\nPor favor elige PayPal o Revolut para completar tu pedido.');
+        alert('La pasarela de tarjeta está en integración.\nPor favor elige otro método de pago.');
       } else {
-        window.location.href = metodo === 'revolut'
-          ? 'https://www.revolut.com'
-          : 'https://www.paypal.com';
+        window.location.href = 'https://www.revolut.com';
       }
     }
 
@@ -2170,6 +2243,8 @@
     <i class="fa-solid fa-chevron-up"></i>
   </button>
 
+
+  
   <script src="script.js"></script>
   <!-- ░░ MODAL GUÍA DE TALLAS ░░ -->
   <div class="modal-overlay" id="modal-guia-tallas" role="dialog" aria-modal="true" aria-label="Guía de tallas">
