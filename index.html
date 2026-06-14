@@ -2010,7 +2010,8 @@
      *  CONFIGURACIÓN DE ENLACES DE PAGO
      *  Sustituye TuUsuario por tu usuario real en cada enlace.
      * ══════════════════════════════════════════════════════════ */
-    var PAYPAL_LINK  = 'https://paypal.me/RawRepublicES?country.x=ES&locale.x=es_ES';
+    /* ── Email de tu cuenta PayPal Business (el que recibes los pagos) ── */
+    var PAYPAL_EMAIL = 'rawrepublic.reservas@gmail.com';
     var REVOLUT_LINK = 'https://revolut.me/TuUsuario/';
     var CARD_LINK    = ''; // URL de tu pasarela de tarjeta cuando esté lista
 
@@ -2070,9 +2071,18 @@
       if (metodo === 'tarjeta') {
         return CARD_LINK || null;
       }
-      /* paypal */
-      if (PAYPAL_LINK && PAYPAL_LINK.indexOf('TuUsuario') === -1) {
-        return PAYPAL_LINK + totalNum.toFixed(2);
+      /* paypal — usa el sistema estándar que acepta importe automático */
+      if (PAYPAL_EMAIL) {
+        var desc = encodeURIComponent('Pedido RAW Republic');
+        return 'https://www.paypal.com/cgi-bin/webscr'
+          + '?cmd=_xclick'
+          + '&business=' + encodeURIComponent(PAYPAL_EMAIL)
+          + '&item_name=' + desc
+          + '&amount=' + totalNum.toFixed(2)
+          + '&currency_code=EUR'
+          + '&no_shipping=1'
+          + '&return=' + encodeURIComponent(window.location.origin + '/gracias.html')
+          + '&cancel_return=' + encodeURIComponent(window.location.href);
       }
       return null;
     }
