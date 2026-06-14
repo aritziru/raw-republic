@@ -2200,27 +2200,17 @@
         });
       }
 
-      /* ── Mostrar importe en el aviso de PayPal ── */
+      /* ── Modal de aviso para PayPal ── */
       if (metodo === 'paypal') {
-        var aviso = document.getElementById('paypalImporteAviso');
-        var span  = document.getElementById('paypalImporteValor');
-        if (span)  span.textContent = totalNum.toFixed(2).replace('.', ',') + ' €';
-        if (aviso) aviso.style.display = '';
-        setTimeout(function() { window.location.href = paymentUrl; }, 3000);
         reactivarBotones();
-        if (activeBtn) activeBtn.innerHTML = '<i class="fa-brands fa-paypal"></i> Abriendo PayPal…';
+        showPayModal('paypal', totalNum.toFixed(2).replace('.', ','), paymentUrl);
         return;
       }
 
-      /* ── Mostrar importe en el aviso de Revolut ── */
+      /* ── Modal de aviso para Revolut ── */
       if (metodo === 'revolut') {
-        var aviso = document.getElementById('revolutImporteAviso');
-        var span  = document.getElementById('revolutImporteValor');
-        if (span)  span.textContent = totalNum.toFixed(2).replace('.', ',') + ' €';
-        if (aviso) aviso.style.display = '';
-        setTimeout(function() { window.location.href = paymentUrl || 'https://revolut.me'; }, 3000);
         reactivarBotones();
-        if (activeBtn) activeBtn.innerHTML = '<i class="fa-solid fa-bolt"></i> Abriendo Revolut…';
+        showPayModal('revolut', totalNum.toFixed(2).replace('.', ','), paymentUrl || 'https://revolut.me');
         return;
       }
 
@@ -2326,6 +2316,78 @@
 
 
   
+
+  <!-- ░░ MODAL AVISO PAGO EXTERNO ░░ -->
+  <div id="payModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.75);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:16px;">
+    <div style="background:var(--bg-card,#141414);border:1px solid rgba(255,255,255,.12);border-radius:16px;max-width:420px;width:100%;padding:28px 24px;position:relative;">
+
+      <div id="payModalIcon" style="width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:1.6rem;"></div>
+
+      <h3 style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1.35rem;text-align:center;margin-bottom:6px;" id="payModalTitle"></h3>
+      <p style="font-size:.82rem;color:var(--text-muted,#888);text-align:center;margin-bottom:20px;line-height:1.5;" id="payModalSub"></p>
+
+      <div style="background:rgba(255,106,0,.08);border:1px solid rgba(255,106,0,.25);border-radius:10px;padding:14px 16px;margin-bottom:16px;text-align:center;">
+        <div style="font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted,#888);margin-bottom:4px;">Importe exacto a introducir</div>
+        <div id="payModalImporte" style="font-family:'Barlow Condensed',sans-serif;font-size:2rem;font-weight:700;color:var(--accent,#ff6a00);"></div>
+        <div style="font-size:.75rem;color:var(--text-muted,#888);margin-top:2px;">(envío incluido)</div>
+      </div>
+
+      <div style="background:rgba(255,150,0,.07);border:1px solid rgba(255,150,0,.2);border-radius:8px;padding:11px 14px;margin-bottom:22px;font-size:.8rem;color:var(--text-muted,#888);line-height:1.6;">
+        ⚠️ <strong style="color:#e07b00;">Si introduces un importe diferente, el pedido no quedará confirmado</strong> y la prenda no se enviará hasta recibir el pago completo. Recibirás confirmación por email cuando validemos tu pago.
+      </div>
+
+      <button id="payModalBtn" onclick="payModalConfirm()" style="width:100%;padding:13px;border:none;border-radius:10px;font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:.05em;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;"></button>
+      <button onclick="payModalCancel()" style="width:100%;margin-top:10px;padding:10px;border:1px solid rgba(255,255,255,.12);border-radius:10px;background:transparent;color:var(--text-muted,#888);font-size:.85rem;cursor:pointer;">Cancelar — volver al carrito</button>
+    </div>
+  </div>
+
+  <script>
+    var _payModalUrl = '';
+    function payModalCancel() {
+      var m = document.getElementById('payModal');
+      m.style.display = 'none';
+      document.querySelectorAll('.pay-method-btn').forEach(function(b) {
+        b.disabled = false; b.style.opacity = '1';
+      });
+    }
+    function payModalConfirm() {
+      document.getElementById('payModal').style.display = 'none';
+      window.location.href = _payModalUrl;
+    }
+    function showPayModal(metodo, importe, url) {
+      _payModalUrl = url;
+      var isPaypal = metodo === 'paypal';
+      var icon     = document.getElementById('payModalIcon');
+      var title    = document.getElementById('payModalTitle');
+      var sub      = document.getElementById('payModalSub');
+      var imp      = document.getElementById('payModalImporte');
+      var btn      = document.getElementById('payModalBtn');
+      var modal    = document.getElementById('payModal');
+
+      if (isPaypal) {
+        icon.style.background = 'rgba(0,112,204,.15)';
+        icon.style.border     = '2px solid rgba(0,112,204,.4)';
+        icon.innerHTML        = '<i class="fa-brands fa-paypal" style="color:#009cde;"></i>';
+        title.textContent     = 'Vas a PayPal';
+        sub.textContent       = 'Cuando llegues a PayPal, introduce manualmente el importe que ves aquí abajo. Es el total de tu pedido con envío incluido.';
+        btn.style.background  = '#009cde';
+        btn.style.color       = '#fff';
+        btn.innerHTML         = '<i class="fa-brands fa-paypal"></i> Entendido — ir a PayPal';
+      } else {
+        icon.style.background = 'rgba(100,50,200,.15)';
+        icon.style.border     = '2px solid rgba(100,50,200,.4)';
+        icon.innerHTML        = '<i class="fa-solid fa-bolt" style="color:#7c3aed;"></i>';
+        title.textContent     = 'Vas a Revolut';
+        sub.textContent       = 'Cuando llegues a Revolut, introduce manualmente el importe que ves aquí abajo. Es el total de tu pedido con envío incluido.';
+        btn.style.background  = '#7c3aed';
+        btn.style.color       = '#fff';
+        btn.innerHTML         = '<i class="fa-solid fa-bolt"></i> Entendido — ir a Revolut';
+      }
+
+      imp.textContent = importe + ' €';
+      modal.style.display = 'flex';
+    }
+  </script>
   <script src="script.js"></script>
   <!-- ░░ MODAL GUÍA DE TALLAS ░░ -->
   <div class="modal-overlay" id="modal-guia-tallas" role="dialog" aria-modal="true" aria-label="Guía de tallas">
